@@ -1,0 +1,375 @@
+season,week,date,title
+1,1,2005-06-01,Round 1
+1,2,2005-06-08,Round 2
+1,3,2005-06-15,Round 3
+1,4,2005-06-22,Round 4
+1,5,2005-06-29,Round 5
+1,6,2005-07-06,Season 1 Finale
+1,7,,
+1,8,,
+1,9,,
+1,10,,
+1,11,,
+2,1,2006-01-05,Round 1
+2,2,2006-01-12,Round 2
+2,3,2006-01-19,Round 3
+2,4,2006-01-26,Round 4
+2,5,2006-02-02,Round 5
+2,6,2006-02-09,Round 6
+2,7,2006-02-16,Round 7
+2,8,2006-02-23,Final Round
+2,9,2006-02-26,Season 2 Finale
+2,10,,
+2,11,,
+3,1,2006-09-12,Round One
+3,2,2006-09-19,Round Two
+3,3,2006-09-26,Round Three
+3,4,2006-10-03,Round Four
+3,5,2006-10-10,Round Five
+3,6,2006-10-17,Round Six
+3,7,2006-10-24,Round Seven
+3,8,2006-10-31,Round Eight
+3,9,2006-11-07,Round Nine
+3,10,2006-11-14,Final Round
+3,11,2006-11-15,Season 3 Finale
+4,1,2007-03-19,Body Movin
+4,2,2007-03-26,Performance Show
+4,3,2007-04-02,Performance Show
+4,4,2007-04-09,Performance Show
+4,5,2007-04-16,Performance Show
+4,6,2007-04-23,Performance Show
+4,7,2007-04-30,Performance Show
+4,8,2007-05-07,Performance Show
+4,9,2007-05-14,Performance Show
+4,10,2007-05-21,Final Performance
+4,11,2007-05-22,Season 4 Finale
+5,1,2007-09-24,Season 5 Premiere
+5,2,2007-09-25,Performance Show
+5,3,2007-10-01,Performance Show 2
+5,4,2007-10-08,Performance Show 3
+5,5,2007-10-15,Performance Show 4
+5,6,2007-10-22,Performance Show 5
+5,7,2007-10-29,Performance Show 6
+5,8,2007-11-05,Performance Show 7
+5,9,2007-11-12,Performance Show 8
+5,10,2007-11-19,Performance Show 9
+5,11,2007-11-26,Performance Show 10
+6,1,2008-03-17,Season 6 Premiere
+6,2,2008-03-18,Episode 601A
+6,3,2008-03-24,Episode 602
+6,4,2008-03-25,Episode 602A
+6,5,2008-03-31,Episode 603
+6,6,2008-04-01,Episode 603A
+6,7,2008-04-07,Episode 604
+6,8,2008-04-08,Episode 604A
+6,9,2008-04-14,Episode 605
+6,10,2008-04-15,Episode 605A
+6,11,2008-04-21,Episode 606
+7,1,2008-09-22,Episode 701
+7,2,2008-09-23,Episode 701A
+7,3,2008-09-24,Episode 701B
+7,4,2008-09-29,Episode 702
+7,5,2008-09-30,Episode 702 A
+7,6,2008-10-06,Episode 703
+7,7,2008-10-07,Episode 703A
+7,8,2008-10-13,Episode 704
+7,9,2008-10-14,Episode 704A
+7,10,2008-10-20,Episode 705
+7,11,2008-10-21,Episode 705A
+8,1,2009-03-09,Episode 801
+8,2,2009-03-16,Episode 802
+8,3,2009-03-17,Episode 802A
+8,4,2009-03-23,Episode 803
+8,5,2009-03-24,Episode 803A
+8,6,2009-03-30,Episode 804
+8,7,2009-03-31,Episode 804A
+8,8,2009-04-06,Episode 805
+8,9,2009-04-07,Episode 805A
+8,10,2009-04-13,Episode 806
+8,11,2009-04-14,Episode 806A
+9,1,2009-09-21,Episode 1
+9,2,2009-09-22,Episode 2
+9,3,2009-09-23,Episode 3
+9,4,2009-09-28,Episode 4
+9,5,2009-09-29,Episode 5
+9,6,2009-10-05,Episode 6
+9,7,2009-10-06,Episode 7
+9,8,2009-10-12,Episode 8
+9,9,2009-10-13,Episode 9
+9,10,2009-10-19,Episode 10
+9,11,2009-10-20,Episode 11
+10,1,2010-03-22,Episode 1001
+10,2,2010-03-29,Episode 1002
+10,3,2010-03-30,Episode 1002A
+10,4,2010-04-05,Episode 1003
+10,5,2010-04-06,Episode 1003A
+10,6,2010-04-12,Episode 1004
+10,7,2010-04-13,Episode 1004A
+10,8,2010-04-19,Episode 1005
+10,9,2010-04-20,Episode 1005A
+10,10,2010-04-26,Episode 1006
+10,11,2010-04-27,Episode 1006A
+11,1,2010-09-20,Episode 1
+11,2,2010-09-21,Episode 2
+11,3,2010-09-27,Episode 3
+11,4,2010-09-28,Episode 4
+11,5,2010-10-04,Episode 5
+11,6,2010-10-05,Episode 6
+11,7,2010-10-11,Episode 7
+11,8,2010-10-12,Episode 8
+11,9,2010-10-18,Episode 9
+11,10,2010-10-19,Episode 10
+11,11,2010-10-25,Episode 11
+12,1,2011-04-26,The Road to the Finals
+12,2,2011-03-21,Episode 1
+12,3,2011-03-28,Episode 2
+12,4,2011-03-29,Episode 3
+12,5,2011-03-29,Episode 4
+12,6,2011-04-04,Episode 5
+12,7,2011-04-05,Episode 6
+12,8,2011-04-11,Episode 7
+12,9,2011-04-12,Episode 8
+12,10,2011-04-18,Episode 9
+12,11,2011-04-19,Episode 10
+13,1,2011-09-20,Meet the Cast
+13,2,2011-09-19,Episode 1
+13,3,2011-09-20,Episode 2
+13,4,2011-09-26,Episode 3
+13,5,2011-09-27,Episode 4
+13,6,2011-10-03,Episode 5
+13,7,2011-10-04,Episode 6
+13,8,2011-10-10,Episode 7
+13,9,2011-10-11,Episode 8
+13,10,2011-10-17,Episode 9
+13,11,2011-10-18,Episode 10
+14,1,2012-03-27,The Story So Far
+14,2,2012-03-19,Episode 1
+14,3,2012-03-26,Episode 2
+14,4,2012-03-27,Episode 3
+14,5,2012-04-02,Episode 4
+14,6,2012-04-03,Episode 5
+14,7,2012-04-09,Episode 6
+14,8,2012-04-10,Episode 7
+14,9,2012-04-16,Episode 8
+14,10,2012-04-17,Episode 9
+14,11,2012-04-23,Episode 10
+15,1,2012-10-09,Judges' Analysis: Where They Stand
+15,2,2012-10-02,Defining Dances
+15,3,2012-10-08,Week 3: Iconic dances
+15,4,2012-10-15,Week 4: Opponents' choice
+15,5,2012-10-22,Week 5: Guilty Pleasures (1)
+15,6,2012-10-29,Week 6: Country week
+15,7,2012-11-05,Week 7: Fusion dances
+15,8,2012-11-12,Week 8: Trio Challenge
+15,9,2012-11-19,Week 9: Semi-finals
+15,10,2012-11-26,Week 10: Finale
+15,11,2012-11-27,Season 15 Finale
+16,1,2013-03-19,Exclusive First Look
+16,2,2013-03-18,Episode 1
+16,3,2013-03-25,Episode 2
+16,4,2013-03-26,"Season 16, Episode 2A"
+16,5,2013-04-01,Episode 3
+16,6,2013-04-02,"Season 16, Episode 3A"
+16,7,2013-04-08,Episode 4
+16,8,2013-05-06,Week 8 - Performance
+16,9,2013-05-13,Week 9 - Semi-Final Performance
+16,10,2013-05-20,Week 10 - Final (Night 1)
+16,11,,
+17,1,2013-09-16,Week 1
+17,2,2013-09-23,Week 2
+17,3,2013-09-30,Week 3
+17,4,2013-10-07,Week 4
+17,5,2013-10-14,Episode 5
+17,6,2013-10-21,Episode 6
+17,7,2013-10-28,Episode 7
+17,8,2013-11-04,Episode 8
+17,9,2013-11-11,Episode 9
+17,10,2013-11-18,Episode 10
+17,11,2013-11-25,Episode 11
+18,1,2014-05-20,The Road to the Finals
+18,2,2014-03-17,Episode 1
+18,3,2014-03-24,Episode 2
+18,4,2014-03-31,Episode 3
+18,5,2014-04-07,Episode 4
+18,6,2014-04-14,Episode 5
+18,7,2014-04-21,Episode 6
+18,8,2014-04-28,Episode 7
+18,9,2014-05-05,Episode 8
+18,10,2014-05-12,Episode 9
+18,11,,
+19,1,2014-11-25,Road to the Finals (60 min)
+19,2,2014-09-22,Week #2 (Performances)
+19,3,2014-09-29,Week #3 (Performances)
+19,4,2014-11-25,The winning dance team is announced
+19,5,,
+19,6,,
+19,7,,
+19,8,,
+19,9,,
+19,10,,
+19,11,,
+20,1,2015-04-28,10th Anniversary Special (60 min)
+20,2,2015-05-16,Road to the Finals
+20,3,2015-03-16,Episode 2001
+20,4,,
+20,5,,
+20,6,,
+20,7,,
+20,8,,
+20,9,2015-05-11,Week #9 Performances
+20,10,2015-05-18,10th & Final Week of Performances (60 min)
+20,11,,
+21,1,2015-09-14,Season 21 Premiere
+21,2,2015-09-15,Season 21 Premiere Part 2: First Dances
+21,3,2015-09-28,Week 3: TV Night with Guest Judge Alfonso Ribeiro
+21,4,2015-10-05,Week 4: Most Memorable Year
+21,5,2015-10-12,Week 5: The Switch Up
+21,6,2015-10-19,Week 6: Famous Dances
+21,7,2015-10-26,Week 7: Halloween Night
+21,8,2015-11-02,Week 8: Icons Night
+21,9,2015-11-09,Week 9: Showstoppers Night
+21,10,2015-11-16,Week 10: Semifinals
+21,11,2015-11-23,Week 11: The Finals
+22,1,2016-03-21,Week 1: Premiere
+22,2,2016-03-28,Week 2: Latin Night
+22,3,2016-04-04,Week 3: Most Memorable Year
+22,4,2016-04-11,Week 4: Disney films music
+22,5,2016-04-18,Week 5: Switch-Up Challenge
+22,6,2016-04-25,Week 6: Famous Dances Night (121 min)
+22,7,2016-05-02,Week 7: Icons (121 min)
+22,8,2016-05-09,Week 8: You Be the Judge
+22,9,2016-05-16,Week 9: Semi-Finals (121 min)
+22,10,2016-05-23,Week 10: Finale Part 1 (61 min)
+22,11,,
+23,1,2016-09-12,Week 1: Premiere
+23,2,,
+23,3,2016-09-26,Week 3
+23,4,2016-10-03,Week 4
+23,5,2016-10-10,Week 5: Most Memorable Year
+23,6,2016-10-17,Week 6: Latin Night
+23,7,2016-10-24,Week 7: Eras Night
+23,8,2016-10-31,Week 8: Halloween Night
+23,9,2016-11-07,Week 9: Showstoppers Night
+23,10,2016-11-14,Week 10 - Semi-Finals
+23,11,2016-11-21,Week 11: Finals Pt. 1
+24,1,2017-03-20,Week 1: Premiere
+24,2,2017-03-27,Week 2
+24,3,2017-04-03,Week 3 - Vegas Night
+24,4,2017-04-10,Week 4: Most Memorable Year
+24,5,2017-04-17,Week 5: Disney Night
+24,6,2017-04-24,Week 6: Boy Bands vs. Girl Groups Night
+24,7,2017-05-01,Week 7: A Night at the Movies
+24,8,2017-05-08,Week 8: Trio Night
+24,9,2017-05-15,Week 9: Semi-Finals
+24,10,2017-05-22,Week 10: Finals Pt. 1 (60 min)
+24,11,,
+25,1,2017-09-18,Premiere
+25,2,2017-09-25,Ballroom Night
+25,3,2017-09-26,Latin Night
+25,4,2017-10-02,Guilty Pleasures Night
+25,5,2017-10-09,Most Memorable Year Night
+25,6,2017-10-16,Disney Night
+25,7,2017-10-23,A Night At the Movies
+25,8,2017-10-30,Halloween Night
+25,9,2017-11-06,Trio Night
+25,10,2017-11-13,Semi-Finals
+25,11,2017-11-20,The Finals Part 1
+26,1,2018-04-30,Athletes Premiere: Week 1
+26,2,2018-05-07,Athletes: Week 2
+26,3,2018-05-14,Athletes Week 3: The Semifinals
+26,4,2018-05-21,Athletes Week 4: The Finale (60 min)
+26,5,,
+26,6,,
+26,7,,
+26,8,,
+26,9,,
+26,10,,
+26,11,,
+27,1,2018-09-24,Week 1: Premiere (Night 1)
+27,2,2018-10-01,Week 2: New York City Night
+27,3,2018-10-08,Week 3: Most Memorable Night
+27,4,2018-10-15,Week 4: Trio Night
+27,5,2018-10-22,Week 5: Disney Night
+27,6,2018-10-29,Week 6: Halloween Night
+27,7,2018-11-05,Week 7: Country Night
+27,8,2018-11-12,Week 8: Semi-Finals
+27,9,2018-11-19,Week 9: Finale
+27,10,,
+27,11,,
+28,1,2019-09-16,2019 Season Premiere
+28,2,2019-09-23,First Elimination
+28,3,2019-09-30,Movie Night
+28,4,2019-10-07,Top 10
+28,5,2019-10-14,Disney Night
+28,6,2019-10-21,Week 6
+28,7,2019-10-28,Halloween Night
+28,8,2019-11-04,Dance-Off Week
+28,9,2019-11-11,Boy Band & Girl Group Night
+28,10,2019-11-18,Semi-Finals
+28,11,2019-11-25,Finale
+29,1,2020-09-14,2020 Premiere
+29,2,2020-09-22,First Elimination
+29,3,2020-09-28,Disney Night
+29,4,2020-10-05,Top 13
+29,5,2020-10-12,'80s Night
+29,6,2020-10-19,Top 11
+29,7,2020-10-26,Villains Night
+29,8,2020-11-02,Double Elimination Night â Use Your Vote!
+29,9,2020-11-09,Icons Night
+29,10,2020-11-16,Semi-Finals
+29,11,2020-11-23,Finale
+30,1,2021-09-20,Season 30 Premiere
+30,2,2021-09-27,First Elimination
+30,3,2021-10-04,Britney Night
+30,4,2021-10-11,Disney Week: Heroes Night
+30,5,2021-10-12,Disney Week: Villains Night
+30,6,2021-10-18,Grease Night
+30,7,2021-10-25,Horror Night
+30,8,2021-11-01,Queen Night
+30,9,2021-11-08,Janet Jackson Night
+30,10,2021-11-15,Semi-Finals
+30,11,2021-11-22,Finale
+31,1,2022-09-08,Dancing With the Stars: The Pros' Most Memorable Dances (55 min)
+31,2,2022-09-19,Premiere Night Party (119 min)
+31,3,2022-09-26,Elvis Night
+31,4,2022-10-03,Bond Night (121 min)
+31,5,2022-10-10,Disney+ Night
+31,6,2022-10-17,Stars' Stories Week: Most Memorable Year (117 min)
+31,7,2022-10-18,Stars' Stories Week: Prom Night (119 min)
+31,8,2022-10-24,Michael BublÃ© Night (115 min)
+31,9,2022-10-31,Halloween Night
+31,10,2022-11-07,90s Night
+31,11,2022-11-14,Semi-Finals
+32,1,2023-09-26,Premiere Night (150 min)
+32,2,2023-10-03,Latin Night
+32,3,2023-10-10,Motown Night
+32,4,2023-10-17,Disney100 Night
+32,5,2023-10-24,Most Memorable Year
+32,6,2023-10-31,Monster Night
+32,7,2023-11-07,Music Video Night
+32,8,2023-11-14,Whitney Houston Night
+32,9,2023-11-21,A Celebration of Taylor Swift
+32,10,2023-11-28,Semi-Finals
+32,11,2023-12-05,Finale (180 min)
+33,1,2024-09-17,Premiere
+33,2,2024-09-24,Oscars Night (121 min)
+33,3,2024-10-07,Soul Train Night
+33,4,2024-10-08,Hair Metal Night
+33,5,2024-10-15,Dedication Night
+33,6,2024-10-22,Disney Night
+33,7,2024-10-29,Halloween Nightmares Night
+33,8,2024-11-12,500th Episode
+33,9,2024-11-19,Semi-Finals
+33,10,2024-11-26,Finale (180 min)
+33,11,,
+34,1,2025-09-16,Premiere
+34,2,2025-09-23,One-Hit Wonders Night
+34,3,2025-09-30,TikTok Night
+34,4,2025-10-07,Disney Night
+34,5,2025-10-14,Dedication Night
+34,6,2025-10-21,Wicked Night
+34,7,2025-10-28,Halloween Night
+34,8,2025-11-04,Rock & Roll Hall of Fame Night
+34,9,2025-11-11,20th Birthday Party
+34,10,2025-11-18,Prince Night (Semi-Finals) (127 min)
+34,11,2025-11-25,Finale (180 min)
