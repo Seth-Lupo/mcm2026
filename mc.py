@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import re
 from collections import defaultdict
+import matplotlib.pyplot as plt
 
 DATA_PATH = "2026_MCM_Problem_C_Data.csv"
 
@@ -150,10 +151,10 @@ def summarize_week_samples(samples, names):
 def finalists_for_season(sdf):
     # finalists are those with placement 1..k where k is number of finalists in that season
     # simplest: take the minimum placements present (usually 1,2,3)
-    fin = sdf[sdf["placement"].isin([1,2,3])].copy()
+    fin = sdf[sdf["placement"].isin([1,2,3,4,5])].copy()
     # If some seasons have 4 finalists, include 4 too if it exists
-    if (sdf["placement"] == 4).any() and len(fin) < 4:
-        fin = sdf[sdf["placement"].isin([1,2,3,4])].copy()
+#     if (sdf["placement"] == 4).any() and len(fin) < 4:
+#         fin = sdf[sdf["placement"].isin([1,2,3,4])].copy()
     return fin
 
 def final_week_index(sdf):
@@ -169,18 +170,19 @@ def final_week_index(sdf):
 def mc_finals_percent(sdf, n_keep=5000, max_tries=2_000_000, alpha=1.0, seed=0):
     rng = np.random.default_rng(seed)
 
+    # get finalist rows
     fin = finalists_for_season(sdf)
     if fin.empty:
         return None, None, {"status": "skip", "reason": "no finalists detected"}
-
     w = final_week_index(sdf)
     if w is None:
         return None, None, {"status": "skip", "reason": "cannot find final week"}
-
+    
+    # get names and placements of finalists
     names = fin["celebrity_name"].tolist()
     placements = fin["placement"].to_numpy()
 
-    # Judge shares among finalists in final week
+    # get judge vote shares among finalists in final week
     totals = judge_total_for_week(fin, w).to_numpy()
     if totals.sum() <= 0:
         return None, names, {"status": "skip", "reason": "no judge points in finals"}
@@ -193,15 +195,21 @@ def mc_finals_percent(sdf, n_keep=5000, max_tries=2_000_000, alpha=1.0, seed=0):
 
     kept = []
     tries = 0
+
     while len(kept) < n_keep and tries < max_tries:
         tries += 1
+        # generate random percentages of fan votes for contestants
         fan_share = rng.dirichlet(np.full(len(names), alpha))
         combined = judge_share + fan_share
 
+        # order contestants
         pred_order = np.argsort(-combined)  # descending combined
+        # if this order from the randomly generated fan votes matches the real
+        # results of this week, keep
         if np.array_equal(pred_order, obs_order):
             kept.append(fan_share)
 
+    
     info = {
         "status": "ok" if len(kept) > 0 else "fail",
         "final_week": w,
@@ -239,55 +247,79 @@ def save_finals_samples_csv(samples, names, season_num, final_week, out_csv):
     df_out.to_csv(out_csv, index=False)
     print(f"Saved {len(df_out)} accepted finals samples to {out_csv}")
 
+def plot_single_distribution(samples, names, contestant, bins=30):
+    idx = names.index(contestant)
+    data = samples[:, idx]
 
-def main():
-    season_num = 3
-    n_keep = 2000          # how many accepted samples you want to TRY to collect
-    max_tries = 500000     # finite random generations (cap)
-    alpha = 0.7
-    seed = 200
-
-    df = load_data()
-    sdf = season_df(df, season_num)
-
-    samples, names, info = mc_finals_percent(
-        sdf,
-        n_keep=n_keep,
-        max_tries=max_tries,
-        alpha=alpha,
-        seed=seed
-    )
-
-    print("Finals info:", info)
-
-    # If the finals function succeeded, info has final_week
-    final_week = info.get("final_week", None) if isinstance(info, dict) else None
-
-    out_csv = f"season_{season_num}_final_week_{final_week}_fan_samples.csv"
-    save_finals_samples_csv(samples, names, season_num, final_week, out_csv)
+    plt.figure(figsize=(6,4))
+    plt.hist(data, bins=bins, density=True, alpha=0.7)
+    plt.xlabel("Fan vote share")
+    plt.ylabel("Density")
+    plt.title(f"Final-week fan vote distribution for {contestant}")
+    plt.show()
 
 
+def plot_all_finalists(samples, names, bins=30):
+    plt.figure(figsize=(7,5))
+    for i, name in enumerate(names):
+        plt.hist(samples[:, i], bins=bins, density=True, alpha=0.5, label=name)
+    plt.xlabel("Fan vote share")
+    plt.ylabel("Density")
+    plt.title("Final-week fan vote distributions (Monte Carlo)")
+    plt.legend()
+    plt.show()
 
-# # Example usage:
+
 # def main():
-#     results = mc_season_percent(season_num=3, n_keep_per_week=1000, alpha=1.0, seed=123)
+#     season_num = 32
+#     n_keep = 100000         # how many accepted samples you want to TRY to collect
+#     max_tries = 10000000  # finite random generations (cap)
+#     alpha = 1.0
+#     seed = 200
 
-#     # Print info for all weeks
-#     for week in range(1, 12):
-#         wk = results[week]
-#         print(f"Week {week} info:", wk["info"])
+#     df = load_data()
+#     sdf = season_df(df, season_num)
 
-#     # Find the first week with accepted samples and summarize it
-#     for week in range(1, 12):
-#         wk = results[week]
-#         if wk["samples"] is not None and len(wk["samples"]) > 0:
-#             summary = summarize_week_samples(wk["samples"], wk["names"])
-#             print("\nShowing summary for week", week)
-#             print(summary.head(10))
-#             break
-#     else:
-#         print("\nNo week produced accepted samples. Try alpha=0.5 or reduce n_keep_per_week.")
+#     samples, names, info = mc_finals_percent(
+#         sdf,
+#         n_keep=n_keep,
+#         max_tries=max_tries,
+#         alpha=alpha,
+#         seed=seed
+#     )
 
+#     print("Finals info:", info)
+
+#     # If the finals function succeeded, info has final_week
+#     final_week = info.get("final_week", None) if isinstance(info, dict) else None
+
+#     out_csv = f"season_{season_num}_final_week_{final_week}_fan_samples.csv"
+#     save_finals_samples_csv(samples, names, season_num, final_week, out_csv)
+
+#     plot_single_distribution(samples, names, names[0])
+#     plot_all_finalists(samples, names)
+
+
+
+# EOR REGULAR WEEKS:
+def main():
+    results = mc_season_percent(season_num=3, n_keep_per_week=1000, alpha=1.0, seed=123)
+
+    # Print info for all weeks
+    for week in range(1, 12):
+        wk = results[week]
+        print(f"Week {week} info:", wk["info"])
+
+    # Find the first week with accepted samples and summarize it
+    for week in range(1, 12):
+        wk = results[week]
+        if wk["samples"] is not None and len(wk["samples"]) > 0:
+            summary = summarize_week_samples(wk["samples"], wk["names"])
+            print("\nShowing summary for week", week)
+            print(summary.head(10))
+            break
+    else:
+        print("\nNo week produced accepted samples. Try alpha=0.5 or reduce n_keep_per_week.")
 
 if __name__ == "__main__":
     main()
