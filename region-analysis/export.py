@@ -393,6 +393,192 @@ def process_file(json_path: Path, projection_type: Optional[str] = None) -> None
     print(f"  Wrote {txt_path.name}")
 
 
+def load_viewership(data_dir: Path) -> Dict[tuple, float]:
+    """
+    Load viewership data and create mapping from (season, week) to viewers in millions.
+
+    Returns dict mapping (season, week) -> viewership_millions
+    """
+    viewership_path = data_dir / "viewership.csv"
+    if not viewership_path.exists():
+        return {}
+
+    import re
+
+    viewership = {}
+
+    with open(viewership_path, "r") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            season = int(row["Season"])
+            label = row["EpisodeLabel"]
+            viewers = float(row["ViewersMillions"])
+
+            # Try to extract week number from label
+            week = None
+
+            # Match patterns like "Week 1", "Week 2:", "Week 10"
+            week_match = re.search(r'Week\s*(\d+)', label, re.IGNORECASE)
+            if week_match:
+                week = int(week_match.group(1))
+
+            # Match patterns like "Episode 101" -> week 1, "Episode 302" -> week 2
+            if week is None:
+                ep_match = re.search(r'Episode\s*(\d)0(\d)', label)
+                if ep_match:
+                    # Episode XYZ where X is season digit, YZ is episode/week
+                    week = int(ep_match.group(2))
+
+            # Match "Performance show X" or "Results show X"
+            if week is None:
+                perf_match = re.search(r'(?:Performance|Results)\s+show\s+(\d+)', label, re.IGNORECASE)
+                if perf_match:
+                    week = int(perf_match.group(1))
+
+            # Match "Top X Perform" patterns (season 14)
+            if week is None:
+                top_match = re.search(r'Top\s+(\d+)\s+Perform', label, re.IGNORECASE)
+                if top_match:
+                    # Map top N to approximate week
+                    top_n = int(top_match.group(1))
+                    # Rough mapping - this varies by season
+                    week = 14 - top_n  # approximate
+
+            # Match simple row numbers for season 11
+            if week is None and season == 11:
+                row_match = re.search(r'Row\s+(\d+)', label)
+                if row_match:
+                    week = int(row_match.group(1))
+
+            # Skip results shows (they don't have eliminations, just announcements)
+            if week is not None and 'Result' in label and 'Final' not in label:
+                continue
+
+            # Skip specials
+            if 'Special' in label or 'Road to' in label or 'Anniversary' in label:
+                continue
+
+            if week is not None:
+                key = (season, week)
+                # Keep maximum viewership for the week (performance show, not results)
+                if key not in viewership or viewers > viewership[key]:
+                    viewership[key] = viewers
+
+    return viewership
+
+
+def write_votes_csv(regions: List[Dict[str, Any]], output_path: Path, data_dir: Path) -> None:
+    """
+    Write votes.csv with per-contestant vote proportions from finalized regions.
+
+    Each row is one contestant in one event, with columns:
+    - season, week, name
+    - proportion, proportion_min, proportion_max, proportion_range
+    - absolute, absolute_min, absolute_max, absolute_range (scaled by viewership * votes_per_viewer)
+    """
+    from config import get_config
+    cfg = get_config()
+    votes_per_viewer = cfg.voting.votes_per_viewer
+
+    # Load viewership data
+    viewership = load_viewership(data_dir)
+
+    rows = []
+
+    for region in regions:
+        event = region.get("event", {})
+        region_data = region.get("region", {})
+        finalization = region.get("finalization", {})
+
+        season = event.get("season")
+        week = event.get("week")
+        is_final = event.get("is_final", False)
+        contestants = event.get("contestants", [])
+
+        # Get representative point (nearest to mean in verified cloud)
+        representative = finalization.get("representative_point", [])
+        if not representative:
+            representative = region_data.get("representative_point", [])
+
+        # Get dim_bounds for min/max
+        dim_bounds = region_data.get("dim_bounds", [])
+
+        # Get viewership for this season/week (in millions)
+        viewers_millions = viewership.get((season, week), None)
+
+        # Total votes = viewers * 1_000_000 * votes_per_viewer
+        total_votes = None
+        if viewers_millions is not None:
+            total_votes = viewers_millions * 1_000_000 * votes_per_viewer
+
+        # Skip if no data
+        if not representative or not contestants:
+            continue
+
+        # Create row for each contestant
+        for i, name in enumerate(contestants):
+            prop = representative[i] if i < len(representative) else None
+
+            if i < len(dim_bounds):
+                bounds = dim_bounds[i]
+                prop_min = bounds.get("min")
+                prop_max = bounds.get("max")
+                prop_range = bounds.get("delta")
+            else:
+                prop_min = prop_max = prop_range = None
+
+            # Calculate absolute votes
+            abs_votes = None
+            abs_min = None
+            abs_max = None
+            abs_range = None
+
+            if total_votes is not None:
+                if prop is not None:
+                    abs_votes = prop * total_votes
+                if prop_min is not None:
+                    abs_min = prop_min * total_votes
+                if prop_max is not None:
+                    abs_max = prop_max * total_votes
+                if prop_range is not None:
+                    abs_range = prop_range * total_votes
+
+            row = {
+                "season": season,
+                "week": week,
+                "is_final": is_final,
+                "name": name,
+                "viewers_millions": round(viewers_millions, 2) if viewers_millions else None,
+                "proportion": round(prop, 6) if prop is not None else None,
+                "proportion_min": round(prop_min, 6) if prop_min is not None else None,
+                "proportion_max": round(prop_max, 6) if prop_max is not None else None,
+                "proportion_range": round(prop_range, 6) if prop_range is not None else None,
+                "absolute": round(abs_votes) if abs_votes is not None else None,
+                "absolute_min": round(abs_min) if abs_min is not None else None,
+                "absolute_max": round(abs_max) if abs_max is not None else None,
+                "absolute_range": round(abs_range) if abs_range is not None else None,
+            }
+            rows.append(row)
+
+    if not rows:
+        print("  No data to write for votes.csv")
+        return
+
+    # Write CSV
+    fieldnames = [
+        "season", "week", "is_final", "name", "viewers_millions",
+        "proportion", "proportion_min", "proportion_max", "proportion_range",
+        "absolute", "absolute_min", "absolute_max", "absolute_range",
+    ]
+
+    with open(output_path, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
+
+    print(f"  Wrote {output_path.name} ({len(rows)} rows)")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Export region analysis to CSV and TXT")
     parser.add_argument("--data-dir", "-d", default=str(DATA_DIR),
@@ -430,6 +616,13 @@ def main():
 
     if process_finalized:
         process_file(data_dir / "regions-finalized.json", projection_type="finalized")
+
+        # Also write votes.csv from finalized regions
+        finalized_path = data_dir / "regions-finalized.json"
+        if finalized_path.exists():
+            with open(finalized_path) as f:
+                finalized_regions = json.load(f)
+            write_votes_csv(finalized_regions, data_dir / "votes.csv", data_dir)
 
     print("\nDone!")
 

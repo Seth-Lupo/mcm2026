@@ -33,6 +33,10 @@ parallel:
   n_workers: 8                # number of CPU workers for parallel tasks
   batch_size: 100             # batch size for parallel vertex verification
 
+# Voting
+voting:
+  votes_per_viewer: 3       # number of votes each viewer can cast
+
 # Numerical stability
 numerical:
   epsilon: 1e-30            # small value to prevent division by zero

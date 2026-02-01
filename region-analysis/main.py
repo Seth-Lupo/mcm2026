@@ -239,6 +239,7 @@ def main():
         "regions-backprojected.json",
         "regions-forwardprojected.json",
         "regions-finalized.json",
+        "votes.csv",
         "regions.csv",
         "regions-backprojected.csv",
         "regions-forwardprojected.csv",

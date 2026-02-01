@@ -48,6 +48,11 @@ class ParallelConfig:
 
 
 @dataclass
+class VotingConfig:
+    votes_per_viewer: int = 3
+
+
+@dataclass
 class NumericalConfig:
     epsilon: float = 1e-15
     jitter: float = 1e-12
@@ -61,6 +66,7 @@ class Config:
     output: OutputConfig
     backprojection: BackprojectionConfig
     parallel: ParallelConfig
+    voting: VotingConfig
     numerical: NumericalConfig
 
 
@@ -93,6 +99,7 @@ def load_config(path: Optional[Path] = None) -> Config:
             output=OutputConfig(),
             backprojection=BackprojectionConfig(),
             parallel=ParallelConfig(),
+            voting=VotingConfig(),
             numerical=NumericalConfig(),
         )
 
@@ -105,6 +112,7 @@ def load_config(path: Optional[Path] = None) -> Config:
         output=OutputConfig(**_convert_floats(data.get("output", {}))),
         backprojection=BackprojectionConfig(**_convert_floats(data.get("backprojection", {}))),
         parallel=ParallelConfig(**_convert_floats(data.get("parallel", {}))),
+        voting=VotingConfig(**_convert_floats(data.get("voting", {}))),
         numerical=NumericalConfig(**_convert_floats(data.get("numerical", {}))),
     )
 
