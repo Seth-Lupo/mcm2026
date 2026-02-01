@@ -16,16 +16,6 @@ class SamplingConfig:
 
 
 @dataclass
-class RefinementConfig:
-    enabled: bool = True
-    min_acceptance: float = 0.01
-    walks_per_seed: int = 50
-    steps_per_walk: int = 20
-    step_size: float = 0.05
-    max_seeds: int = 100
-
-
-@dataclass
 class HullConfig:
     n_directions: int = 200
     max_points: int = 2000
@@ -67,7 +57,6 @@ class NumericalConfig:
 @dataclass
 class Config:
     sampling: SamplingConfig
-    refinement: RefinementConfig
     hull: HullConfig
     output: OutputConfig
     backprojection: BackprojectionConfig
@@ -100,7 +89,6 @@ def load_config(path: Optional[Path] = None) -> Config:
         # Return defaults
         return Config(
             sampling=SamplingConfig(),
-            refinement=RefinementConfig(),
             hull=HullConfig(),
             output=OutputConfig(),
             backprojection=BackprojectionConfig(),
@@ -113,7 +101,6 @@ def load_config(path: Optional[Path] = None) -> Config:
 
     return Config(
         sampling=SamplingConfig(**_convert_floats(data.get("sampling", {}))),
-        refinement=RefinementConfig(**_convert_floats(data.get("refinement", {}))),
         hull=HullConfig(**_convert_floats(data.get("hull", {}))),
         output=OutputConfig(**_convert_floats(data.get("output", {}))),
         backprojection=BackprojectionConfig(**_convert_floats(data.get("backprojection", {}))),

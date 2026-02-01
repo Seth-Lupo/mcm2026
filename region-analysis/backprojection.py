@@ -26,7 +26,7 @@ import multiprocessing
 from numba import njit
 
 from config import get_config
-from geometry import simplex_volume, compute_volume, compute_diameter
+from geometry import simplex_volume, compute_volume, compute_diameter, add_jitter
 from structures import (
     WeekRegion,
     load_regions,
@@ -847,15 +847,27 @@ def filter_region_by_projection(
         all_points_sub = all_points
 
     # Try exact ConvexHull for lower dimensions
-    try:
-        if dim <= max_dim_exact and len(projected_sub) > dim + 1:
+    if dim <= max_dim_exact and len(projected_sub) > dim + 1:
+        try:
             hull = ConvexHull(projected_sub)
             hull_indices = np.unique(hull.simplices.flatten())
             hull_vertices = all_points_sub[hull_indices]
             log.info(f"  Final: {len(hull_vertices)} hull vertices (ConvexHull)")
             return hull_vertices, len(hull_vertices)
-    except Exception as e:
-        log.warning(f"  ConvexHull failed: {e}")
+        except Exception as e:
+            # Try with jitter for degenerate cases
+            err_line = str(e).split('\n')[0][:80]
+            log.warning(f"  ConvexHull failed ({err_line}...), retrying with jitter...")
+            try:
+                jittered = add_jitter(projected_sub)
+                hull = ConvexHull(jittered)
+                hull_indices = np.unique(hull.simplices.flatten())
+                hull_vertices = all_points_sub[hull_indices]
+                log.info(f"  Final: {len(hull_vertices)} hull vertices (ConvexHull with jitter)")
+                return hull_vertices, len(hull_vertices)
+            except Exception as e2:
+                err_line2 = str(e2).split('\n')[0][:80]
+                log.warning(f"  ConvexHull with jitter also failed ({err_line2}...), using extreme points")
 
     # Fallback: random directions (uses cfg.hull.n_directions internally)
     from geometry import find_extreme_points

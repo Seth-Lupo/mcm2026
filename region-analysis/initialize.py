@@ -6,7 +6,7 @@ For each (season, week) event, finds the convex region of valid fan vote
 probability vectors that satisfy the premise constraints.
 
 Usage:
-    python region-analysis/initialize.py [--samples N] [--seasons S1,S2,...] [--output PATH]
+    python region-analysis/initialize.py [--samples N] [--seasons S1,S2,...] [--output PATH] [--hull-validity-samples N]
 """
 import sys
 from pathlib import Path
@@ -39,12 +39,12 @@ DATA_DIR = Path(__file__).parent.parent / "data"
 # Worker function for parallel processing
 # =============================================================================
 
-def _analyze_event_worker(args: Tuple[Dict[str, Any], int, int]) -> Dict[str, Any]:
+def _analyze_event_worker(args: Tuple[Dict[str, Any], int, int, int]) -> Dict[str, Any]:
     """
     Worker function to analyze a single event.
     Takes serialized event data and returns serialized result with logs.
     """
-    event_dict, n_samples, seed = args
+    event_dict, n_samples, seed, hull_validity_samples = args
 
     # Reconstruct Event object (n is a property, not a constructor arg)
     from events import Event
@@ -67,10 +67,10 @@ def _analyze_event_worker(args: Tuple[Dict[str, Any], int, int]) -> Dict[str, An
     log_lines.append(f"  [SAMPLE] {sample_result.n_valid}/{n_samples} valid ({sample_result.acceptance_rate:.1%})")
 
     log_lines.append(f"  [HULL] Computing convex hull...")
-    region_info = compute_region(sample_result)
+    region_info = compute_region(sample_result, hull_validity_samples=hull_validity_samples)
 
     if region_info.has_hull:
-        log_lines.append(f"  [HULL] {region_info.n_vertices} vertices, vol={region_info.volume:.2e}")
+        log_lines.append(f"  [HULL] {region_info.n_vertices} vertices, vol={region_info.volume:.2e}, hull_valid={region_info.hull_validity:.1%}")
     else:
         log_lines.append(f"  [HULL] No hull (insufficient valid points)")
 
@@ -83,12 +83,12 @@ def _analyze_event_worker(args: Tuple[Dict[str, Any], int, int]) -> Dict[str, An
     }
 
 
-def analyze_event(event: Event, n_samples: int, seed: int) -> RegionInfo:
+def analyze_event(event: Event, n_samples: int, seed: int, hull_validity_samples: int = 10000) -> RegionInfo:
     """Run full analysis for a single event (sequential version)."""
     log.info("  [MAIN] Starting sampling...")
     sample_result = sample_valid_votes(event, n_samples=n_samples, seed=seed)
     log.info("  [MAIN] Computing convex hull...")
-    region_info = compute_region(sample_result)
+    region_info = compute_region(sample_result, hull_validity_samples=hull_validity_samples)
     log.info("  [MAIN] Done with event.")
     return region_info
 
@@ -109,6 +109,8 @@ def main():
                         help=f"Random seed (default: {cfg.sampling.seed})")
     parser.add_argument("--sequential", action="store_true",
                         help="Process events sequentially (disable parallelization)")
+    parser.add_argument("--hull-validity-samples", type=int, default=10000,
+                        help="Number of Monte Carlo samples for hull validity estimation (default: 10000)")
     args = parser.parse_args()
 
     # Parse seasons
@@ -151,12 +153,12 @@ def main():
 
             log.info(f"[{i+1}/{len(events)}] Analyzing {tag}: {event.n} contestants...")
 
-            region = analyze_event(event, n_samples=args.samples, seed=args.seed + i)
+            region = analyze_event(event, n_samples=args.samples, seed=args.seed + i, hull_validity_samples=args.hull_validity_samples)
             results.append(region)
 
             status = f"valid={region.n_valid}/{region.n_samples} ({region.acceptance_rate:.1%})"
             if region.has_hull:
-                status += f", vertices={region.n_vertices}, vol={region.volume:.2e}"
+                status += f", vertices={region.n_vertices}, vol={region.volume:.2e}, hull_valid={region.hull_validity:.1%}"
             log.info(f"  {status}")
     else:
         # Parallel processing
@@ -174,7 +176,7 @@ def main():
                 "is_final": event.is_final,
                 "placements": event.placements,
             }
-            event_tasks.append((event_dict, args.samples, args.seed + i))
+            event_tasks.append((event_dict, args.samples, args.seed + i, args.hull_validity_samples))
 
         # Process in parallel
         results_list = []
@@ -225,6 +227,8 @@ def main():
                 n_vertices=region_info_data["n_vertices"],
                 volume=region_info_data["volume"],
                 relative_volume=region_info_data["relative_volume"],
+                hull_validity=region_info_data.get("hull_validity", 0.0),
+                hull_validity_samples=region_info_data.get("hull_validity_samples", 0),
                 diameter=region_info_data["diameter"],
                 centroid=np.array(region_info_data["centroid"]) if region_info_data.get("centroid") else None,
                 dim_bounds=np.array([[b["min"], b["max"]] for b in region_info_data["dim_bounds"]]) if region_info_data.get("dim_bounds") else None,
@@ -256,6 +260,29 @@ def main():
     for ptype in sorted(by_premise.keys()):
         rates = by_premise[ptype]
         print(f"  {ptype:<12}: mean={np.mean(rates):.1%}, min={min(rates):.1%}, max={max(rates):.1%}")
+
+    # Hull validity by premise (how much of the convex hull satisfies the premise)
+    hull_validity_by_premise = {}
+    for r in results:
+        if r.has_hull and r.hull_validity_samples > 0:
+            if r.premise_type not in hull_validity_by_premise:
+                hull_validity_by_premise[r.premise_type] = []
+            hull_validity_by_premise[r.premise_type].append(r.hull_validity)
+
+    if hull_validity_by_premise:
+        print("\nHull validity by premise (fraction of hull satisfying premise):")
+        for ptype in sorted(hull_validity_by_premise.keys()):
+            validities = hull_validity_by_premise[ptype]
+            print(f"  {ptype:<12}: mean={np.mean(validities):.1%}, min={min(validities):.1%}, max={max(validities):.1%}")
+
+        # Identify potentially non-convex regions (hull validity < 100%)
+        low_validity = [(r, r.hull_validity) for r in results if r.has_hull and r.hull_validity < 0.99]
+        if low_validity:
+            print(f"\n*** POTENTIALLY NON-CONVEX REGIONS (hull validity < 99%): {len(low_validity)} ***")
+            low_validity.sort(key=lambda x: x[1])
+            for r, validity in low_validity[:10]:  # Show worst 10
+                final = " [FINAL]" if r.is_final else ""
+                print(f"  Season {r.season}, Week {r.week}{final} - {r.premise_type}: hull_valid={validity:.1%}")
 
     # List events with 0 valid points
     zero_events = [r for r in results if r.n_valid == 0]

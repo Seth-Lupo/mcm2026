@@ -11,7 +11,6 @@ import logging
 
 from events import Event
 from premises import PremiseType, get_premise_type
-from config import get_config
 
 log = logging.getLogger(__name__)
 
@@ -286,71 +285,6 @@ def _check_validity(
     return np.zeros(len(samples), dtype=bool)
 
 
-def _project_to_simplex(points: np.ndarray) -> np.ndarray:
-    """Project points onto simplex (ensure sum=1, all >= 0)."""
-    points = np.maximum(points, 0)
-    sums = points.sum(axis=1, keepdims=True)
-    sums = np.where(sums > 0, sums, 1)
-    return points / sums
-
-
-def refine_with_walks(
-    seeds: np.ndarray,
-    event: Event,
-    premise_type: PremiseType,
-    rng: np.random.Generator,
-) -> np.ndarray:
-    """
-    Local random walk refinement from seed points.
-    Explores the valid region by taking small steps from known valid points.
-    """
-    cfg = get_config().refinement
-    n = event.n
-
-    if len(seeds) == 0:
-        return np.empty((0, n))
-
-    # Limit seeds
-    if len(seeds) > cfg.max_seeds:
-        indices = rng.choice(len(seeds), cfg.max_seeds, replace=False)
-        seeds = seeds[indices]
-
-    log.info(f"  [REFINE] Walking from {len(seeds)} seeds, {cfg.walks_per_seed} walks x {cfg.steps_per_walk} steps...")
-
-    all_valid = [seeds]  # include seeds
-
-    for seed in seeds:
-        for _ in range(cfg.walks_per_seed):
-            current = seed.copy()
-            walk_points = []
-
-            for _ in range(cfg.steps_per_walk):
-                # Random direction on simplex tangent space
-                direction = rng.normal(size=n)
-                direction = direction - direction.mean()  # zero-sum to stay on simplex
-                direction = direction / (np.linalg.norm(direction) + 1e-10)
-
-                # Take step
-                new_point = current + cfg.step_size * direction
-                new_point = _project_to_simplex(new_point.reshape(1, -1))[0]
-
-                # Check validity
-                valid = _check_validity(new_point.reshape(1, -1), event, premise_type)
-                if valid[0]:
-                    walk_points.append(new_point)
-                    current = new_point
-
-            if walk_points:
-                all_valid.append(np.array(walk_points))
-
-    result = np.vstack(all_valid)
-    # Remove duplicates (approximately)
-    result = np.unique(np.round(result, 8), axis=0)
-
-    log.info(f"  [REFINE] Found {len(result)} total valid points")
-    return result
-
-
 MAX_RETRIES = 20  # max retry attempts if 0 hits
 
 
@@ -361,11 +295,9 @@ def sample_valid_votes(
 ) -> SampleResult:
     """
     Sample random vote vectors and keep those satisfying the premise.
-    Uses numba JIT for speed. Optionally refines with local walks.
-    Retries if 0 hits initially.
+    Uses numba JIT for speed. Retries if 0 hits initially.
     """
     warmup_jit()
-    cfg = get_config()
 
     rng = np.random.default_rng(seed)
     premise_type = get_premise_type(event.season, event.n_eliminated, event.is_final)
@@ -404,11 +336,6 @@ def sample_valid_votes(
 
     acceptance = len(all_valid) / total_sampled
     log.info(f"  [SAMPLE] Found {len(all_valid):,} valid ({acceptance:.4%} acceptance, {total_sampled:,} total samples)")
-
-    # Refinement if acceptance is low
-    if cfg.refinement.enabled and acceptance < cfg.refinement.min_acceptance:
-        log.info(f"  [REFINE] Low acceptance, refining...")
-        all_valid = refine_with_walks(all_valid, event, premise_type, rng)
 
     return SampleResult(
         event=event,

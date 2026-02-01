@@ -96,6 +96,7 @@ class Region:
     centroid: Optional[np.ndarray]
     vertices: Optional[np.ndarray]
     dim_bounds: Optional[np.ndarray]
+    representative_point: Optional[np.ndarray] = None  # nearest-to-mean from finalization
 
     @classmethod
     def from_dict(cls, d: Dict[str, Any]) -> "Region":
@@ -115,6 +116,10 @@ class Region:
             bounds_list = region["dim_bounds"]
             dim_bounds = np.array([[b["min"], b["max"]] for b in bounds_list], dtype=np.float64)
 
+        representative_point = None
+        if "representative_point" in region and region["representative_point"]:
+            representative_point = np.array(region["representative_point"], dtype=np.float64)
+
         return cls(
             season=event["season"],
             week=event["week"],
@@ -123,6 +128,7 @@ class Region:
             centroid=centroid,
             vertices=vertices,
             dim_bounds=dim_bounds,
+            representative_point=representative_point,
         )
 
     def to_serializable(self) -> Dict[str, Any]:
@@ -135,6 +141,7 @@ class Region:
             "centroid": self.centroid.tolist() if self.centroid is not None else None,
             "vertices": self.vertices.tolist() if self.vertices is not None else None,
             "dim_bounds": self.dim_bounds.tolist() if self.dim_bounds is not None else None,
+            "representative_point": self.representative_point.tolist() if self.representative_point is not None else None,
         }
 
     @classmethod
@@ -148,6 +155,7 @@ class Region:
             centroid=np.array(d["centroid"], dtype=np.float64) if d["centroid"] else None,
             vertices=np.array(d["vertices"], dtype=np.float64) if d["vertices"] else None,
             dim_bounds=np.array(d["dim_bounds"], dtype=np.float64) if d["dim_bounds"] else None,
+            representative_point=np.array(d["representative_point"], dtype=np.float64) if d.get("representative_point") else None,
         )
 
 
@@ -329,6 +337,15 @@ def _verify_region_task(args: Tuple[Dict, int, int]) -> Dict[str, Any]:
         centroid_margin = result.margin
         centroid_predicted = result.predicted_eliminated
 
+    # Verify representative point (nearest-to-mean from finalization)
+    representative_valid = None
+    if region_data.get("representative_point") is not None:
+        representative = np.array(region_data["representative_point"], dtype=np.float64)
+        result = verify_point_core(
+            representative, contestants, judge_scores, eliminated, placements, season, is_final
+        )
+        representative_valid = result.valid
+
     # Verify vertices
     n_vertices = 0
     n_vertices_valid = 0
@@ -372,6 +389,7 @@ def _verify_region_task(args: Tuple[Dict, int, int]) -> Dict[str, Any]:
         "centroid_valid": centroid_valid,
         "centroid_margin": centroid_margin,
         "centroid_predicted": centroid_predicted,
+        "representative_valid": representative_valid,
         "actual_eliminated": list(eliminated),
         "n_vertices": n_vertices,
         "n_vertices_valid": n_vertices_valid,
@@ -396,6 +414,7 @@ class RegionVerification:
     centroid_valid: Optional[bool]
     centroid_margin: Optional[float]
     centroid_predicted: Optional[List[str]]
+    representative_valid: Optional[bool]  # nearest-to-mean from finalization
     actual_eliminated: List[str]
 
     n_vertices: int
@@ -479,6 +498,7 @@ def verify_all_regions_parallel(
             centroid_valid=r["centroid_valid"],
             centroid_margin=r["centroid_margin"],
             centroid_predicted=r["centroid_predicted"],
+            representative_valid=r.get("representative_valid"),
             actual_eliminated=r["actual_eliminated"],
             n_vertices=r["n_vertices"],
             n_vertices_valid=r["n_vertices_valid"],
@@ -566,6 +586,16 @@ def print_summary(results: List[RegionVerification]) -> None:
     print(f"  Invalid: {centroid_invalid}/{total}")
     print(f"  No centroid: {centroid_none}/{total}")
 
+    # Representative point (from finalization)
+    rep_valid = sum(1 for r in results if r.representative_valid is True)
+    rep_invalid = sum(1 for r in results if r.representative_valid is False)
+    rep_none = sum(1 for r in results if r.representative_valid is None)
+    if rep_valid + rep_invalid > 0:
+        print(f"\nRepresentative point verification (nearest-to-mean):")
+        print(f"  Valid:   {rep_valid}/{total}")
+        print(f"  Invalid: {rep_invalid}/{total}")
+        print(f"  No rep point: {rep_none}/{total}")
+
     if any(r.n_vertices > 0 for r in results):
         print(f"\nVertex verification:")
         print(f"  Total checked: {total_vertices}")
@@ -611,8 +641,8 @@ def print_summary(results: List[RegionVerification]) -> None:
 def main():
     parser = argparse.ArgumentParser(description="Verify region centroids against elimination constraints")
     parser.add_argument("--regions", "-r",
-                        default=str(DATA_DIR / "regions-forwardprojected.json"),
-                        help="Regions JSON file to verify (default: regions-forwardprojected.json)")
+                        default=str(DATA_DIR / "regions-finalized.json"),
+                        help="Regions JSON file to verify (default: regions-finalized.json)")
     parser.add_argument("--events", "-e",
                         default=str(DATA_DIR / "events.json"),
                         help="Events JSON file with judge scores and eliminations")

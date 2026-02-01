@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 import argparse
 import json
 import csv
+import numpy as np
 from typing import List, Dict, Any, Optional
 from datetime import datetime
 
@@ -25,7 +26,7 @@ def flatten_region(d: Dict[str, Any], projection_type: Optional[str] = None) -> 
 
     Args:
         d: Region data dict
-        projection_type: None, "back", or "forward"
+        projection_type: None, "back", "forward", or "finalized"
     """
     event = d.get("event", {})
     region = d.get("region", {})
@@ -48,6 +49,11 @@ def flatten_region(d: Dict[str, Any], projection_type: Optional[str] = None) -> 
     centroid = region.get("centroid") or []
     for i, val in enumerate(centroid):
         row[f"centroid_{i}"] = val
+
+    # Add representative point (nearest to mean) if available
+    representative = region.get("representative_point") or []
+    for i, val in enumerate(representative):
+        row[f"representative_{i}"] = val
 
     # Add dim_bounds as min/max/delta columns
     dim_bounds = region.get("dim_bounds") or []
@@ -81,6 +87,33 @@ def flatten_region(d: Dict[str, Any], projection_type: Optional[str] = None) -> 
         row["volume_lost_pct"] = fp.get("volume_lost_pct")
         row["iou"] = fp.get("iou")
 
+    # Finalization stats
+    if projection_type == "finalized":
+        fp = d.get("forwardprojection", {})
+        row["fp_constrained_by"] = fp.get("constrained_by")
+        row["fp_iou"] = fp.get("iou")
+
+        fin = d.get("finalization", {})
+        row["fin_status"] = fin.get("status")
+        row["hull_acceptance"] = fin.get("hull_acceptance")
+        row["simplex_accuracy"] = fin.get("simplex_accuracy")
+
+        cloud_stats = fin.get("cloud_statistics", {})
+        row["cloud_n_points"] = cloud_stats.get("n_points")
+        row["nearest_to_mean_distance"] = cloud_stats.get("nearest_to_mean_distance")
+
+        extreme_stats = fin.get("extreme_statistics", {})
+        row["cloud_diameter"] = extreme_stats.get("diameter")
+        row["max_centroid_distance"] = extreme_stats.get("max_centroid_distance")
+
+        # Add cloud dim_bounds (verified points) with extrema info
+        cloud_dim_bounds = cloud_stats.get("dim_bounds") or []
+        for i, bounds in enumerate(cloud_dim_bounds):
+            if bounds:
+                row[f"cloud_dim_{i}_min"] = bounds.get("min")
+                row[f"cloud_dim_{i}_max"] = bounds.get("max")
+                row[f"cloud_dim_{i}_delta"] = bounds.get("delta")
+
     return row
 
 
@@ -112,6 +145,13 @@ def write_csv(regions: List[Dict[str, Any]], path: Path, projection_type: Option
             "constrained_by", "original_volume", "filtered_volume",
             "volume_lost", "volume_lost_pct", "iou",
         ])
+    elif projection_type == "finalized":
+        main_fields.extend([
+            "fp_constrained_by", "fp_iou",
+            "fin_status", "hull_acceptance", "simplex_accuracy",
+            "cloud_n_points", "nearest_to_mean_distance",
+            "cloud_diameter", "max_centroid_distance",
+        ])
 
     # Sort numerically, not lexicographically (so centroid_2 comes before centroid_10)
     def extract_num(s):
@@ -122,6 +162,7 @@ def write_csv(regions: List[Dict[str, Any]], path: Path, projection_type: Option
             return 0
 
     centroid_keys = sorted([k for k in all_keys if k.startswith("centroid_")], key=extract_num)
+    representative_keys = sorted([k for k in all_keys if k.startswith("representative_")], key=extract_num)
 
     # Sort dim keys: group by dimension number, then order min/max/delta within each
     def dim_sort_key(k):
@@ -131,9 +172,10 @@ def write_csv(regions: List[Dict[str, Any]], path: Path, projection_type: Option
         suffix_order = {"min": 0, "max": 1, "delta": 2}.get(parts[-1], 3)
         return (dim_num, suffix_order)
 
-    dim_keys = sorted([k for k in all_keys if k.startswith("dim_")], key=dim_sort_key)
+    dim_keys = sorted([k for k in all_keys if k.startswith("dim_") and not k.startswith("dim_bounds")], key=dim_sort_key)
+    cloud_dim_keys = sorted([k for k in all_keys if k.startswith("cloud_dim_")], key=dim_sort_key)
 
-    fieldnames = main_fields + centroid_keys + dim_keys
+    fieldnames = main_fields + centroid_keys + representative_keys + dim_keys + cloud_dim_keys
 
     with open(path, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
@@ -157,6 +199,7 @@ def write_summary(
         None: "regions.json",
         "back": "regions-backprojected.json",
         "forward": "regions-forwardprojected.json",
+        "finalized": "regions-finalized.json",
     }.get(projection_type, "regions.json")
 
     lines = []
@@ -204,6 +247,38 @@ def write_summary(
         if total_orig_vol > 0:
             lines.append(f"Overall vol retention: {total_filt_vol/total_orig_vol*100:.1f}%")
         lines.append("")
+
+    # Finalization stats
+    if projection_type == "finalized":
+        finalized = [r for r in regions if r.get("finalization", {}).get("status") == "success"]
+        if finalized:
+            hull_acceptances = [r["finalization"]["hull_acceptance"] for r in finalized if r["finalization"].get("hull_acceptance") is not None]
+            simplex_accuracies = [r["finalization"]["simplex_accuracy"] for r in finalized if r["finalization"].get("simplex_accuracy") is not None]
+            cloud_sizes = [r["finalization"]["cloud_statistics"]["n_points"] for r in finalized if r["finalization"].get("cloud_statistics")]
+
+            lines.append("FINALIZATION STATISTICS")
+            lines.append("-" * 40)
+            lines.append(f"Successfully finalized: {len(finalized)}/{total}")
+
+            if hull_acceptances:
+                lines.append(f"\nHull acceptance (% of hull samples that verify):")
+                lines.append(f"  Mean: {np.mean(hull_acceptances)*100:.1f}%")
+                lines.append(f"  Min:  {np.min(hull_acceptances)*100:.1f}%")
+                lines.append(f"  Max:  {np.max(hull_acceptances)*100:.1f}%")
+
+            if simplex_accuracies:
+                lines.append(f"\nSimplex accuracy (% of full simplex that's valid):")
+                lines.append(f"  Mean: {np.mean(simplex_accuracies)*100:.4f}%")
+                lines.append(f"  Min:  {np.min(simplex_accuracies)*100:.4f}%")
+                lines.append(f"  Max:  {np.max(simplex_accuracies)*100:.4f}%")
+
+            if cloud_sizes:
+                lines.append(f"\nVerified point cloud sizes:")
+                lines.append(f"  Total:  {sum(cloud_sizes):,}")
+                lines.append(f"  Mean:   {np.mean(cloud_sizes):.0f}")
+                lines.append(f"  Min:    {min(cloud_sizes)}")
+                lines.append(f"  Max:    {max(cloud_sizes)}")
+            lines.append("")
 
     # By premise type
     by_premise = {}
@@ -256,6 +331,14 @@ def write_summary(
                 filt_vol = proj.get("filtered_volume", 0) or 0
                 iou = proj.get("iou", 0) or 0
                 line += f"  [by W{proj['constrained_by']}: vol {orig_vol:.4f}->{filt_vol:.4f}, iou={iou:.2%}]"
+
+        if projection_type == "finalized":
+            fin = r.get("finalization", {})
+            if fin.get("status") == "success":
+                hull_acc = fin.get("hull_acceptance", 0) or 0
+                simp_acc = fin.get("simplex_accuracy", 0) or 0
+                n_pts = fin.get("cloud_statistics", {}).get("n_points", 0) or 0
+                line += f"  [hull={hull_acc:.0%}, simplex={simp_acc:.4%}, pts={n_pts}]"
 
         lines.append(line)
 
@@ -320,14 +403,21 @@ def main():
                         help="Only process regions-backprojected.json")
     parser.add_argument("--forwardprojected-only", action="store_true",
                         help="Only process regions-forwardprojected.json")
+    parser.add_argument("--finalized-only", action="store_true",
+                        help="Only process regions-finalized.json")
     args = parser.parse_args()
 
     data_dir = Path(args.data_dir)
 
     # Determine which files to process
-    process_regions = not (args.backprojected_only or args.forwardprojected_only)
-    process_back = not (args.regions_only or args.forwardprojected_only)
-    process_forward = not (args.regions_only or args.backprojected_only)
+    # By default, process all including finalized
+    only_flags = [args.regions_only, args.backprojected_only, args.forwardprojected_only, args.finalized_only]
+    any_only = any(only_flags)
+
+    process_regions = args.regions_only or (not any_only)
+    process_back = args.backprojected_only or (not any_only)
+    process_forward = args.forwardprojected_only or (not any_only)
+    process_finalized = args.finalized_only or (not any_only)  # Now included by default
 
     if process_regions:
         process_file(data_dir / "regions.json", projection_type=None)
@@ -337,6 +427,9 @@ def main():
 
     if process_forward:
         process_file(data_dir / "regions-forwardprojected.json", projection_type="forward")
+
+    if process_finalized:
+        process_file(data_dir / "regions-finalized.json", projection_type="finalized")
 
     print("\nDone!")
 
