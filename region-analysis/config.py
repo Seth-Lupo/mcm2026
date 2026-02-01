@@ -31,7 +31,7 @@ class HullConfig:
     max_points: int = 2000
     include_axis_extremes: bool = True
     max_dim_exact_volume: int = 6
-    volume_directions: int = 500
+    volume_samples: int = 100000
 
 
 @dataclass

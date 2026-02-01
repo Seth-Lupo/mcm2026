@@ -2,26 +2,26 @@
 
 # Sampling
 sampling:
-  n_samples: 10000000        # initial random samples per event
+  n_samples: 2000000        # initial random samples per event
   seed: 42                 # random seed for reproducibility
 
 # Local walk refinement - explores from valid points to find more
 # Useful for small/high-dim regions with low acceptance rates
 refinement:
   enabled: true            # enable local walk refinement
-  min_acceptance: 0.01     # only refine if acceptance rate below this
-  walks_per_seed: 50       # random walks from each seed point
-  steps_per_walk: 20       # steps per walk
-  step_size: 0.05          # step size (fraction of simplex)
+  min_acceptance: 0.10     # only refine if acceptance rate below this
+  walks_per_seed: 10       # random walks from each seed point
+  steps_per_walk: 10       # steps per walk
+  step_size: 0.02          # step size (fraction of simplex)
   max_seeds: 100           # max seed points to start walks from
 
 # Convex Hull (approximate via extreme points)
 hull:
-  n_directions: 100000       # random directions to find extreme points
-  max_points: 1000         # subsample if more valid points than this
+  n_directions: 10000       # random directions to find extreme points
+  max_points: 1000        # subsample if more valid points than this
   include_axis_extremes: true
-  max_dim_exact_volume: 6   # use exact ConvexHull for dims <= this, approx above
-  volume_directions: 500    # directions for approximate volume (more = accurate, slower)
+  max_dim_exact_volume: 7   # use exact ConvexHull for dims <= this, approx above
+  volume_samples: 10000    # Monte Carlo samples for approximate volume (more = accurate)
 
 # Output
 output:

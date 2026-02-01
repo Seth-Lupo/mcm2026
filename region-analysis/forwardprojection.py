@@ -25,8 +25,16 @@ from scipy.spatial import ConvexHull
 from typing import List, Dict, Any, Optional, Tuple
 from dataclasses import dataclass
 from collections import defaultdict
+from math import factorial
 
 from config import get_config
+
+
+def simplex_volume(n: int) -> float:
+    """Volume of the (n-1)-simplex in projected coordinates."""
+    if n <= 1:
+        return 1.0
+    return 1.0 / factorial(n - 1)
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s | %(message)s")
 log = logging.getLogger(__name__)
@@ -104,45 +112,67 @@ def compute_volume(vertices: np.ndarray) -> float:
         return 0.0
 
     if dim > cfg.hull.max_dim_exact_volume:
-        return _approximate_volume(points, cfg.hull.volume_directions)
+        return _approximate_volume(points, cfg.hull.volume_samples)
 
     try:
         hull = ConvexHull(points)
         return hull.volume
     except Exception:
-        return _approximate_volume(points, cfg.hull.volume_directions)
+        return _approximate_volume(points, cfg.hull.volume_samples)
 
 
-def _approximate_volume(points: np.ndarray, n_dirs: int = 500) -> float:
-    """Approximate volume using random direction widths."""
-    n_points, dim = points.shape
-    if dim == 0:
+def _approximate_volume_fast(vertices: np.ndarray) -> float:
+    """Fast volume approximation WITHOUT building ConvexHull."""
+    n_points, dim = vertices.shape
+    if dim == 0 or n_points < dim + 1:
         return 0.0
 
+    centroid = vertices.mean(axis=0)
+    diffs = vertices - centroid
+    avg_sq_dist = np.mean(np.sum(diffs ** 2, axis=1))
+    r = np.sqrt(avg_sq_dist)
+    return (r ** dim) / factorial(dim)
+
+
+def _approximate_volume(vertices: np.ndarray, n_samples: int = 100000) -> float:
+    """Approximate convex hull volume."""
+    n_points, dim = vertices.shape
+    if dim == 0 or n_points < dim + 1:
+        return 0.0
+
+    if dim > 6:
+        return _approximate_volume_fast(vertices)
+
+    mins = vertices.min(axis=0)
+    maxs = vertices.max(axis=0)
+
+    widths = maxs - mins
+    if np.any(widths == 0):
+        return 0.0
+
+    box_volume = np.prod(widths)
+
     rng = np.random.default_rng(42)
-    directions = rng.normal(size=(n_dirs, dim))
-    directions /= np.linalg.norm(directions, axis=1, keepdims=True)
+    samples = rng.uniform(mins, maxs, size=(n_samples, dim))
 
-    widths = []
-    for d in directions:
-        projections = points @ d
-        widths.append(projections.max() - projections.min())
-
-    avg_width = np.mean(widths) if widths else 0.0
-    return (avg_width ** dim) / (2 ** dim) if dim > 0 else 0.0
+    try:
+        from scipy.spatial import ConvexHull
+        hull = ConvexHull(vertices)
+        samples_h = np.hstack([samples, np.ones((n_samples, 1))])
+        inside = np.all(samples_h @ hull.equations.T <= 1e-10, axis=1)
+        fraction_inside = inside.sum() / n_samples
+        return box_volume * fraction_inside
+    except Exception:
+        return _approximate_volume_fast(vertices)
 
 
 def compute_diameter(vertices: np.ndarray) -> float:
     """Compute diameter (max pairwise distance) of vertices."""
     if len(vertices) < 2:
         return 0.0
-    max_dist = 0.0
-    for i in range(len(vertices)):
-        for j in range(i + 1, len(vertices)):
-            dist = np.linalg.norm(vertices[i] - vertices[j])
-            if dist > max_dist:
-                max_dist = dist
-    return max_dist
+    from scipy.spatial.distance import pdist
+    distances = pdist(vertices)
+    return float(distances.max()) if len(distances) > 0 else 0.0
 
 
 # =============================================================================
@@ -350,6 +380,7 @@ def recompute_region_stats(
         result["region"]["dim_bounds"] = None
         result["region"]["centroid"] = None
         result["region"]["volume"] = 0.0
+        result["region"]["relative_volume"] = 0.0
         result["region"]["diameter"] = 0.0
         return result, 0.0
 
@@ -359,6 +390,11 @@ def recompute_region_stats(
     filtered_volume = compute_volume(vertices)
     diameter = compute_diameter(vertices)
 
+    # Compute relative volume (compared to full simplex)
+    n_contestants = vertices.shape[1]
+    full_simplex_vol = simplex_volume(n_contestants)
+    relative_volume = filtered_volume / full_simplex_vol if full_simplex_vol > 0 else 0.0
+
     result["region"]["n_vertices"] = len(vertices)
     result["region"]["vertices"] = [[round(float(x), p) for x in row] for row in vertices]
     result["region"]["centroid"] = [round(float(x), p) for x in vertices.mean(axis=0)]
@@ -367,6 +403,7 @@ def recompute_region_stats(
         for i in range(vertices.shape[1])
     ]
     result["region"]["volume"] = round(float(filtered_volume), p + 4)
+    result["region"]["relative_volume"] = round(float(relative_volume), p + 4)
     result["region"]["diameter"] = round(float(diameter), p)
 
     return result, filtered_volume
