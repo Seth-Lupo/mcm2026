@@ -1,0 +1,475 @@
+Season	EpisodeLabel	AirDate	ViewersMillions
+1	1 | "Episode 101"	June 1, 2005	13.48
+1	2 | "Episode 102"	June 8, 2005	15.09
+1	3 | "Episode 103"	June 15, 2005	15.67
+1	4 | "Episode 104"	June 22, 2005	15.52
+1	5 | "Episode 105"	June 29, 2005	18.59
+1	6 | "Episode 106"	July 6, 2005	22.36
+1	Special | "Dance-Off Results Show"	September 22, 2005	10.48
+1	Special | "Dance-Off"	September 20, 2005	10.91
+2	1 | "Episode 201"	January 5, 2006	17.46
+2	10 | "Result Show 205A"	February 3, 2006	16.04
+2	11 | "Episode 206"	February 9, 2006	19.96
+2	12 | "Result Show 206A"	February 10, 2006	14.59
+2	13 | "Episode 207"	February 16, 2006	19.26
+2	14 | "Result Show 207A"	February 17, 2006	15.75
+2	15 | "Episode 208"	February 23, 2006	17.70
+2	16 | "Episode 208A"	February 26, 2006	27.23
+2	2 | "Result Show 201A"	January 6, 2006	12.88
+2	3 | "Episode 202"	January 12, 2006	17.36
+2	4 | "Result Show 202A"	January 13, 2006	13.66
+2	5 | "Episode 203"	January 19, 2006	18.98
+2	6 | "Result Show 203A"	January 20, 2006	15.44
+2	7 | "Episode 204"	January 26, 2006	19.37
+2	8 | "Result Show 204A"	January 27, 2006	14.00
+2	9 | "Episode 205"	February 2, 2006	18.83
+3	1 | "Episode 301"	September 12, 2006	20.22
+3	10 | "Episode 305A"	October 11, 2006	18.21
+3	11 | "Episode 306"	October 17, 2006	21.25
+3	12 | "Episode 306A"	October 18, 2006	19.23
+3	13 | "Episode 307"	October 24, 2006	20.69
+3	14 | "Episode 307A"	October 25, 2006	20.02
+3	15 | "Episode 308"	October 31, 2006	20.51
+3	16 | "Episode 308A"	November 1, 2006	19.22
+3	17 | "Episode 309"	November 7, 2006	21.98
+3	18 | "Episode 309A"	November 8, 2006	20.68
+3	19 | "Episode 310"	November 14, 2006	26.80
+3	2 | "Episode 301A"	September 13, 2006	16.30
+3	20 | "Episode 310A"	November 15, 2006	27.51
+3	3 | "Episode 302"	September 19, 2006	17.92
+3	4 | "Episode 302A"	September 20, 2006	14.79
+3	5 | "Episode 303"	September 26, 2006	17.91
+3	6 | "Episode 303A"	September 27, 2006	15.81
+3	7 | "Episode 304"	October 3, 2006	18.38
+3	8 | "Episode 304A"	October 4, 2006	17.49
+3	9 | "Episode 305"	October 10, 2006	20.10
+4	1 | "Episode 401"	March 19, 2007	21.80
+4	10 | "Episode 406"	April 23, 2007	18.87
+4	11 | "Episode 406A"	April 24, 2007	16.56
+4	12 | "Episode 407"	April 30, 2007	18.97
+4	13 | "Episode 407A"	May 1, 2007	16.26
+4	14 | "Episode 408"	May 7, 2007	19.44
+4	15 | "Episode 408A"	May 8, 2007	16.86
+4	16 | "Episode 409"	May 14, 2007	19.58
+4	17 | "Episode 409A"	May 15, 2007	18.44
+4	18 | "Episode 410"	May 21, 2007	20.19
+4	19 | "Episode 410A"	May 22, 2007	22.96
+4	2 | "Episode 402"	March 26, 2007	20.42
+4	3 | "Episode 402A"	March 27, 2007	17.93
+4	4 | "Episode 403"	April 2, 2007	18.24
+4	5 | "Episode 403A"	April 3, 2007	14.99
+4	6 | "Episode 404"	April 9, 2007	18.84
+4	7 | "Episode 404A"	April 10, 2007	17.32
+4	8 | "Episode 405"	April 16, 2007	18.87
+4	9 | "Episode 405A"	April 17, 2007	16.54
+5	1 | "Episode 501A"	September 24, 2007	21.25
+5	10 | "Episode 505"	October 22, 2007	21.37
+5	11 | "Episode 505A"	October 23, 2007	18.06
+5	12 | "Episode 506"	October 29, 2007	21.43
+5	13 | "Episode 506A"	October 30, 2007	18.86
+5	14 | "Episode 507"	November 5, 2007	20.47
+5	15 | "Episode 507A"	November 6, 2007	17.06
+5	16 | "Episode 508"	November 12, 2007	21.81
+5	17 | "Episode 508A"	November 13, 2007	17.59
+5	18 | "Episode 509"	November 19, 2007	22.85
+5	19 | "Episode 509A"	November 20, 2007	20.95
+5	2 | "Episode 501B"	September 25, 2007	18.50
+5	20 | "Episode 510"	November 26, 2007	24.23
+5	21 | "Episode 510A"	November 27, 2007	24.87
+5	3 | "Episode 501C"	September 26, 2007	16.81
+5	4 | "Episode 502"	October 1, 2007	20.21
+5	5 | "Episode 502A"	October 2, 2007	18.50
+5	6 | "Episode 503"	October 8, 2007	19.62
+5	7 | "Episode 503A"	October 9, 2007	16.36
+5	8 | "Episode 504"	October 15, 2007	19.40
+5	9 | "Episode 504A"	October 16, 2007	17.30
+6	1 | "Episode 601"	March 17, 2008	21.15
+6	10 | "Episode 605A"	April 15, 2008	15.42
+6	11 | "Episode 606"	April 21, 2008	18.04
+6	12 | "Episode 606A"	April 22, 2008	17.97
+6	13 | "Episode 607"	April 28, 2008	18.22
+6	14 | "Episode 607A"	April 29, 2008	17.06
+6	15 | "Episode 608"	May 5, 2008	18.10
+6	16 | "Episode 608A"	May 6, 2008	18.38
+6	17 | "Episode 609"	May 12, 2008	18.47
+6	18 | "Episode 609A"	May 13, 2008	16.99
+6	19 | "Episode 610"	May 19, 2008	19.22
+6	2 | "Episode 601A"	March 18, 2008	17.02
+6	20 | "Episode 610A"	May 20, 2008	20.12
+6	3 | "Episode 602"	March 24, 2008	20.51
+6	4 | "Episode 602A"	March 25, 2008	17.49
+6	5 | "Episode 603"	March 31, 2008	20.56
+6	6 | "Episode 603A"	April 1, 2008	17.28
+6	7 | "Episode 604"	April 7, 2008	19.68
+6	8 | "Episode 604A"	April 8, 2008	17.02
+6	9 | "Episode 605"	April 14, 2008	17.20
+7	1 | "Episode 701"	September 22, 2008	21.34
+7	10 | "Episode 705"	October 20, 2008	18.50
+7	11 | "Episode 705A"	October 21, 2008	16.35
+7	12 | "Episode 706"	October 27, 2008	18.88
+7	13 | "Episode 706A"	October 28, 2008	17.44
+7	14 | "Episode 707"	November 3, 2008	17.09
+7	15 | "Episode 707A"	November 5, 2008	15.85
+7	16 | "Episode 708"	November 10, 2008	18.69
+7	17 | "Episode 708A"	November 11, 2008	16.52
+7	18 | "Episode 709"	November 17, 2008	19.63
+7	19 | "Episode 709A"	November 18, 2008	17.59
+7	2 | "Episode 701A"	September 23, 2008	18.30
+7	20 | "Episode 710"	November 24, 2008	21.09
+7	21 | "Episode 710A"	November 25, 2008	20.65
+7	3 | "Episode 701B"	September 24, 2008	15.87
+7	4 | "Episode 702"	September 29, 2008	18.88
+7	5 | "Episode 702A"	September 30, 2008	15.49
+7	6 | "Episode 703"	October 6, 2008	18.59
+7	7 | "Episode 703A"	October 7, 2008	15.05
+7	8 | "Episode 704"	October 13, 2008	17.76
+7	9 | "Episode 704A"	October 14, 2008	14.82
+8	1 | "Episode 801"	March 9, 2009	22.83
+8	10 | "Episode 806"	April 13, 2009	19.46
+8	11 | "Episode 806A"	April 14, 2009	15.24
+8	12 | "Episode 807"	April 20, 2009	20.53
+8	13 | "Episode 807A"	April 21, 2009	14.72
+8	14 | "Episode 808"	April 27, 2009	19.23
+8	15 | "Episode 808A"	April 28, 2009	14.72
+8	16 | "Episode 809"	May 4, 2009	20.28
+8	17 | "Episode 809A"	May 5, 2009	14.56
+8	18 | "Episode 810"	May 11, 2009	18.55
+8	19 | "Episode 810A"	May 12, 2009	14.06
+8	2 | "Episode 802"	March 16, 2009	21.22
+8	20 | "Episode 811"	May 18, 2009	19.17
+8	21 | "Episode 811A"	May 19, 2009	20.31
+8	3 | "Episode 802A"	March 17, 2009	12.74
+8	4 | "Episode 803"	March 23, 2009	20.34
+8	5 | "Episode 803A"	March 24, 2009	16.12
+8	6 | "Episode 804"	March 30, 2009	20.48
+8	7 | "Episode 804A"	March 31, 2009	13.51
+8	8 | "Episode 805"	April 6, 2009	19.88
+8	9 | "Episode 805A"	April 7, 2009	14.56
+9	1 | "Episode 901"	September 21, 2009	17.79
+9	10 | "Episode 905"	October 19, 2009	16.82
+9	11 | "Episode 905A"	October 20, 2009	14.92
+9	12 | "Episode 906"	October 26, 2009	17.38
+9	13 | "Episode 906A"	October 27, 2009	15.20
+9	14 | "Episode 907"	November 2, 2009	16.69
+9	15 | "Episode 907A"	November 3, 2009	15.05
+9	16 | "Episode 908"	November 9, 2009	17.62
+9	17 | "Episode 908A"	November 10, 2009	16.23
+9	18 | "Episode 909"	November 16, 2009	18.84
+9	19 | "Episode 909A"	November 17, 2009	16.02
+9	2 | "Episode 901A"	September 22, 2009	15.37
+9	20 | "Episode 910"	November 23, 2009	20.41
+9	21 | "Episode 910A"	November 24, 2009	19.29
+9	3 | "Episode 901B"	September 23, 2009	15.36
+9	4 | "Episode 902"	September 28, 2009	17.03
+9	5 | "Episode 902A"	September 29, 2009	13.02
+9	6 | "Episode 903"	October 5, 2009	16.35
+9	7 | "Episode 903A"	October 6, 2009	12.42
+9	8 | "Episode 904"	October 12, 2009	16.79
+9	9 | "Episode 904A"	October 13, 2009	13.95
+10	1 | "Week 1"	March 22, 2010	24.19
+10	10 | "Week 6"	April 26, 2010	20.40
+10	11 | "Week 6: Results"	April 27, 2010	12.39
+10	12 | "Week 7"	May 3, 2010	19.64
+10	13 | "Week 7: Results"	May 4, 2010	12.04
+10	14 | "Week 8"	May 10, 2010	19.16
+10	15 | "Week 8: Results"	May 11, 2010	12.52
+10	16 | "Week 9"	May 17, 2010	19.04
+10	17 | "Week 9: Results"	May 18, 2010	13.19
+10	18 | "Week 10"	May 24, 2010	19.36
+10	19 | "Week 10: Results"	May 25, 2010	18.40
+10	2 | "Week 2"	March 29, 2010	22.97
+10	3 | "Week 2: Results"	March 30, 2010	14.28
+10	4 | "Week 3"	April 5, 2010	21.21
+10	5 | "Week 3: Results"	April 6, 2010	12.44
+10	6 | "Week 4"	April 12, 2010	20.56
+10	7 | "Week 4: Results"	April 13, 2010	13.60
+10	8 | "Week 5"	April 19, 2010	21.07
+10	9 | "Week 5: Results"	April 20, 2010	13.56
+11	Row 1		21.00
+11	Row 10		23.70
+11	Row 2		21.34
+11	Row 3		19.89
+11	Row 4		19.53
+11	Row 5		19.33
+11	Row 6		20.41
+11	Row 7		19.93
+11	Row 8		19.95
+11	Row 9		20.68
+13	Final results show	November 22, 2011	19.45
+13	Meet the cast	September 20, 2011	10.97
+13	Performance show 1	September 19, 2011	19.03
+13	Performance show 10	November 21, 2011	19.61
+13	Performance show 2	September 26, 2011	16.23
+13	Performance show 3	October 3, 2011	16.40
+13	Performance show 4	October 10, 2011	16.30
+13	Performance show 5	October 17, 2011	17.47
+13	Performance show 6	October 24, 2011	16.99
+13	Performance show 7	October 31, 2011	16.30
+13	Performance show 8	November 7, 2011	18.03
+13	Performance show 9	November 14, 2011	18.50
+13	Results show 1	September 20, 2011	14.79
+13	Results show 2	September 27, 2011	14.39
+13	Results show 3	October 4, 2011	14.80
+13	Results show 4	October 11, 2011	16.60
+13	Results show 5	October 18, 2011	13.50
+13	Results show 6	October 25, 2011	14.10
+13	Results show 7	November 1, 2011	15.21
+13	Results show 8	November 8, 2011	14.80
+13	Results show 9	November 15, 2011	15.15
+13	Special	September 27, 2011	9.49
+13	Special	October 4, 2011	9.11
+14	"Season Finale"	May 22, 2012	17.75
+14	"Top 10 Perform"	April 9, 2012	16.39
+14	"Top 10 Results"	April 10, 2012	13.39
+14	"Top 11 Perform"	April 2, 2012	16.87
+14	"Top 11 Results"	April 3, 2012	15.61
+14	"Top 12 Perform (Week 1)"	March 19, 2012	18.79
+14	"Top 12 Perform (Week 2)"	March 26, 2012	17.96
+14	"Top 12 Results"	March 27, 2012	15.74
+14	"Top 3 Perform"	May 21, 2012	16.84
+14	"Top 4 Perform"	May 14, 2012	15.79
+14	"Top 4 Results"	May 15, 2012	13.23
+14	"Top 6 Perform"	May 7, 2012	16.37
+14	"Top 6 Results"	May 8, 2012	13.71
+14	"Top 7 Perform"	April 30, 2012	16.20
+14	"Top 7 Results"	May 1, 2012	13.87
+14	"Top 8 Perform"	April 23, 2012	17.62
+14	"Top 8 Results"	April 24, 2012	14.54
+14	"Top 9 Perform"	April 16, 2012	16.65
+14	"Top 9 Results"	April 17, 2012	14.17
+15	"Performance Show 1: Week 5"	October 22, 2012	13.27
+15	"Performance Show 2: Week 5"	October 23, 2012	12.90
+15	"Performance Show: Week 1"	September 24, 2012	14.11
+15	"Performance Show: Week 10"	November 26, 2012	16.30
+15	"Performance Show: Week 2"	October 1, 2012	12.38
+15	"Performance Show: Week 3"	October 8, 2012	13.55
+15	"Performance Show: Week 4"	October 15, 2012	13.64
+15	"Performance Show: Week 6"	October 29, 2012	13.90
+15	"Performance Show: Week 7"	November 5, 2012	13.48
+15	"Performance Show: Week 8"	November 12, 2012	13.79
+15	"Performance Show: Week 9"	November 19, 2012	14.28
+15	"Results Show: Week 1"	September 25, 2012	11.79
+15	"Results Show: Week 2"	October 2, 2012	12.03
+15	"Results Show: Week 3"	October 9, 2012	13.33
+15	"Results Show: Week 4"	October 16, 2012	12.92
+15	"Results Show: Week 6"	October 30, 2012	11.49
+15	"Results Show: Week 8"	November 13, 2012	12.11
+15	"Results Show: Week 9"	November 20, 2012	13.01
+15	"Season Finale"	November 27, 2012	16.73
+16	"Exclusive First Look"	March 19, 2013	9.76
+16	"Performance Show: Week 1"	March 18, 2013	17.06
+16	"Performance Show: Week 10"	May 20, 2013	14.97
+16	"Performance Show: Week 2"	March 25, 2013	14.47
+16	"Performance Show: Week 3"	April 1, 2013	13.91
+16	"Performance Show: Week 4"	April 8, 2013	13.15
+16	"Performance Show: Week 5"	April 15, 2013	13.40
+16	"Performance Show: Week 6"	April 22, 2013	13.77
+16	"Performance Show: Week 7"	April 29, 2013	13.45
+16	"Performance Show: Week 8"	May 6, 2013	13.12
+16	"Performance Show: Week 9"	May 13, 2013	13.33
+16	"Results Show: Week 2"	March 26, 2013	13.43
+16	"Results Show: Week 3"	April 2, 2013	13.98
+16	"Results Show: Week 4"	April 9, 2013	12.13
+16	"Results Show: Week 5"	April 16, 2013	12.73
+16	"Results Show: Week 6"	April 23, 2013	12.65
+16	"Results Show: Week 7"	April 30, 2013	10.89
+16	"Results Show: Week 8"	May 7, 2013	10.79
+16	"Results Show: Week 9"	May 14, 2013	11.87
+16	"Season Finale"	May 21, 2013	15.20
+17	"The Finals: Part 1"	November 25, 2013	14.61
+17	"The Finals: Part 2"	November 26, 2013	14.75
+17	"Week 10: Plugged/Unplugged Night (Semifinals)"	November 18, 2013	13.80
+17	"Week 1: Premiere"	September 16, 2013	16.04
+17	"Week 2: Latin Night"	September 23, 2013	13.57
+17	"Week 3: Hollywood Night"	September 30, 2013	13.10
+17	"Week 4"	October 7, 2013	13.00
+17	"Week 5: Most Memorable Year"	October 14, 2013	12.99
+17	"Week 6: Switch-Up Challenge"	October 21, 2013	13.35
+17	"Week 7: Team Dance Week"	October 28, 2013	13.28
+17	"Week 8: Cher Week"	November 4, 2013	13.72
+17	"Week 9: Trio Challenge"	November 11, 2013	12.57
+18	"Week 10: The Finals - Part 1"	May 19, 2014	15.66
+18	"Week 10: The Finals - Part 2"	May 20, 2014	15.07
+18	"Week 1: Premiere"	March 17, 2014	15.44
+18	"Week 2: Star-Chosen Dances"	March 24, 2014	14.65
+18	"Week 3: Most Memorable Year"	March 31, 2014	14.10
+18	"Week 4: Switch-Up Night"	April 7, 2014	14.47
+18	"Week 5: Disney Night"	April 14, 2014	14.78
+18	"Week 6: Party Anthems Night"	April 21, 2014	14.06
+18	"Week 7: Latin Night"	April 28, 2014	15.88
+18	"Week 8: Celebrity Dance Duels"	May 5, 2014	13.12
+18	"Week 9: American Icons"	May 12, 2014	14.36
+18	Road to the Finals	May 20, 2014	11.64
+19	"The Road to the Finals"	November 25, 2014	11.31
+19	"Week 10: Plugged/Unplugged Night (Semifinals)"	November 17, 2014	14.29
+19	"Week 11: The Finals – Part 1"	November 24, 2014	14.87
+19	"Week 11: The Finals – Part 2"	November 25, 2014	15.98
+19	"Week 1: Results Show"	September 16, 2014	12.68
+19	"Week 1: Season Premiere"	September 15, 2014	13.64
+19	"Week 2: My Jam Monday"	September 22, 2014	12.76
+19	"Week 2: Results Show"	September 23, 2014	9.96
+19	"Week 3: Movie Night"	September 29, 2014	12.50
+19	"Week 4: Most Memorable Year"	October 6, 2014	12.74
+19	"Week 5: Partner Switch-Up"	October 13, 2014	12.74
+19	"Week 6"	October 20, 2014	12.58
+19	"Week 7: Halloween Night"	October 27, 2014	12.62
+19	"Week 8: Dynamic Duos Night"	November 3, 2014	13.09
+19	"Week 9: America's Choice Night"	November 10, 2014	13.30
+20	"10th Anniversary Special"[46]	April 28, 2015	10.07
+20	"Week 10: Finals: Night 1"	May 18, 2015	14.35
+20	"Week 10: Finals: Night 2"	May 19, 2015	13.49
+20	"Week 1: Season Premiere"	March 16, 2015	14.16
+20	"Week 2: My Jam Monday"	March 23, 2015	13.85
+20	"Week 3: Latin Night"	March 30, 2015	13.76
+20	"Week 4: Most Memorable Year"	April 6, 2015	13.75
+20	"Week 5: Disney Night"	April 13, 2015	13.89
+20	"Week 6: Spring Break Special"	April 20, 2015	13.42
+20	"Week 7: Eras Night"	April 27, 2015	13.22
+20	"Week 8: America's Choice"	May 4, 2015	12.43
+20	"Week 8: America's Choice: The Results"	May 5, 2015	10.29
+20	"Week 9: Semi-Finals"	May 11, 2015	13.48
+20	"Week 9: Semi-Finals: The Results"	May 12, 2015	10.16
+21	1	September 14, 2015	13.13
+21	10	November 2, 2015	12.09
+21	11	November 9, 2015	12.63
+21	12	November 16, 2015	12.35
+21	13	November 23, 2015	13.29
+21	14	November 24, 2015	13.49
+21	2	September 15, 2015	5.70
+21	3	September 21, 2015	11.46
+21	4	September 22, 2015	9.58
+21	5	September 28, 2015	11.04
+21	6	October 5, 2015	11.82
+21	7	October 12, 2015	11.64
+21	8	October 19, 2015	12.50
+21	9	October 26, 2015	11.86
+22	1	March 21, 2016	12.46
+22	10	May 23, 2016	12.34
+22	11	May 24, 2016	10.49
+22	2	March 28, 2016	11.97
+22	3	April 4, 2016	11.72
+22	4	April 11, 2016	12.51
+22	5	April 18, 2016	10.95
+22	6	April 25, 2016	11.75
+22	7	May 2, 2016	11.81
+22	8	May 9, 2016	11.33
+22	9	May 16, 2016	11.64
+23	1	September 12, 2016	12.19
+23	10	October 24, 2016	11.03
+23	11	October 31, 2016	10.39
+23	12	November 7, 2016	10.84
+23	13	November 14, 2016	11.34
+23	14	November 21, 2016	11.97
+23	15	November 22, 2016	10.97
+23	2	September 19, 2016	10.71
+23	3	September 20, 2016	8.60
+23	4	September 26, 2016	10.83
+23	5	September 27, 2016	8.03
+23	6	October 3, 2016	10.73
+23	7	October 4, 2016	9.12
+23	8	October 10, 2016	10.43
+23	9	October 17, 2016	10.55
+24	1	March 20, 2017	12.09
+24	10	May 22, 2017	10.54
+24	11	May 23, 2017	8.91
+24	2	March 27, 2017	11.12
+24	3	April 3, 2017	10.47
+24	4	April 10, 2017	10.31
+24	5	April 17, 2017	11.18
+24	6	April 24, 2017	10.35
+24	7	May 1, 2017	10.31
+24	8	May 8, 2017	9.95
+24	9	May 15, 2017	10.07
+25	1 | "Week 1: Premiere"	September 18, 2017	10.71
+25	10 | "Week 9: Semifinals"	November 13, 2017	9.88
+25	11 | "Week 10: Finals (Night 1)"	November 20, 2017	10.08
+25	12 | "Week 10: Finals (Night 2)"	November 21, 2017	9.20
+25	2 | "Week 2: Ballroom Night (Night 1)"	September 25, 2017	8.67
+25	3 | "Week 2: Latin Night (Night 2)"	September 26, 2017	7.22
+25	4 | "Week 3: Guilty Pleasures Night"	October 2, 2017	9.06
+25	5 | "Week 4: Most Memorable Year Night"	October 9, 2017	9.25
+25	6 | "Week 5: Disney Night"	October 16, 2017	9.76
+25	7 | "Week 6: A Night at the Movies"	October 23, 2017	9.15
+25	8 | "Week 7: Halloween Night"	October 30, 2017	9.93
+25	9 | "Week 8: Quarterfinals"	November 6, 2017	9.30
+26	1 | "Week 1: Premiere"	April 30, 2018	8.48
+26	2 | "Week 2"	May 7, 2018	7.73
+26	3 | "Week 3: MVP Night (Semifinals)"	May 14, 2018	7.68
+26	4 | "Week 4: The Finals"	May 21, 2018	8.77
+27	1 | "Premiere (Night 1)"	September 24, 2018	7.68
+27	10 | "Semi-Finals"	November 12, 2018	7.29
+27	11 | "Finale"	November 19, 2018	7.90
+27	2 | "Premiere (Night 2)"	September 25, 2018	6.55
+27	3 | "New York City Night"	October 1, 2018	7.06
+27	4 | "Las Vegas Night"	October 2, 2018	6.10
+27	5 | "Most Memorable Year Night"	October 8, 2018	7.22
+27	6 | "Trio Night"	October 15, 2018	6.89
+27	7 | "Disney Night"	October 22, 2018	7.27
+27	8 | "Halloween Night"	October 29, 2018	7.25
+27	9 | "Country Night"	November 5, 2018	7.10
+28	1 | "2019 Season Premiere"	September 16, 2019	8.07
+28	10 | "Semi-Finals"	November 18, 2019	6.63
+28	11 | "Finale"	November 25, 2019	7.79
+28	2 | "First Elimination"	September 23, 2019	6.40
+28	3 | "Movie Night"	September 30, 2019	6.58
+28	4 | "Top 10"	October 7, 2019	6.40
+28	5 | "Disney Night"	October 14, 2019	6.61
+28	6 | "Week 6"	October 21, 2019	6.28
+28	7 | "Halloween Night"	October 28, 2019	6.40
+28	8 | "Dance-Off Week"	November 4, 2019	6.20
+28	9 | "Boy Band & Girl Group Night"	November 11, 2019	6.75
+29	1 | "2020 Premiere"	September 14, 2020	8.12
+29	10 | "Semi-Finals"	November 16, 2020	5.75
+29	11 | "Finale"	November 23, 2020	6.41
+29	2 | "First Elimination"	September 22, 2020	6.09
+29	3 | "Disney Night"	September 28, 2020	6.87
+29	4 | "Top 13"	October 5, 2020	5.84
+29	5 | "'80s Night"	October 12, 2020	6.26
+29	6 | "Top 11"	October 19, 2020	5.75
+29	7 | "Villains Night"	October 26, 2020	5.48
+29	8 | "Double Elimination Night – Use Your Vote!"	November 2, 2020	5.55
+29	9 | "Icons Night"	November 9, 2020	5.97
+30	1 | "Season 30 Premiere"	September 20, 2021	5.47
+30	10 | "Semi-Finals"	November 15, 2021	4.81
+30	11 | "Finale"	November 22, 2021	5.64
+30	2 | "First Elimination"	September 27, 2021	4.88
+30	3 | "Britney Night"	October 4, 2021	4.74
+30	4 | "Disney Week: Heroes Night"	October 11, 2021	4.61
+30	5 | "Disney Week: Villains Night"	October 12, 2021	4.32
+30	6 | "Grease Night"	October 18, 2021	5.02
+30	7 | "Horror Night"	October 25, 2021	4.86
+30	8 | "Queen Night"	November 1, 2021	4.79
+30	9 | "Janet Jackson Night"	November 8, 2021	4.72
+32	1 | "Premiere Night"	September 26, 2023	4.78
+32	10 | "Semi-Finals"	November 28, 2023	5.10
+32	11 | "Finale"	December 5, 2023	5.50
+32	2 | "Latin Night"	October 3, 2023	4.53
+32	3 | "Motown Night"	October 10, 2023	5.13
+32	4 | "Disney100 Night"	October 17, 2023	4.76
+32	5 | "Most Memorable Year"	October 24, 2023	4.73
+32	6 | "Monster Night"	October 31, 2023	4.75
+32	7 | "Music Video Night"	November 7, 2023	4.87
+32	8 | "Whitney Houston Night"	November 14, 2023	5.12
+32	9 | "A Celebration of Taylor Swift"	November 21, 2023	5.70
+33	1 | "Premiere"	September 17, 2024	4.97
+33	10 | "Finale"	November 26, 2024	6.36
+33	2 | "Oscars Night"	September 24, 2024	4.89
+33	3 | "Soul Train Night"	October 7, 2024	3.98
+33	4 | "Hair Metal Night"	October 8, 2024	4.52
+33	5 | "Dedication Night"	October 15, 2024	4.40
+33	6 | "Disney Night"	October 22, 2024	4.85
+33	7 | "Halloween Nightmares Night"	October 29, 2024	4.47
+33	8 | "500th Episode"	November 12, 2024	5.13
+33	9 | "Semi-Finals"	November 19, 2024	5.19
+34	1 | "Premiere"	September 16, 2025	5.28
+34	10 | "Prince Night (Semi-Finals)"	November 18, 2025	7.22
+34	11 | "Finale"	November 25, 2025	9.43
+34	2 | "One-Hit Wonders Night"	September 23, 2025	5.46
+34	3 | "TikTok Night"	September 30, 2025	5.83
+34	4 | "Disney Night"	October 7, 2025	5.88
+34	5 | "Dedication Night"	October 14, 2025	5.98
+34	6 | "Wicked Night"	October 21, 2025	6.63
+34	7 | "Halloween Night"	October 28, 2025	6.74
+34	8 | "Rock & Roll Hall of Fame Night"	November 4, 2025	6.30
+34	9 | "20th Birthday Party"	November 11, 2025	6.67
+34	Special | "Dancing with the Holidays"	December 2, 2025	5.19
