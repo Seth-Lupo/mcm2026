@@ -23,7 +23,7 @@ log = logging.getLogger(__name__)
 log.info("Importing modules...")
 from config import get_config
 log.info("  config OK")
-from events import load_events, Event
+from events import load_events, save_events, Event
 log.info("  events OK")
 from sampler import sample_valid_votes, SampleResult
 log.info("  sampler OK")
@@ -51,6 +51,8 @@ def main():
                         help=f"Number of random samples per event (default: {cfg.sampling.n_samples})")
     parser.add_argument("--seasons", "-s", default=None,
                         help="Comma-separated seasons to analyze")
+    parser.add_argument("--week", "-w", default=None,
+                        help="Week to analyze (number or 'final')")
     parser.add_argument("--output", "-o", default=None,
                         help="Output path for results JSON")
     parser.add_argument("--seed", type=int, default=cfg.sampling.seed,
@@ -67,9 +69,22 @@ def main():
     events = load_events()
     log.info(f"Loaded {len(events)} events")
 
+    # Save preprocessed events
+    save_events(events)
+    log.info(f"Saved events to data/events.json")
+
     if seasons:
         events = [e for e in events if e.season in seasons]
         log.info(f"Filtered to {len(events)} events for seasons {seasons}")
+
+    if args.week:
+        if args.week.lower() == "final":
+            events = [e for e in events if e.is_final]
+            log.info(f"Filtered to {len(events)} final events")
+        else:
+            week_num = int(args.week)
+            events = [e for e in events if e.week == week_num and not e.is_final]
+            log.info(f"Filtered to {len(events)} events for week {week_num}")
 
     # Analyze each event
     results: List[RegionInfo] = []
@@ -118,7 +133,7 @@ def main():
     if zero_events:
         print(f"\n*** FAILED EVENTS (0 valid points): {len(zero_events)} ***")
         for r in zero_events:
-            final = " [FINAL]" if "FINAL" in r.premise_type else ""
+            final = " [FINAL]" if r.is_final else ""
             print(f"  Season {r.season}, Week {r.week}{final} - {r.premise_type}, n={r.n_contestants}")
 
     # List events with very low acceptance (but > 0)
@@ -126,7 +141,7 @@ def main():
     if low_events:
         print(f"\n*** LOW SAMPLE EVENTS (<10 valid): {len(low_events)} ***")
         for r in low_events:
-            final = " [FINAL]" if "FINAL" in r.premise_type else ""
+            final = " [FINAL]" if r.is_final else ""
             print(f"  Season {r.season}, Week {r.week}{final} - {r.n_valid} valid, {r.premise_type}")
 
 

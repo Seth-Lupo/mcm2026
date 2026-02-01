@@ -6,7 +6,8 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 from dataclasses import dataclass
-from typing import List, Set, Optional, Dict
+from typing import List, Set, Optional, Dict, Any
+import json
 import logging
 
 log = logging.getLogger(__name__)
@@ -33,6 +34,21 @@ class Event:
     def n_eliminated(self) -> int:
         return len(self.eliminated)
 
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert to JSON-serializable dict."""
+        d = {
+            "season": int(self.season),
+            "week": int(self.week),
+            "is_final": self.is_final,
+            "n_contestants": self.n,
+            "contestants": self.contestants,
+            "judge_scores": [round(float(x), 2) for x in self.judge_scores],
+            "eliminated": list(self.eliminated),
+        }
+        if self.placements is not None:
+            d["placements"] = [int(x) for x in self.placements]
+        return d
+
 
 def get_judge_total(row: pd.Series, week: int) -> float:
     """Sum judge scores for a contestant in a given week."""
@@ -46,22 +62,23 @@ def get_judge_total(row: pd.Series, week: int) -> float:
     return total
 
 
-def extract_elimination_week(result: str) -> Optional[int]:
-    """Extract week number from result string like 'Eliminated Week 3'."""
-    if pd.isna(result):
-        return None
-    if "Eliminated Week" in str(result):
-        try:
-            return int(str(result).split("Week")[1].strip())
-        except:
-            return None
-    return None
+def get_active_contestants(sdf: pd.DataFrame, week: int) -> Dict[str, pd.Series]:
+    """Get contestants with non-zero scores for a given week."""
+    active = {}
+    for _, row in sdf.iterrows():
+        score = get_judge_total(row, week)
+        if score > 0:
+            active[row["celebrity_name"]] = row
+    return active
 
 
 def load_events(path: Optional[Path] = None) -> List[Event]:
     """
     Load all events from main.csv.
     Returns list of Event objects for each (season, week) with eliminations.
+
+    Eliminations are detected by comparing who has scores week-to-week:
+    if someone danced in week N but not week N+1, they were eliminated in week N.
     """
     path = path or DATA_DIR / "main.csv"
     df = pd.read_csv(path)
@@ -70,33 +87,44 @@ def load_events(path: Optional[Path] = None) -> List[Event]:
     for season in sorted(df["season"].unique()):
         sdf = df[df["season"] == season].copy()
 
-        # Build elimination mapping: week -> eliminated names
-        elim_by_week: Dict[int, Set[str]] = {}
-        for _, row in sdf.iterrows():
-            week = extract_elimination_week(row["results"])
-            if week:
-                if week not in elim_by_week:
-                    elim_by_week[week] = set()
-                elim_by_week[week].add(row["celebrity_name"])
-
-        # Build events for each week
+        # Build week -> active contestants mapping
+        active_by_week: Dict[int, Dict[str, pd.Series]] = {}
         for week in range(1, 12):
-            active_rows = []
-            for _, row in sdf.iterrows():
-                score = get_judge_total(row, week)
-                if score > 0:
-                    active_rows.append(row)
+            active = get_active_contestants(sdf, week)
+            if active:
+                active_by_week[week] = active
 
-            if not active_rows:
+        if not active_by_week:
+            continue
+
+        weeks_with_data = sorted(active_by_week.keys())
+        last_week = max(weeks_with_data)
+
+        # Detect eliminations by comparing consecutive weeks
+        for i, week in enumerate(weeks_with_data):
+            active = active_by_week[week]
+            contestants = list(active.keys())
+            judge_scores = np.array([get_judge_total(active[name], week) for name in contestants])
+
+            # Find who was eliminated this week
+            if week == last_week:
+                # Last week is the final - no elimination event, handle separately
                 continue
 
-            contestants = [r["celebrity_name"] for r in active_rows]
-            judge_scores = np.array([get_judge_total(r, week) for r in active_rows])
-            eliminated = elim_by_week.get(week, set())
+            # Find next week with data
+            next_week = None
+            for w in weeks_with_data[i + 1:]:
+                next_week = w
+                break
+
+            if next_week is None:
+                continue
+
+            next_active = active_by_week[next_week]
+            eliminated = set(contestants) - set(next_active.keys())
 
             if not eliminated:
-                continue
-            if not eliminated.issubset(set(contestants)):
+                # No elimination this week (rare, but possible)
                 continue
 
             events.append(Event(
@@ -108,19 +136,25 @@ def load_events(path: Optional[Path] = None) -> List[Event]:
                 is_final=False,
             ))
 
-        # Finals
-        finalists = sdf[sdf["placement"].isin([1, 2, 3, 4, 5])].copy()
-        if not finalists.empty:
-            last_week = None
-            for w in range(1, 12):
-                has_scores = any(get_judge_total(row, w) > 0 for _, row in finalists.iterrows())
-                if has_scores:
-                    last_week = w
+        # Finals - last week with data
+        if last_week in active_by_week:
+            active = active_by_week[last_week]
+            contestants = list(active.keys())
+            judge_scores = np.array([get_judge_total(active[name], last_week) for name in contestants])
 
-            if last_week:
-                contestants = finalists["celebrity_name"].tolist()
-                judge_scores = np.array([get_judge_total(row, last_week) for _, row in finalists.iterrows()])
-                placements = finalists["placement"].to_numpy()
+            # Get placements for finalists
+            finalists_df = sdf[sdf["celebrity_name"].isin(contestants)]
+            if not finalists_df.empty and "placement" in finalists_df.columns:
+                # Build placement array in same order as contestants
+                placements = []
+                for name in contestants:
+                    row = finalists_df[finalists_df["celebrity_name"] == name]
+                    if not row.empty:
+                        p = row["placement"].values[0]
+                        placements.append(int(p) if pd.notna(p) else 99)
+                    else:
+                        placements.append(99)
+                placements = np.array(placements)
 
                 events.append(Event(
                     season=season,
@@ -133,3 +167,11 @@ def load_events(path: Optional[Path] = None) -> List[Event]:
                 ))
 
     return events
+
+
+def save_events(events: List[Event], path: Optional[Path] = None) -> None:
+    """Save events to JSON."""
+    path = path or DATA_DIR / "events.json"
+    data = [e.to_dict() for e in events]
+    with open(path, "w") as f:
+        json.dump(data, f, indent=2)

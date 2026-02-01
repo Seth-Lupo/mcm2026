@@ -30,6 +30,8 @@ class HullConfig:
     n_directions: int = 200
     max_points: int = 2000
     include_axis_extremes: bool = True
+    max_dim_exact_volume: int = 6
+    volume_directions: int = 500
 
 
 @dataclass
@@ -40,11 +42,20 @@ class OutputConfig:
 
 
 @dataclass
+class BackprojectionConfig:
+    method: str = "lp"
+    n_redistribution_samples: int = 1000
+    tolerance: float = 1e-9
+    bounds_padding: float = 0.001
+
+
+@dataclass
 class Config:
     sampling: SamplingConfig
     refinement: RefinementConfig
     hull: HullConfig
     output: OutputConfig
+    backprojection: BackprojectionConfig
 
 
 def load_config(path: Optional[Path] = None) -> Config:
@@ -58,6 +69,7 @@ def load_config(path: Optional[Path] = None) -> Config:
             refinement=RefinementConfig(),
             hull=HullConfig(),
             output=OutputConfig(),
+            backprojection=BackprojectionConfig(),
         )
 
     with open(path) as f:
@@ -68,6 +80,7 @@ def load_config(path: Optional[Path] = None) -> Config:
         refinement=RefinementConfig(**data.get("refinement", {})),
         hull=HullConfig(**data.get("hull", {})),
         output=OutputConfig(**data.get("output", {})),
+        backprojection=BackprojectionConfig(**data.get("backprojection", {})),
     )
 
 

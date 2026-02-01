@@ -3,10 +3,12 @@ Convex hull approximation via extreme points in random directions.
 Fast for any dimension.
 """
 import numpy as np
-from dataclasses import dataclass
+from math import factorial, sqrt
+from dataclasses import dataclass, field
 from typing import Optional, List, Dict, Any
 import json
 import logging
+from scipy.spatial import ConvexHull
 
 log = logging.getLogger(__name__)
 
@@ -14,24 +16,37 @@ from sampler import SampleResult
 from config import get_config
 
 
+def simplex_volume(n: int) -> float:
+    """Volume of the (n-1)-simplex (probability simplex in n dimensions)."""
+    if n <= 1:
+        return 1.0
+    return sqrt(n) / factorial(n - 1)
+
+
 @dataclass
 class RegionInfo:
     """Properties of a valid vote region."""
+    # Event info
     season: int
     week: int
-    n_contestants: int
+    is_final: bool
     premise_type: str
+    contestants: List[str]
+    n_contestants: int
 
-    # Sampling stats
+    # Sampling experiment
     n_samples: int
     n_valid: int
     acceptance_rate: float
 
-    # Hull properties
+    # Region properties
     has_hull: bool = False
     n_vertices: int = 0
     volume: float = 0.0
+    relative_volume: float = 0.0
+    diameter: float = 0.0
     centroid: Optional[np.ndarray] = None
+    dim_bounds: Optional[np.ndarray] = None  # shape (n, 2) for [min, max] per dim
     vertices: Optional[np.ndarray] = None
 
     def to_dict(self) -> Dict[str, Any]:
@@ -39,26 +54,106 @@ class RegionInfo:
         cfg = get_config()
         p = cfg.output.precision
 
-        d = {
+        # Event info
+        event_info = {
             "season": int(self.season),
             "week": int(self.week),
-            "n_contestants": int(self.n_contestants),
+            "is_final": bool(self.is_final),
             "premise_type": str(self.premise_type),
+            "contestants": self.contestants,
+            "n_contestants": int(self.n_contestants),
+        }
+
+        # Sampling experiment
+        sampling_info = {
             "n_samples": int(self.n_samples),
             "n_valid": int(self.n_valid),
             "acceptance_rate": round(float(self.acceptance_rate), p),
+        }
+
+        # Region properties
+        region_info = {
             "has_hull": bool(self.has_hull),
             "n_vertices": int(self.n_vertices),
             "volume": round(float(self.volume), p + 4),
+            "relative_volume": round(float(self.relative_volume), p + 4),
+            "diameter": round(float(self.diameter), p),
         }
 
         if cfg.output.save_centroid and self.centroid is not None:
-            d["centroid"] = [round(float(x), p) for x in self.centroid]
+            region_info["centroid"] = [round(float(x), p) for x in self.centroid]
+
+        if self.dim_bounds is not None:
+            region_info["dim_bounds"] = [
+                [round(float(lo), p), round(float(hi), p)]
+                for lo, hi in self.dim_bounds
+            ]
 
         if cfg.output.save_vertices and self.vertices is not None:
-            d["vertices"] = [[round(float(x), p) for x in row] for row in self.vertices]
+            region_info["vertices"] = [[round(float(x), p) for x in row] for row in self.vertices]
 
-        return d
+        return {
+            "event": event_info,
+            "sampling": sampling_info,
+            "region": region_info,
+        }
+
+
+def compute_diameter(vertices: np.ndarray) -> float:
+    """Compute diameter (max pairwise distance) of vertices."""
+    if len(vertices) < 2:
+        return 0.0
+    max_dist = 0.0
+    for i in range(len(vertices)):
+        for j in range(i + 1, len(vertices)):
+            dist = np.linalg.norm(vertices[i] - vertices[j])
+            if dist > max_dist:
+                max_dist = dist
+    return max_dist
+
+
+def compute_volume(vertices: np.ndarray) -> float:
+    """
+    Compute convex hull volume.
+    Uses exact scipy.spatial.ConvexHull for low dimensions,
+    falls back to approximation for high dimensions.
+    """
+    cfg = get_config()
+    n_points, dim = vertices.shape
+
+    # Need at least dim+1 points to form a hull in dim dimensions
+    if n_points < dim + 1:
+        return 0.0
+
+    # Use approximation for high dimensions (ConvexHull is exponential)
+    if dim > cfg.hull.max_dim_exact_volume:
+        return _approximate_volume(vertices, cfg.hull.volume_directions)
+
+    try:
+        hull = ConvexHull(vertices)
+        return hull.volume
+    except Exception as e:
+        log.debug(f"ConvexHull failed ({e}), using approximation")
+        return _approximate_volume(vertices, cfg.hull.volume_directions)
+
+
+def _approximate_volume(vertices: np.ndarray, n_dirs: int = 500) -> float:
+    """Approximate volume using random direction widths."""
+    n_points, dim = vertices.shape
+    if dim == 0:
+        return 0.0
+
+    rng = np.random.default_rng(42)
+    directions = rng.normal(size=(n_dirs, dim))
+    directions /= np.linalg.norm(directions, axis=1, keepdims=True)
+
+    widths = []
+    for d in directions:
+        projections = vertices @ d
+        widths.append(projections.max() - projections.min())
+
+    avg_width = np.mean(widths) if widths else 0.0
+    return (avg_width ** dim) / (2 ** dim) if dim > 0 else 0.0
 
 
 def find_extreme_points(points: np.ndarray) -> dict:
@@ -91,21 +186,18 @@ def find_extreme_points(points: np.ndarray) -> dict:
     vertex_indices = list(vertex_indices)
     vertices = points[vertex_indices]
 
-    # Estimate volume using widths in random directions
-    widths = []
-    for d in directions[:min(n_dirs, dim * 3)]:
-        projections = points @ d
-        widths.append(projections.max() - projections.min())
-    avg_width = np.mean(widths) if widths else 0.0
+    # Compute exact volume (with fallback)
+    volume = compute_volume(vertices)
 
-    # Approximate volume (rough estimate)
-    approx_volume = (avg_width ** dim) / (2 ** dim) if dim > 0 else 0.0
+    # Diameter
+    diameter = compute_diameter(vertices)
 
     return {
         "vertices": vertices,
         "vertex_indices": vertex_indices,
         "n_vertices": len(vertex_indices),
-        "volume": approx_volume,
+        "volume": volume,
+        "diameter": diameter,
     }
 
 
@@ -122,8 +214,10 @@ def compute_region(sample_result: SampleResult) -> RegionInfo:
     base_info = RegionInfo(
         season=event.season,
         week=event.week,
-        n_contestants=n,
+        is_final=event.is_final,
         premise_type=sample_result.premise_type.name,
+        contestants=event.contestants,
+        n_contestants=n,
         n_samples=sample_result.n_samples,
         n_valid=sample_result.n_valid,
         acceptance_rate=sample_result.acceptance_rate,
@@ -134,8 +228,9 @@ def compute_region(sample_result: SampleResult) -> RegionInfo:
         log.info(f"  [HULL] No valid points")
         return base_info
 
-    # Centroid
+    # Centroid and dim_bounds from all valid samples
     base_info.centroid = np.mean(valid, axis=0)
+    base_info.dim_bounds = np.column_stack([valid.min(axis=0), valid.max(axis=0)])
 
     # Need at least a few points for meaningful hull
     if sample_result.n_valid < 3:
@@ -161,7 +256,12 @@ def compute_region(sample_result: SampleResult) -> RegionInfo:
     base_info.has_hull = True
     base_info.n_vertices = result["n_vertices"]
     base_info.volume = result["volume"]
+    base_info.diameter = result["diameter"]
     base_info.vertices = hull_points[result["vertex_indices"]]
+
+    # Relative volume compared to full simplex
+    full_simplex_vol = simplex_volume(n)
+    base_info.relative_volume = result["volume"] / full_simplex_vol if full_simplex_vol > 0 else 0.0
 
     return base_info
 

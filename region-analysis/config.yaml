@@ -17,12 +17,21 @@ refinement:
 
 # Convex Hull (approximate via extreme points)
 hull:
-  n_directions: 2000       # random directions to find extreme points
-  max_points: 2000         # subsample if more valid points than this
+  n_directions: 100000       # random directions to find extreme points
+  max_points: 1000         # subsample if more valid points than this
   include_axis_extremes: true
+  max_dim_exact_volume: 6   # use exact ConvexHull for dims <= this, approx above
+  volume_directions: 500    # directions for approximate volume (more = accurate, slower)
 
 # Output
 output:
   save_vertices: true
   save_centroid: true
   precision: 6
+
+# Backprojection - constraining earlier weeks by later weeks
+backprojection:
+  method: "lp"              # "lp" (linear program) or "sample" (monte carlo)
+  n_redistribution_samples: 1000  # for sample method only
+  tolerance: 1e-9           # LP solver tolerance
+  bounds_padding: 0.001     # small padding on bounds for numerical stability

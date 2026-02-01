@@ -41,12 +41,21 @@ def _argsort_desc(arr):
 
 @njit(cache=True)
 def _ranks_1d(scores):
-    """Convert 1D scores to ranks (1=best, highest score)."""
+    """Convert 1D scores to ranks (1=best, highest score).
+
+    Competition ranking: ties share rank, next rank skips.
+    E.g., [30, 30, 30, 28] -> [1, 1, 1, 4]
+    """
     n = len(scores)
     order = np.argsort(-scores)
     ranks = np.empty(n, dtype=np.float64)
+
+    current_rank = 1
     for i in range(n):
-        ranks[order[i]] = i + 1
+        if i > 0 and scores[order[i]] < scores[order[i - 1]]:
+            current_rank = i + 1  # skip to position-based rank
+        ranks[order[i]] = current_rank
+
     return ranks
 
 
@@ -62,7 +71,9 @@ def _check_rr_elim(fan_votes, judge_ranks, elim_indices, n_elim):
         combined = judge_ranks + fan_ranks
 
         # Find worst n_elim indices (highest combined)
-        order = np.argsort(-combined)
+        # Tiebreaker: lower fan votes = worse (higher in elimination order)
+        sort_key = combined - fan_votes[b] * 1e-9
+        order = np.argsort(-sort_key)
         worst = order[:n_elim]
 
         # Check if worst matches elim_indices (as sets)
@@ -146,7 +157,9 @@ def _check_rr_b2(fan_votes, judge_ranks, elim_indices, n_bottom):
     for b in prange(batch_size):
         fan_ranks = _ranks_1d(fan_votes[b])
         combined = judge_ranks + fan_ranks
-        order = np.argsort(-combined)
+        # Tiebreaker: lower fan votes = worse
+        sort_key = combined - fan_votes[b] * 1e-9
+        order = np.argsort(-sort_key)
         bottom = order[:n_bottom]
 
         # All elim_indices must be in bottom
@@ -175,7 +188,9 @@ def _check_rr_final(fan_votes, judge_ranks, expected_order):
     for b in prange(batch_size):
         fan_ranks = _ranks_1d(fan_votes[b])
         combined = judge_ranks + fan_ranks
-        pred_order = np.argsort(combined)
+        # Tiebreaker: higher fan votes = better (lower sort key = ranks higher)
+        sort_key = combined - fan_votes[b] * 1e-9
+        pred_order = np.argsort(sort_key)
 
         match = True
         for i in range(n):
@@ -336,6 +351,9 @@ def refine_with_walks(
     return result
 
 
+MAX_RETRIES = 20  # max retry attempts if 0 hits
+
+
 def sample_valid_votes(
     event: Event,
     n_samples: int = 100000,
@@ -344,6 +362,7 @@ def sample_valid_votes(
     """
     Sample random vote vectors and keep those satisfying the premise.
     Uses numba JIT for speed. Optionally refines with local walks.
+    Retries if 0 hits initially.
     """
     warmup_jit()
     cfg = get_config()
@@ -352,27 +371,49 @@ def sample_valid_votes(
     premise_type = get_premise_type(event.season, event.n_eliminated, event.is_final)
     n = event.n
 
-    # Initial random sampling
-    log.info(f"  [SAMPLE] Generating {n_samples:,} samples for {n} contestants...")
-    samples = rng.dirichlet(np.ones(n), size=n_samples)
-    log.info(f"  [SAMPLE] Premise: {premise_type.name}")
+    log.info(f"  [SAMPLE] Premise: {premise_type.name}, {n} contestants")
 
-    log.info(f"  [SAMPLE] Checking validity...")
-    valid_mask = _check_validity(samples, event, premise_type)
-    valid_samples = samples[valid_mask]
-    acceptance = len(valid_samples) / n_samples
+    # Keep sampling until we get at least 1 hit (or max retries)
+    all_valid = []
+    total_sampled = 0
+    attempt = 0
 
-    log.info(f"  [SAMPLE] Initial: {len(valid_samples):,} valid ({acceptance:.2%} acceptance)")
+    while len(all_valid) == 0 and attempt < MAX_RETRIES:
+        attempt += 1
+        if attempt > 1:
+            log.info(f"  [SAMPLE] Retry {attempt}/{MAX_RETRIES}...")
+
+        samples = rng.dirichlet(np.ones(n), size=n_samples)
+        valid_mask = _check_validity(samples, event, premise_type)
+        valid_samples = samples[valid_mask]
+        total_sampled += n_samples
+
+        if len(valid_samples) > 0:
+            all_valid = valid_samples
+            break
+
+    if len(all_valid) == 0:
+        log.info(f"  [SAMPLE] No valid samples after {total_sampled:,} attempts")
+        return SampleResult(
+            event=event,
+            premise_type=premise_type,
+            valid_samples=np.empty((0, n)),
+            n_samples=total_sampled,
+            n_valid=0,
+        )
+
+    acceptance = len(all_valid) / total_sampled
+    log.info(f"  [SAMPLE] Found {len(all_valid):,} valid ({acceptance:.4%} acceptance, {total_sampled:,} total samples)")
 
     # Refinement if acceptance is low
-    if cfg.refinement.enabled and acceptance < cfg.refinement.min_acceptance and len(valid_samples) > 0:
-        log.info(f"  [REFINE] Low acceptance ({acceptance:.2%} < {cfg.refinement.min_acceptance:.0%}), refining...")
-        valid_samples = refine_with_walks(valid_samples, event, premise_type, rng)
+    if cfg.refinement.enabled and acceptance < cfg.refinement.min_acceptance:
+        log.info(f"  [REFINE] Low acceptance, refining...")
+        all_valid = refine_with_walks(all_valid, event, premise_type, rng)
 
     return SampleResult(
         event=event,
         premise_type=premise_type,
-        valid_samples=valid_samples,
-        n_samples=n_samples,
-        n_valid=len(valid_samples),
+        valid_samples=all_valid,
+        n_samples=total_sampled,
+        n_valid=len(all_valid),
     )
