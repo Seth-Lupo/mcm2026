@@ -42,15 +42,15 @@ import pandas as pd
 import requests
 
 
-DATA_PATH = "2026_MCM_Problem_C_Data.csv"
-DATES_PATH = "dates.csv"
+DATA_PATH = "data/main.csv"
+DATES_PATH = "data/dates.csv"
 OUT_PATH = "wiki_popularity_by_season.csv"
 
 CACHE_DIR = "cache"
 TITLE_CACHE_PATH = os.path.join(CACHE_DIR, "wiki_title_cache.json")
 
 # If you only want to run a few seasons while testing:
-SEASONS_TO_RUN: Optional[set[int]] = {27, 28}   # e.g., {27, 28}
+SEASONS_TO_RUN: Optional[set[int]] = None   # None = all seasons; or e.g., {27, 28}
 
 # Baseline window length (pre-season)
 BASELINE_DAYS = 28
