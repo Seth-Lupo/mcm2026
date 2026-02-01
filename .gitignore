@@ -2,3 +2,15 @@ venv
 data/reddit.txt
 data/reddit1.txt
 data
+
+# Environment secrets
+.env
+
+# SLURM logs (keep on cluster, not in repo)
+logs/
+*.out
+*.err
+
+# Results archives
+results_*.zip
+cluster_results/

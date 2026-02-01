@@ -39,16 +39,29 @@ class HullConfig:
 class OutputConfig:
     save_vertices: bool = True
     save_centroid: bool = True
-    precision: int = 6
+    precision: int = 15  # max ~15-17 significant digits for float64
 
 
 @dataclass
 class BackprojectionConfig:
     method: str = "lp"
     n_redistribution_samples: int = 1000
-    tolerance: float = 1e-9
-    bounds_padding: float = 0.001
-    edge_intersection_tol: float = 1e-6
+    tolerance: float = 1e-12
+    bounds_padding: float = 1e-9
+    edge_intersection_tol: float = 1e-10
+
+
+@dataclass
+class ParallelConfig:
+    n_workers: int = 8
+    batch_size: int = 100
+
+
+@dataclass
+class NumericalConfig:
+    epsilon: float = 1e-15
+    jitter: float = 1e-12
+    clamp_probabilities: bool = True
 
 
 @dataclass
@@ -58,6 +71,25 @@ class Config:
     hull: HullConfig
     output: OutputConfig
     backprojection: BackprojectionConfig
+    parallel: ParallelConfig
+    numerical: NumericalConfig
+
+
+def _convert_floats(d: dict) -> dict:
+    """Convert string representations of floats to actual floats.
+
+    YAML sometimes parses scientific notation like 1e-30 as strings.
+    """
+    result = {}
+    for k, v in d.items():
+        if isinstance(v, str):
+            try:
+                result[k] = float(v)
+            except ValueError:
+                result[k] = v
+        else:
+            result[k] = v
+    return result
 
 
 def load_config(path: Optional[Path] = None) -> Config:
@@ -72,17 +104,21 @@ def load_config(path: Optional[Path] = None) -> Config:
             hull=HullConfig(),
             output=OutputConfig(),
             backprojection=BackprojectionConfig(),
+            parallel=ParallelConfig(),
+            numerical=NumericalConfig(),
         )
 
     with open(path) as f:
         data = yaml.safe_load(f)
 
     return Config(
-        sampling=SamplingConfig(**data.get("sampling", {})),
-        refinement=RefinementConfig(**data.get("refinement", {})),
-        hull=HullConfig(**data.get("hull", {})),
-        output=OutputConfig(**data.get("output", {})),
-        backprojection=BackprojectionConfig(**data.get("backprojection", {})),
+        sampling=SamplingConfig(**_convert_floats(data.get("sampling", {}))),
+        refinement=RefinementConfig(**_convert_floats(data.get("refinement", {}))),
+        hull=HullConfig(**_convert_floats(data.get("hull", {}))),
+        output=OutputConfig(**_convert_floats(data.get("output", {}))),
+        backprojection=BackprojectionConfig(**_convert_floats(data.get("backprojection", {}))),
+        parallel=ParallelConfig(**_convert_floats(data.get("parallel", {}))),
+        numerical=NumericalConfig(**_convert_floats(data.get("numerical", {}))),
     )
 
 

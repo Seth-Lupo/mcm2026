@@ -21,10 +21,11 @@ import json
 import logging
 import numpy as np
 from scipy.optimize import linprog
-from typing import List, Dict, Any, Optional, Tuple
+from typing import List, Dict, Any, Optional, Tuple, Callable
 from collections import defaultdict
 from concurrent.futures import ProcessPoolExecutor
 import multiprocessing
+from numba import njit
 
 from config import get_config
 from geometry import simplex_volume, compute_volume, compute_diameter
@@ -44,7 +45,168 @@ DATA_DIR = Path(__file__).parent.parent / "data"
 
 
 # =============================================================================
-# Core forward projection logic
+# Numba-accelerated analytical methods for single elimination
+# =============================================================================
+
+@njit(cache=True)
+def _is_feasible_forward_numba(ps_prime, lo_surv, hi_surv, lo_elim, hi_elim):
+    """
+    Numba-compiled feasibility check for forward projection.
+
+    Given point p' in week N+1, check if it could have come from week N.
+    For single elimination: x_j = votes redistributed from eliminated to survivor j.
+    Original survivor j had: p_j = p'_j - x_j, must be in [lo_j, hi_j].
+    Eliminated had: e = Σx_j, must be in [lo_e, hi_e].
+    """
+    n = len(ps_prime)
+
+    sum_L = 0.0
+    sum_U = 0.0
+
+    for j in range(n):
+        # Bounds on x_j:
+        # x_j >= 0
+        # x_j <= p'_j (can't take more than they have)
+        # x_j >= p'_j - hi_j (from p'_j - x_j <= hi_j)
+        # x_j <= p'_j - lo_j (from p'_j - x_j >= lo_j)
+        L_j = max(0.0, ps_prime[j] - hi_surv[j])
+        U_j = min(ps_prime[j], ps_prime[j] - lo_surv[j])
+
+        if L_j > U_j + 1e-9:
+            return False
+
+        sum_L += L_j
+        sum_U += U_j
+
+    # Sum constraint: lo_e <= Σx_j <= hi_e
+    # Combined with interval constraints: max(sum_L, lo_e) <= min(sum_U, hi_e)
+    lower = max(sum_L, lo_elim)
+    upper = min(sum_U, hi_elim)
+
+    return lower <= upper + 1e-9
+
+
+@njit(cache=True)
+def _find_intersection_forward_numba(v_pass, v_fail, surv_idx_n1, lo_surv, hi_surv, lo_elim, hi_elim):
+    """
+    Numba-compiled edge intersection finder for forward projection.
+    Returns t value where feasibility boundary is crossed.
+    """
+    n_surv = len(surv_idx_n1)
+
+    # Linear coefficients: p'(t) = a + b*t where a = v_pass, b = v_fail - v_pass
+    a_surv = np.empty(n_surv)
+    b_surv = np.empty(n_surv)
+    for i in range(n_surv):
+        j = surv_idx_n1[i]
+        a_surv[i] = v_pass[j]
+        b_surv[i] = v_fail[j] - v_pass[j]
+
+    # Collect candidate t values from constraint boundaries
+    max_candidates = 4 * n_surv + 10
+    candidates = np.empty(max_candidates)
+    n_cand = 0
+
+    # Candidates from L_j = U_j crossings and sum constraint crossings
+    for i in range(n_surv):
+        # L_j = max(0, p'_j - hi_j) changes at p'_j = hi_j
+        if abs(b_surv[i]) > 1e-15:
+            t = (hi_surv[i] - a_surv[i]) / b_surv[i]
+            if 0 < t <= 1:
+                candidates[n_cand] = t
+                n_cand += 1
+
+        # U_j = min(p'_j, p'_j - lo_j) = p'_j - lo_j (since lo >= 0)
+        # Changes behavior at p'_j = lo_j (but p'_j >= lo_j always for valid)
+        if abs(b_surv[i]) > 1e-15:
+            t = (lo_surv[i] - a_surv[i]) / b_surv[i]
+            if 0 < t <= 1:
+                candidates[n_cand] = t
+                n_cand += 1
+
+    # Sort and check candidates
+    candidates_sorted = np.sort(candidates[:n_cand])
+
+    for k in range(len(candidates_sorted)):
+        t = candidates_sorted[k]
+        ps_before = a_surv + b_surv * (t - 1e-9)
+        ps_after = a_surv + b_surv * (t + 1e-9)
+
+        feas_before = _is_feasible_forward_numba(ps_before, lo_surv, hi_surv, lo_elim, hi_elim)
+        feas_after = _is_feasible_forward_numba(ps_after, lo_surv, hi_surv, lo_elim, hi_elim)
+
+        if feas_before and not feas_after:
+            return t
+
+    # Fallback: binary search
+    lo_t = 0.0
+    hi_t = 1.0
+    for _ in range(50):
+        mid = (lo_t + hi_t) / 2
+        ps_mid = a_surv + b_surv * mid
+        if _is_feasible_forward_numba(ps_mid, lo_surv, hi_surv, lo_elim, hi_elim):
+            lo_t = mid
+        else:
+            hi_t = mid
+
+    return lo_t
+
+
+def check_point_came_from_analytical(
+    point_n1: np.ndarray,
+    elim_idx_n: int,
+    survivor_indices_n: list,
+    survivor_indices_n1: list,
+    source_bounds: np.ndarray,
+    padding: float = 0.001,
+) -> bool:
+    """
+    Analytical feasibility check for SINGLE elimination forward projection.
+    """
+    n_surv = len(survivor_indices_n)
+
+    # Get survivor values in week N+1
+    ps_prime = np.array([point_n1[j] for j in survivor_indices_n1])
+
+    # Get survivor bounds from week N
+    lo_surv = np.array([source_bounds[j][0] for j in survivor_indices_n]) - padding
+    hi_surv = np.array([source_bounds[j][1] for j in survivor_indices_n]) + padding
+
+    # Get eliminated bounds from week N
+    lo_elim = source_bounds[elim_idx_n][0] - padding
+    hi_elim = source_bounds[elim_idx_n][1] + padding
+
+    return _is_feasible_forward_numba(ps_prime, lo_surv, hi_surv, lo_elim, hi_elim)
+
+
+def find_edge_intersection_forward_analytical(
+    v_pass: np.ndarray,
+    v_fail: np.ndarray,
+    elim_idx_n: int,
+    survivor_indices_n: list,
+    survivor_indices_n1: list,
+    source_bounds: np.ndarray,
+    padding: float = 0.001,
+) -> np.ndarray:
+    """
+    Find intersection using Numba-accelerated analytical solver for forward projection.
+    """
+    surv_idx_n1 = np.array(survivor_indices_n1, dtype=np.int64)
+
+    # Get survivor bounds from week N
+    lo_surv = np.array([source_bounds[j][0] for j in survivor_indices_n]) - padding
+    hi_surv = np.array([source_bounds[j][1] for j in survivor_indices_n]) + padding
+
+    # Get eliminated bounds from week N
+    lo_elim = source_bounds[elim_idx_n][0] - padding
+    hi_elim = source_bounds[elim_idx_n][1] + padding
+
+    t = _find_intersection_forward_numba(v_pass, v_fail, surv_idx_n1, lo_surv, hi_surv, lo_elim, hi_elim)
+    return (1 - t) * v_pass + t * v_fail
+
+
+# =============================================================================
+# Core forward projection logic (LP-based for multiple eliminations)
 # =============================================================================
 
 def check_point_came_from_lp(
@@ -187,6 +349,55 @@ def get_hull_edges(vertices: np.ndarray) -> List[Tuple[int, int]]:
     return [(i, j) for i in range(n_verts) for j in range(i + 1, n_verts)]
 
 
+# Global shared data for workers (avoid repeated pickling)
+_shared_check_params_fwd = None
+
+
+def _init_worker_forward(eliminated_indices_n, survivor_indices_n, survivor_indices_n1, source_bounds, padding):
+    """Initialize shared data in worker process."""
+    global _shared_check_params_fwd
+    _shared_check_params_fwd = (eliminated_indices_n, survivor_indices_n, survivor_indices_n1, source_bounds, padding)
+
+
+def _check_vertex_batch_forward(vertices_batch):
+    """Check a batch of vertices. Uses shared params initialized in worker."""
+    eliminated_indices_n, survivor_indices_n, survivor_indices_n1, source_bounds, padding = _shared_check_params_fwd
+    results = []
+    for v in vertices_batch:
+        results.append(check_point_came_from_lp(
+            v, eliminated_indices_n, survivor_indices_n, survivor_indices_n1,
+            source_bounds, padding=padding
+        ))
+    return results
+
+
+def _find_intersection_batch_forward(edge_batch):
+    """Find intersections for a batch of edges. Uses shared params."""
+    eliminated_indices_n, survivor_indices_n, survivor_indices_n1, source_bounds, padding = _shared_check_params_fwd
+
+    results = []
+    for v_pass, v_fail in edge_batch:
+        lo, hi = 0.0, 1.0
+        tol, max_iter = 1e-4, 15
+
+        for _ in range(max_iter):
+            mid = (lo + hi) / 2
+            p_mid = (1 - mid) * v_pass + mid * v_fail
+
+            if check_point_came_from_lp(p_mid, eliminated_indices_n, survivor_indices_n,
+                                        survivor_indices_n1, source_bounds, padding=padding):
+                lo = mid
+            else:
+                hi = mid
+
+            if hi - lo < tol:
+                break
+
+        results.append((1 - lo) * v_pass + lo * v_fail)
+
+    return results
+
+
 def _find_single_intersection_forward(args):
     """
     Worker function for parallel edge intersection finding.
@@ -225,7 +436,7 @@ def filter_region_by_forward_projection(
     """
     Compute the intersection of week N+1's region with the forward projection constraint.
 
-    Uses parallel processing for edge intersection finding.
+    Uses ANALYTICAL methods for single elimination (fast), LP for multiple.
     """
     cfg = get_config()
 
@@ -239,21 +450,51 @@ def filter_region_by_forward_projection(
     # Get mappings
     eliminated = find_eliminated(week_n, week_n1)
     eliminated_indices_n, survivor_indices_n, survivor_indices_n1 = get_contestant_indices(week_n, week_n1)
+    n_elim = len(eliminated_indices_n)
 
     log.info(f"  Eliminated: {eliminated}")
-
-    # Build check function for vertex testing
-    check_fn = lambda p: check_point_came_from_lp(
-        p, eliminated_indices_n, survivor_indices_n, survivor_indices_n1,
-        week_n.dim_bounds, padding=padding,
-    )
 
     vertices = week_n1.vertices
     n_verts = len(vertices)
 
-    # Step 1: Check all vertices
-    log.info(f"  Checking {n_verts} vertices...")
-    passes = np.array([check_fn(v) for v in vertices])
+    # Use analytical method for single elimination (MUCH faster)
+    use_analytical = (n_elim == 1)
+
+    if use_analytical:
+        elim_idx_n = eliminated_indices_n[0]
+
+        # Step 1: Check all vertices analytically
+        log.info(f"  Checking {n_verts} vertices (analytical)...")
+        passes = np.array([
+            check_point_came_from_analytical(v, elim_idx_n, survivor_indices_n,
+                                             survivor_indices_n1, week_n.dim_bounds, padding)
+            for v in vertices
+        ])
+    else:
+        # Multiple eliminations - use LP with parallelization
+        n_workers = min(multiprocessing.cpu_count(), 8)
+        log.info(f"  Checking {n_verts} vertices (LP, {n_elim} eliminated)...")
+
+        if n_verts > 50 and n_workers > 1:
+            batch_size = max(10, n_verts // (n_workers * 4))
+            vertex_batches = [vertices[i:i + batch_size] for i in range(0, n_verts, batch_size)]
+
+            init_args = (eliminated_indices_n, survivor_indices_n, survivor_indices_n1,
+                         week_n.dim_bounds, padding)
+
+            with ProcessPoolExecutor(max_workers=n_workers,
+                                     initializer=_init_worker_forward,
+                                     initargs=init_args) as executor:
+                batch_results = list(executor.map(_check_vertex_batch_forward, vertex_batches))
+
+            passes = np.array([r for batch in batch_results for r in batch])
+        else:
+            check_fn = lambda p: check_point_came_from_lp(
+                p, eliminated_indices_n, survivor_indices_n, survivor_indices_n1,
+                week_n.dim_bounds, padding=padding,
+            )
+            passes = np.array([check_fn(v) for v in vertices])
+
     n_pass = passes.sum()
     log.info(f"  {n_pass}/{n_verts} vertices pass")
 
@@ -277,40 +518,48 @@ def filter_region_by_forward_projection(
         all_points = np.array(result_points)
         return all_points, len(all_points)
 
-    # Sample edges if too many
-    max_edges = 500
-    if n_crossing > max_edges:
-        rng = np.random.default_rng(cfg.sampling.seed)
-        sampled_indices = rng.choice(n_crossing, max_edges, replace=False)
-        crossing_edges = [crossing_edges[i] for i in sampled_indices]
-        log.info(f"  Sampled {max_edges} edges (was {n_crossing})")
-        n_crossing = max_edges
-
-    # Prepare args for parallel processing
-    edge_args = []
+    # Prepare edge data
+    edge_data = []
     for i, j in crossing_edges:
         if passes[i]:
-            v_pass, v_fail = vertices[i], vertices[j]
+            edge_data.append((vertices[i], vertices[j]))
         else:
-            v_pass, v_fail = vertices[j], vertices[i]
+            edge_data.append((vertices[j], vertices[i]))
 
-        edge_args.append((
-            v_pass, v_fail,
-            eliminated_indices_n, survivor_indices_n, survivor_indices_n1,
-            week_n.dim_bounds, padding
-        ))
-
-    # Parallel edge intersection finding
-    n_workers = min(multiprocessing.cpu_count(), 8, n_crossing)
-
-    if n_crossing > 50 and n_workers > 1:
-        log.info(f"  Finding intersections in parallel ({n_workers} workers)...")
-        with ProcessPoolExecutor(max_workers=n_workers) as executor:
-            intersections = list(executor.map(_find_single_intersection_forward, edge_args, chunksize=max(1, n_crossing // n_workers // 4)))
-        result_points.extend(intersections)
+    if use_analytical:
+        # Analytical edge intersection (no parallelization needed - it's fast)
+        log.info(f"  Finding {n_crossing} intersections (analytical)...")
+        for v_pass, v_fail in edge_data:
+            intersection = find_edge_intersection_forward_analytical(
+                v_pass, v_fail, elim_idx_n, survivor_indices_n,
+                survivor_indices_n1, week_n.dim_bounds, padding
+            )
+            result_points.append(intersection)
     else:
-        for args in edge_args:
-            result_points.append(_find_single_intersection_forward(args))
+        # LP-based with parallelization for multiple eliminations
+        n_workers = min(multiprocessing.cpu_count(), 8)
+
+        if n_crossing > 50 and n_workers > 1:
+            batch_size = max(10, n_crossing // (n_workers * 4))
+            edge_batches = [edge_data[i:i + batch_size] for i in range(0, n_crossing, batch_size)]
+
+            log.info(f"  Finding {n_crossing} intersections in parallel ({n_workers} workers)...")
+
+            init_args = (eliminated_indices_n, survivor_indices_n, survivor_indices_n1,
+                         week_n.dim_bounds, padding)
+
+            with ProcessPoolExecutor(max_workers=n_workers,
+                                     initializer=_init_worker_forward,
+                                     initargs=init_args) as executor:
+                batch_results = list(executor.map(_find_intersection_batch_forward, edge_batches))
+
+            for batch in batch_results:
+                result_points.extend(batch)
+        else:
+            for v_pass, v_fail in edge_data:
+                args = (v_pass, v_fail, eliminated_indices_n, survivor_indices_n,
+                        survivor_indices_n1, week_n.dim_bounds, padding)
+                result_points.append(_find_single_intersection_forward(args))
 
     log.info(f"  Added {n_crossing} edge intersection points")
 
@@ -319,16 +568,65 @@ def filter_region_by_forward_projection(
 
     all_points = np.array(result_points)
 
-    # Step 4: Extract hull vertices
-    from geometry import find_extreme_points
-    if len(all_points) > 10:
-        projected = all_points[:, :-1]
-        result = find_extreme_points(projected, progress_fn=None)
-        hull_vertices = all_points[result["vertex_indices"]]
-        log.info(f"  Final: {len(hull_vertices)} hull vertices")
-        return hull_vertices, len(hull_vertices)
+    # Step 4: Extract hull vertices using config settings
+    if len(all_points) <= 10:
+        return all_points, len(all_points)
 
-    return all_points, len(all_points)
+    from scipy.spatial import ConvexHull
+    projected = all_points[:, :-1]  # Project to n-1 dims (simplex constraint)
+    n_pts, dim = projected.shape
+
+    # Use config settings for hull extraction
+    max_hull_pts = cfg.hull.max_points
+    max_dim_exact = cfg.hull.max_dim_exact_volume
+
+    # For large point sets, subsample first
+    if n_pts > max_hull_pts:
+        log.info(f"  Subsampling {n_pts} -> {max_hull_pts} points for hull...")
+        rng = np.random.default_rng(cfg.sampling.seed)
+
+        # Keep all original vertices (passing ones), subsample intersections
+        n_original = n_pass
+        n_intersections = n_pts - n_original
+
+        keep_original = min(n_original, max_hull_pts // 2)
+        keep_intersections = max_hull_pts - keep_original
+
+        if n_intersections > keep_intersections:
+            intersection_indices = np.arange(n_original, n_pts)
+            sampled_intersection_indices = rng.choice(
+                intersection_indices, keep_intersections, replace=False
+            )
+            keep_indices = np.concatenate([
+                np.arange(keep_original),
+                sampled_intersection_indices
+            ])
+        else:
+            keep_indices = np.arange(n_pts)
+
+        projected_sub = projected[keep_indices]
+        all_points_sub = all_points[keep_indices]
+    else:
+        projected_sub = projected
+        all_points_sub = all_points
+
+    # Try exact ConvexHull for lower dimensions
+    try:
+        if dim <= max_dim_exact and len(projected_sub) > dim + 1:
+            hull = ConvexHull(projected_sub)
+            hull_indices = np.unique(hull.simplices.flatten())
+            hull_vertices = all_points_sub[hull_indices]
+            log.info(f"  Final: {len(hull_vertices)} hull vertices (ConvexHull)")
+            return hull_vertices, len(hull_vertices)
+    except Exception as e:
+        log.warning(f"  ConvexHull failed: {e}")
+
+    # Fallback: random directions (uses cfg.hull.n_directions internally)
+    from geometry import find_extreme_points
+    result = find_extreme_points(projected_sub, progress_fn=None)
+    hull_vertices = all_points_sub[result["vertex_indices"]]
+    log.info(f"  Final: {len(hull_vertices)} hull vertices")
+    return hull_vertices, len(hull_vertices)
 
 
 # =============================================================================
@@ -398,6 +696,28 @@ def forwardproject_season(
     return results
 
 
+def _process_season_worker(season: int, shared_data: Dict[str, Any]) -> Tuple[List[Dict], List[str]]:
+    """
+    Worker function to process a single season for forward projection.
+    Called in parallel for each season.
+    Returns (results, extra_log_lines).
+    """
+    from structures import WeekRegion
+
+    regions_data = shared_data["by_season"][season]
+    padding = shared_data["padding"]
+
+    # Reconstruct WeekRegion objects
+    regions = [WeekRegion.from_dict(r) for r in regions_data]
+
+    results = forwardproject_season(
+        regions,
+        padding=padding,
+    )
+
+    return results, []
+
+
 def main():
     cfg = get_config()
 
@@ -408,6 +728,8 @@ def main():
                         help="Output path")
     parser.add_argument("--seasons", "-s", default=None,
                         help="Comma-separated seasons to process")
+    parser.add_argument("--sequential", action="store_true",
+                        help="Process seasons sequentially (disable parallelization)")
     args = parser.parse_args()
 
     # Load regions
@@ -425,22 +747,51 @@ def main():
         season_filter = set(int(s.strip()) for s in args.seasons.split(","))
         by_season = {s: rs for s, rs in by_season.items() if s in season_filter}
 
-    log.info(f"Processing {len(by_season)} seasons")
+    n_seasons = len(by_season)
+    log.info(f"Processing {n_seasons} seasons")
 
-    # Process each season
-    all_results = []
     bp_cfg = cfg.backprojection
+    all_results = []
 
-    for season in sorted(by_season.keys()):
-        log.info(f"\n{'='*60}")
-        log.info(f"Season {season}")
-        log.info(f"{'='*60}")
+    if args.sequential or n_seasons <= 1:
+        # Sequential processing
+        for season in sorted(by_season.keys()):
+            log.info(f"\n{'='*60}")
+            log.info(f"Season {season}")
+            log.info(f"{'='*60}")
 
-        season_results = forwardproject_season(
-            by_season[season],
-            padding=bp_cfg.bounds_padding,
+            season_results = forwardproject_season(
+                by_season[season],
+                padding=bp_cfg.bounds_padding,
+            )
+            all_results.extend(season_results)
+    else:
+        # Parallel processing of seasons
+        from parallel import run_parallel_seasons
+
+        # Serialize region data for workers
+        by_season_serialized = {
+            s: [r.raw_data for r in rs]
+            for s, rs in by_season.items()
+        }
+
+        shared_data = {
+            "by_season": by_season_serialized,
+            "padding": bp_cfg.bounds_padding,
+        }
+
+        log.info(f"Using {cfg.parallel.n_workers} workers for parallel season processing")
+
+        season_results = run_parallel_seasons(
+            seasons=sorted(by_season.keys()),
+            process_fn=_process_season_worker,
+            shared_data=shared_data,
+            task_name="Forward projecting",
         )
-        all_results.extend(season_results)
+
+        # Collect results in season order
+        for season in sorted(season_results.keys()):
+            all_results.extend(season_results[season])
 
     # Save results
     log.info(f"\nSaving {len(all_results)} regions to {args.output}")

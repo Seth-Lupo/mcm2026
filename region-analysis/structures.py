@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from typing import List, Dict, Any, Optional, Tuple
 
 from config import get_config
-from geometry import simplex_volume, compute_volume, compute_diameter
+from geometry import simplex_volume, compute_volume, compute_diameter, safe_divide
 
 
 @dataclass
@@ -40,20 +40,23 @@ class WeekRegion:
 
         vertices = None
         if "vertices" in region and region["vertices"]:
-            vertices = np.array(region["vertices"])
+            vertices = np.array(region["vertices"], dtype=np.float64)
 
         dim_bounds = None
         if "dim_bounds" in region and region["dim_bounds"]:
             # Handle both old format [[min, max], ...] and new format [{"min":, "max":, "delta":}, ...]
             bounds_data = region["dim_bounds"]
             if bounds_data and isinstance(bounds_data[0], dict):
-                dim_bounds = np.array([[b["min"], b["max"]] for b in bounds_data])
+                dim_bounds = np.array(
+                    [[float(b["min"]), float(b["max"])] for b in bounds_data],
+                    dtype=np.float64
+                )
             else:
-                dim_bounds = np.array(bounds_data)
+                dim_bounds = np.array(bounds_data, dtype=np.float64)
 
         centroid = None
         if "centroid" in region and region["centroid"]:
-            centroid = np.array(region["centroid"])
+            centroid = np.array(region["centroid"], dtype=np.float64)
 
         return cls(
             season=event["season"],
@@ -118,7 +121,7 @@ def recompute_region_stats(
 
     n_contestants = vertices.shape[1]
     full_simplex_vol = simplex_volume(n_contestants)
-    relative_volume = filtered_volume / full_simplex_vol if full_simplex_vol > 0 else 0.0
+    relative_volume = safe_divide(filtered_volume, full_simplex_vol, default=0.0)
 
     result["region"]["n_vertices"] = len(vertices)
     result["region"]["vertices"] = [

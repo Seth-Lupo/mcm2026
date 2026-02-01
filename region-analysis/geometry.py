@@ -14,6 +14,35 @@ from scipy.spatial.distance import pdist
 from config import get_config
 
 
+def safe_divide(a: float, b: float, default: float = 0.0) -> float:
+    """Safe division that returns default if denominator is near zero."""
+    cfg = get_config()
+    if abs(b) < cfg.numerical.epsilon:
+        return default
+    return a / b
+
+
+def add_jitter(points: np.ndarray) -> np.ndarray:
+    """Add tiny random noise to help with degenerate point sets."""
+    cfg = get_config()
+    rng = np.random.default_rng(cfg.sampling.seed)
+    jitter = rng.uniform(-cfg.numerical.jitter, cfg.numerical.jitter, points.shape)
+    return points + jitter.astype(points.dtype)
+
+
+def clamp_simplex(points: np.ndarray) -> np.ndarray:
+    """Clamp points to valid probability simplex [0,1] and renormalize."""
+    cfg = get_config()
+    if not cfg.numerical.clamp_probabilities:
+        return points
+
+    clamped = np.clip(points, 0.0, 1.0)
+    row_sums = clamped.sum(axis=1, keepdims=True)
+    # Avoid division by zero
+    row_sums = np.where(row_sums < cfg.numerical.epsilon, 1.0, row_sums)
+    return clamped / row_sums
+
+
 def simplex_volume(n: int) -> float:
     """Volume of the (n-1)-simplex in projected coordinates.
 
@@ -78,7 +107,13 @@ def compute_volume(vertices: np.ndarray, project_simplex: bool = True) -> float:
         hull = ConvexHull(points)
         return hull.volume
     except Exception:
-        return _approximate_volume(points, cfg.hull.volume_samples)
+        # Try with jitter for degenerate cases (coplanar points)
+        try:
+            jittered = add_jitter(points)
+            hull = ConvexHull(jittered)
+            return hull.volume
+        except Exception:
+            return _approximate_volume(points, cfg.hull.volume_samples)
 
 
 def _approximate_volume_fast(vertices: np.ndarray) -> float:

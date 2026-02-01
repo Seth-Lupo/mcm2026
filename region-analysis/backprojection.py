@@ -19,10 +19,11 @@ import json
 import logging
 import numpy as np
 from scipy.optimize import linprog
-from typing import List, Dict, Any, Optional, Tuple
+from typing import List, Dict, Any, Optional, Tuple, Callable
 from collections import defaultdict
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import multiprocessing
+from numba import njit
 
 from config import get_config
 from geometry import simplex_volume, compute_volume, compute_diameter
@@ -42,7 +43,321 @@ DATA_DIR = Path(__file__).parent.parent / "data"
 
 
 # =============================================================================
-# Core projection logic
+# Numba-accelerated analytical methods for single elimination
+# =============================================================================
+
+@njit(cache=True)
+def _is_feasible_numba(ps, pe, lo, hi):
+    """Numba-compiled feasibility check."""
+    n = len(ps)
+
+    if pe < 1e-12:
+        for j in range(n):
+            if ps[j] < lo[j] or ps[j] > hi[j]:
+                return False
+        return True
+
+    # Check simple bounds
+    for j in range(n):
+        if ps[j] > hi[j]:
+            return False
+        if ps[j] < lo[j] - pe:
+            return False
+
+    # Compute L and U, check intervals and sums
+    sum_L = 0.0
+    sum_U = 0.0
+    for j in range(n):
+        L_j = max(0.0, (lo[j] - ps[j]) / pe)
+        U_j = min(1.0, (hi[j] - ps[j]) / pe)
+        if L_j > U_j + 1e-9:
+            return False
+        sum_L += L_j
+        sum_U += U_j
+
+    return sum_L <= 1.0 + 1e-9 and sum_U >= 1.0 - 1e-9
+
+
+@njit(cache=True)
+def _find_intersection_numba(v_pass, v_fail, elim_idx, surv_idx, lo, hi):
+    """
+    Numba-compiled edge intersection finder.
+
+    Returns t value where feasibility boundary is crossed.
+    """
+    n_surv = len(surv_idx)
+
+    # Linear coefficients
+    a_surv = np.empty(n_surv)
+    b_surv = np.empty(n_surv)
+    for i in range(n_surv):
+        j = surv_idx[i]
+        a_surv[i] = v_pass[j]
+        b_surv[i] = v_fail[j] - v_pass[j]
+
+    a_elim = v_pass[elim_idx]
+    b_elim = v_fail[elim_idx] - v_pass[elim_idx]
+
+    # Collect candidate t values
+    max_candidates = 4 * n_surv + 10
+    candidates = np.empty(max_candidates)
+    n_cand = 0
+
+    # Simple constraints: p_j <= hi_j
+    for i in range(n_surv):
+        if abs(b_surv[i]) > 1e-15:
+            t = (hi[i] - a_surv[i]) / b_surv[i]
+            if 0 < t <= 1:
+                candidates[n_cand] = t
+                n_cand += 1
+
+    # Simple constraints: p_j + p_elim >= lo_j
+    for i in range(n_surv):
+        denom = b_surv[i] + b_elim
+        if abs(denom) > 1e-15:
+            t = (lo[i] - a_surv[i] - a_elim) / denom
+            if 0 < t <= 1:
+                candidates[n_cand] = t
+                n_cand += 1
+
+    # Sort candidates
+    candidates_sorted = np.sort(candidates[:n_cand])
+
+    # Check simple constraint crossings first
+    for k in range(len(candidates_sorted)):
+        t = candidates_sorted[k]
+        ps_before = a_surv + b_surv * (t - 1e-9)
+        pe_before = a_elim + b_elim * (t - 1e-9)
+        ps_after = a_surv + b_surv * (t + 1e-9)
+        pe_after = a_elim + b_elim * (t + 1e-9)
+
+        if _is_feasible_numba(ps_before, pe_before, lo, hi) and not _is_feasible_numba(ps_after, pe_after, lo, hi):
+            return t
+
+    # Compute breakpoints for piecewise sum constraints
+    max_bp = 4 * n_surv + 2
+    breakpoints = np.empty(max_bp)
+    breakpoints[0] = 0.0
+    breakpoints[1] = 1.0
+    n_bp = 2
+
+    for i in range(n_surv):
+        if abs(b_surv[i]) > 1e-15:
+            t = (lo[i] - a_surv[i]) / b_surv[i]
+            if 0 < t < 1:
+                breakpoints[n_bp] = t
+                n_bp += 1
+            t = (hi[i] - a_surv[i]) / b_surv[i]
+            if 0 < t < 1:
+                breakpoints[n_bp] = t
+                n_bp += 1
+
+        denom = b_surv[i] + b_elim
+        if abs(denom) > 1e-15:
+            t = (lo[i] - a_surv[i] - a_elim) / denom
+            if 0 < t < 1:
+                breakpoints[n_bp] = t
+                n_bp += 1
+            t = (hi[i] - a_surv[i] - a_elim) / denom
+            if 0 < t < 1:
+                breakpoints[n_bp] = t
+                n_bp += 1
+
+    breakpoints_sorted = np.sort(breakpoints[:n_bp])
+
+    # Check sum constraints in each segment
+    sum_candidates = np.empty(2 * n_bp)
+    n_sum_cand = 0
+
+    for seg in range(len(breakpoints_sorted) - 1):
+        t_lo_seg = breakpoints_sorted[seg]
+        t_hi_seg = breakpoints_sorted[seg + 1]
+        t_mid = (t_lo_seg + t_hi_seg) / 2
+
+        pe_mid = a_elim + b_elim * t_mid
+        if pe_mid < 1e-12:
+            continue
+
+        ps_mid = a_surv + b_surv * t_mid
+
+        # Σ L_j = 1 crossing
+        sum_lo_active = 0.0
+        sum_a_active = 0.0
+        sum_b_active = 0.0
+        has_active_L = False
+
+        for i in range(n_surv):
+            raw_L = (lo[i] - ps_mid[i]) / pe_mid
+            if raw_L > 0:
+                has_active_L = True
+                sum_lo_active += lo[i]
+                sum_a_active += a_surv[i]
+                sum_b_active += b_surv[i]
+
+        if has_active_L:
+            numer = sum_lo_active - sum_a_active - a_elim
+            denom = sum_b_active + b_elim
+            if abs(denom) > 1e-15:
+                t_cross = numer / denom
+                if t_lo_seg < t_cross < t_hi_seg:
+                    sum_candidates[n_sum_cand] = t_cross
+                    n_sum_cand += 1
+
+        # Σ U_j = 1 crossing
+        sum_hi_active = 0.0
+        sum_a_active = 0.0
+        sum_b_active = 0.0
+        n_inactive = 0
+        has_active_U = False
+
+        for i in range(n_surv):
+            raw_U = (hi[i] - ps_mid[i]) / pe_mid
+            if raw_U < 1:
+                has_active_U = True
+                sum_hi_active += hi[i]
+                sum_a_active += a_surv[i]
+                sum_b_active += b_surv[i]
+            else:
+                n_inactive += 1
+
+        if has_active_U:
+            coef = 1 - n_inactive
+            numer = sum_hi_active - sum_a_active - coef * a_elim
+            denom = sum_b_active + coef * b_elim
+            if abs(denom) > 1e-15:
+                t_cross = numer / denom
+                if t_lo_seg < t_cross < t_hi_seg:
+                    sum_candidates[n_sum_cand] = t_cross
+                    n_sum_cand += 1
+
+    # Check sum constraint crossings
+    sum_candidates_sorted = np.sort(sum_candidates[:n_sum_cand])
+    for k in range(len(sum_candidates_sorted)):
+        t = sum_candidates_sorted[k]
+        if 0 < t <= 1:
+            ps_before = a_surv + b_surv * (t - 1e-9)
+            pe_before = a_elim + b_elim * (t - 1e-9)
+            ps_after = a_surv + b_surv * (t + 1e-9)
+            pe_after = a_elim + b_elim * (t + 1e-9)
+
+            if _is_feasible_numba(ps_before, pe_before, lo, hi) and not _is_feasible_numba(ps_after, pe_after, lo, hi):
+                return t
+
+    # Fallback: binary search
+    lo_t = 0.0
+    hi_t = 1.0
+    for _ in range(50):
+        mid = (lo_t + hi_t) / 2
+        ps_mid = a_surv + b_surv * mid
+        pe_mid = a_elim + b_elim * mid
+        if _is_feasible_numba(ps_mid, pe_mid, lo, hi):
+            lo_t = mid
+        else:
+            hi_t = mid
+
+    return lo_t
+
+
+# =============================================================================
+# Analytical methods for single elimination (fast path)
+# =============================================================================
+
+def check_point_projects_analytical(
+    point: np.ndarray,
+    elim_idx: int,
+    survivor_indices: List[int],
+    target_bounds: np.ndarray,
+    padding: float = 0.001,
+) -> bool:
+    """
+    Analytical feasibility check for SINGLE elimination case.
+
+    Much faster than LP - pure numpy arithmetic.
+    """
+    p_elim = point[elim_idx]
+    p_survivors = np.array([point[j] for j in survivor_indices])
+
+    # Get bounds for survivors (indexed by their week N+1 position)
+    lo = np.array([target_bounds[j][0] for j in range(len(survivor_indices))]) - padding
+    hi = np.array([target_bounds[j][1] for j in range(len(survivor_indices))]) + padding
+
+    if p_elim < 1e-12:
+        # No redistribution possible, check direct bounds
+        return np.all(p_survivors >= lo) and np.all(p_survivors <= hi)
+
+    # Constraint 1: p_j <= hi_j (upper bound reachable with α_j = 0)
+    if not np.all(p_survivors <= hi):
+        return False
+
+    # Constraint 2: p_j >= lo_j - p_elim (lower bound reachable with α_j = 1)
+    if not np.all(p_survivors >= lo - p_elim):
+        return False
+
+    # Constraint 3: Σ L_j <= 1 <= Σ U_j
+    L = np.maximum(0, (lo - p_survivors) / p_elim)
+    U = np.minimum(1, (hi - p_survivors) / p_elim)
+
+    # Each interval must be valid
+    if not np.all(L <= U):
+        return False
+
+    # Sum constraint
+    if L.sum() > 1 + 1e-9 or U.sum() < 1 - 1e-9:
+        return False
+
+    return True
+
+
+def find_edge_intersection_binary(
+    v_pass: np.ndarray,
+    v_fail: np.ndarray,
+    elim_idx: int,
+    survivor_indices: List[int],
+    target_bounds: np.ndarray,
+    padding: float = 0.001,
+) -> np.ndarray:
+    """
+    Find intersection using binary search with analytical feasibility check.
+    """
+    lo_t, hi_t = 0.0, 1.0
+
+    for _ in range(50):
+        mid = (lo_t + hi_t) / 2
+        p_mid = (1 - mid) * v_pass + mid * v_fail
+
+        if check_point_projects_analytical(p_mid, elim_idx, survivor_indices,
+                                           target_bounds, padding):
+            lo_t = mid
+        else:
+            hi_t = mid
+
+        if hi_t - lo_t < 1e-15:
+            break
+
+    return (1 - lo_t) * v_pass + lo_t * v_fail
+
+
+def find_edge_intersection_analytical(
+    v_pass: np.ndarray,
+    v_fail: np.ndarray,
+    elim_idx: int,
+    survivor_indices: List[int],
+    target_bounds: np.ndarray,
+    padding: float = 0.001,
+) -> np.ndarray:
+    """
+    Find intersection using Numba-accelerated analytical solver.
+    """
+    surv_idx = np.array(survivor_indices, dtype=np.int64)
+    lo = target_bounds[:len(surv_idx), 0] - padding
+    hi = target_bounds[:len(surv_idx), 1] + padding
+
+    t = _find_intersection_numba(v_pass, v_fail, elim_idx, surv_idx, lo, hi)
+    return (1 - t) * v_pass + t * v_fail
+
+
+# =============================================================================
+# Core projection logic (LP-based for multiple eliminations)
 # =============================================================================
 
 def check_point_projects_lp(
@@ -253,6 +568,56 @@ def get_hull_edges(vertices: np.ndarray) -> List[Tuple[int, int]]:
     return [(i, j) for i in range(n_verts) for j in range(i + 1, n_verts)]
 
 
+# Global shared data for workers (avoid repeated pickling)
+_shared_check_params = None
+
+
+def _init_worker(eliminated_indices, survivor_indices_n, survivor_indices_n1, target_bounds, tolerance, padding):
+    """Initialize shared data in worker process."""
+    global _shared_check_params
+    _shared_check_params = (eliminated_indices, survivor_indices_n, survivor_indices_n1, target_bounds, tolerance, padding)
+
+
+def _check_vertex_batch(vertices_batch):
+    """Check a batch of vertices. Uses shared params initialized in worker."""
+    eliminated_indices, survivor_indices_n, survivor_indices_n1, target_bounds, tolerance, padding = _shared_check_params
+    results = []
+    for v in vertices_batch:
+        results.append(check_point_projects_lp(
+            v, eliminated_indices, survivor_indices_n, survivor_indices_n1,
+            target_bounds, tolerance=tolerance, padding=padding
+        ))
+    return results
+
+
+def _find_intersection_batch(edge_batch):
+    """Find intersections for a batch of edges. Uses shared params."""
+    eliminated_indices, survivor_indices_n, survivor_indices_n1, target_bounds, tolerance, padding = _shared_check_params
+
+    results = []
+    for v_pass, v_fail in edge_batch:
+        lo, hi = 0.0, 1.0
+        tol, max_iter = 1e-4, 15
+
+        for _ in range(max_iter):
+            mid = (lo + hi) / 2
+            p_mid = (1 - mid) * v_pass + mid * v_fail
+
+            if check_point_projects_lp(p_mid, eliminated_indices, survivor_indices_n,
+                                       survivor_indices_n1, target_bounds,
+                                       tolerance=tolerance, padding=padding):
+                lo = mid
+            else:
+                hi = mid
+
+            if hi - lo < tol:
+                break
+
+        results.append((1 - lo) * v_pass + lo * v_fail)
+
+    return results
+
+
 def _find_single_intersection(args):
     """
     Worker function for parallel edge intersection finding.
@@ -298,7 +663,7 @@ def filter_region_by_projection(
     When a constraint hyperplane cuts through the polytope, original vertices
     may be removed but NEW vertices appear where edges cross the boundary.
 
-    Uses parallel processing for edge intersection finding.
+    Uses ANALYTICAL methods for single elimination (fast), LP for multiple.
 
     Returns:
         filtered_vertices: vertices of the constrained polytope
@@ -317,21 +682,53 @@ def filter_region_by_projection(
     eliminated = find_eliminated(week_n, week_n1)
     eliminated_indices = [week_n.contestants.index(e) for e in eliminated]
     survivor_indices_n, survivor_indices_n1 = get_contestant_mapping(week_n, week_n1)
+    n_elim = len(eliminated_indices)
 
     log.info(f"  Eliminated: {eliminated}")
-
-    # Build check function for vertex testing
-    check_fn = lambda p: check_point_projects_lp(
-        p, eliminated_indices, survivor_indices_n, survivor_indices_n1,
-        week_n1.dim_bounds, tolerance=tolerance, padding=padding,
-    )
 
     vertices = week_n.vertices
     n_verts = len(vertices)
 
-    # Step 1: Check all vertices
-    log.info(f"  Checking {n_verts} vertices...")
-    passes = np.array([check_fn(v) for v in vertices])
+    # Use analytical method for single elimination (MUCH faster)
+    use_analytical = (n_elim == 1)
+
+    if use_analytical:
+        elim_idx = eliminated_indices[0]
+        # Build target bounds array indexed by survivor position in N+1
+        target_bounds_arr = week_n1.dim_bounds
+
+        # Step 1: Check all vertices analytically (vectorized, no parallelization needed)
+        log.info(f"  Checking {n_verts} vertices (analytical)...")
+        passes = np.array([
+            check_point_projects_analytical(v, elim_idx, survivor_indices_n,
+                                            target_bounds_arr, padding)
+            for v in vertices
+        ])
+    else:
+        # Multiple eliminations - use LP with parallelization
+        n_workers = min(multiprocessing.cpu_count(), 8)
+        log.info(f"  Checking {n_verts} vertices (LP, {n_elim} eliminated)...")
+
+        if n_verts > 50 and n_workers > 1:
+            batch_size = max(10, n_verts // (n_workers * 4))
+            vertex_batches = [vertices[i:i + batch_size] for i in range(0, n_verts, batch_size)]
+
+            init_args = (eliminated_indices, survivor_indices_n, survivor_indices_n1,
+                         week_n1.dim_bounds, tolerance, padding)
+
+            with ProcessPoolExecutor(max_workers=n_workers,
+                                     initializer=_init_worker,
+                                     initargs=init_args) as executor:
+                batch_results = list(executor.map(_check_vertex_batch, vertex_batches))
+
+            passes = np.array([r for batch in batch_results for r in batch])
+        else:
+            check_fn = lambda p: check_point_projects_lp(
+                p, eliminated_indices, survivor_indices_n, survivor_indices_n1,
+                week_n1.dim_bounds, tolerance=tolerance, padding=padding,
+            )
+            passes = np.array([check_fn(v) for v in vertices])
+
     n_pass = passes.sum()
     log.info(f"  {n_pass}/{n_verts} vertices pass")
 
@@ -355,41 +752,48 @@ def filter_region_by_projection(
         all_points = np.array(result_points)
         return all_points, len(all_points)
 
-    # Sample edges if too many (extreme points will still find boundary)
-    max_edges = 500
-    if n_crossing > max_edges:
-        rng = np.random.default_rng(cfg.sampling.seed)
-        sampled_indices = rng.choice(n_crossing, max_edges, replace=False)
-        crossing_edges = [crossing_edges[i] for i in sampled_indices]
-        log.info(f"  Sampled {max_edges} edges (was {n_crossing})")
-        n_crossing = max_edges
-
-    # Prepare args for parallel processing
-    edge_args = []
+    # Prepare edge data
+    edge_data = []
     for i, j in crossing_edges:
         if passes[i]:
-            v_pass, v_fail = vertices[i], vertices[j]
+            edge_data.append((vertices[i], vertices[j]))
         else:
-            v_pass, v_fail = vertices[j], vertices[i]
+            edge_data.append((vertices[j], vertices[i]))
 
-        edge_args.append((
-            v_pass, v_fail,
-            eliminated_indices, survivor_indices_n, survivor_indices_n1,
-            week_n1.dim_bounds, tolerance, padding
-        ))
-
-    # Parallel edge intersection finding
-    n_workers = min(multiprocessing.cpu_count(), 8, n_crossing)
-
-    if n_crossing > 50 and n_workers > 1:
-        log.info(f"  Finding intersections in parallel ({n_workers} workers)...")
-        with ProcessPoolExecutor(max_workers=n_workers) as executor:
-            intersections = list(executor.map(_find_single_intersection, edge_args, chunksize=max(1, n_crossing // n_workers // 4)))
-        result_points.extend(intersections)
+    if use_analytical:
+        # Analytical edge intersection (no parallelization needed - it's fast)
+        log.info(f"  Finding {n_crossing} intersections (analytical)...")
+        for v_pass, v_fail in edge_data:
+            intersection = find_edge_intersection_analytical(
+                v_pass, v_fail, elim_idx, survivor_indices_n,
+                target_bounds_arr, padding
+            )
+            result_points.append(intersection)
     else:
-        # Sequential for small number of edges
-        for args in edge_args:
-            result_points.append(_find_single_intersection(args))
+        # LP-based with parallelization for multiple eliminations
+        n_workers = min(multiprocessing.cpu_count(), 8)
+
+        if n_crossing > 50 and n_workers > 1:
+            batch_size = max(10, n_crossing // (n_workers * 4))
+            edge_batches = [edge_data[i:i + batch_size] for i in range(0, n_crossing, batch_size)]
+
+            log.info(f"  Finding {n_crossing} intersections in parallel ({n_workers} workers)...")
+
+            init_args = (eliminated_indices, survivor_indices_n, survivor_indices_n1,
+                         week_n1.dim_bounds, tolerance, padding)
+
+            with ProcessPoolExecutor(max_workers=n_workers,
+                                     initializer=_init_worker,
+                                     initargs=init_args) as executor:
+                batch_results = list(executor.map(_find_intersection_batch, edge_batches))
+
+            for batch in batch_results:
+                result_points.extend(batch)
+        else:
+            for v_pass, v_fail in edge_data:
+                args = (v_pass, v_fail, eliminated_indices, survivor_indices_n,
+                        survivor_indices_n1, week_n1.dim_bounds, tolerance, padding)
+                result_points.append(_find_single_intersection(args))
 
     log.info(f"  Added {n_crossing} edge intersection points")
 
@@ -398,16 +802,67 @@ def filter_region_by_projection(
 
     all_points = np.array(result_points)
 
-    # Step 4: Extract hull vertices
-    from geometry import find_extreme_points
-    if len(all_points) > 10:
-        projected = all_points[:, :-1]
-        result = find_extreme_points(projected, progress_fn=None)
-        hull_vertices = all_points[result["vertex_indices"]]
-        log.info(f"  Final: {len(hull_vertices)} hull vertices")
-        return hull_vertices, len(hull_vertices)
+    # Step 4: Extract hull vertices using config settings
+    if len(all_points) <= 10:
+        return all_points, len(all_points)
 
-    return all_points, len(all_points)
+    from scipy.spatial import ConvexHull
+    projected = all_points[:, :-1]  # Project to n-1 dims (simplex constraint)
+    n_pts, dim = projected.shape
+
+    # Use config settings for hull extraction
+    max_hull_pts = cfg.hull.max_points  # from config.yaml
+    max_dim_exact = cfg.hull.max_dim_exact_volume  # dimensions to use exact ConvexHull
+
+    # For large point sets, subsample first to find approximate hull
+    if n_pts > max_hull_pts:
+        log.info(f"  Subsampling {n_pts} -> {max_hull_pts} points for hull...")
+        rng = np.random.default_rng(cfg.sampling.seed)
+
+        # Keep all original vertices (passing ones), subsample intersections
+        n_original = n_pass
+        n_intersections = n_pts - n_original
+
+        # Always keep original vertices
+        keep_original = min(n_original, max_hull_pts // 2)
+        keep_intersections = max_hull_pts - keep_original
+
+        if n_intersections > keep_intersections:
+            # Random subsample of intersection points
+            intersection_indices = np.arange(n_original, n_pts)
+            sampled_intersection_indices = rng.choice(
+                intersection_indices, keep_intersections, replace=False
+            )
+            keep_indices = np.concatenate([
+                np.arange(keep_original),
+                sampled_intersection_indices
+            ])
+        else:
+            keep_indices = np.arange(n_pts)
+
+        projected_sub = projected[keep_indices]
+        all_points_sub = all_points[keep_indices]
+    else:
+        projected_sub = projected
+        all_points_sub = all_points
+
+    # Try exact ConvexHull for lower dimensions
+    try:
+        if dim <= max_dim_exact and len(projected_sub) > dim + 1:
+            hull = ConvexHull(projected_sub)
+            hull_indices = np.unique(hull.simplices.flatten())
+            hull_vertices = all_points_sub[hull_indices]
+            log.info(f"  Final: {len(hull_vertices)} hull vertices (ConvexHull)")
+            return hull_vertices, len(hull_vertices)
+    except Exception as e:
+        log.warning(f"  ConvexHull failed: {e}")
+
+    # Fallback: random directions (uses cfg.hull.n_directions internally)
+    from geometry import find_extreme_points
+    result = find_extreme_points(projected_sub, progress_fn=None)
+    hull_vertices = all_points_sub[result["vertex_indices"]]
+    log.info(f"  Final: {len(hull_vertices)} hull vertices")
+    return hull_vertices, len(hull_vertices)
 
 
 # =============================================================================
@@ -484,6 +939,34 @@ def backproject_season(
     return results
 
 
+def _process_season_worker(season: int, shared_data: Dict[str, Any]) -> Tuple[List[Dict], List[str]]:
+    """
+    Worker function to process a single season.
+    Called in parallel for each season.
+    Returns (results, extra_log_lines).
+    """
+    from structures import WeekRegion
+
+    regions_data = shared_data["by_season"][season]
+    method = shared_data["method"]
+    tolerance = shared_data["tolerance"]
+    padding = shared_data["padding"]
+    n_samples = shared_data["n_samples"]
+
+    # Reconstruct WeekRegion objects
+    regions = [WeekRegion.from_dict(r) for r in regions_data]
+
+    results = backproject_season(
+        regions,
+        method=method,
+        tolerance=tolerance,
+        padding=padding,
+        n_samples=n_samples,
+    )
+
+    return results, []
+
+
 def main():
     cfg = get_config()
 
@@ -497,6 +980,8 @@ def main():
     parser.add_argument("--method", "-m", default=cfg.backprojection.method,
                         choices=["lp", "sample"],
                         help="Projection check method")
+    parser.add_argument("--sequential", action="store_true",
+                        help="Process seasons sequentially (disable parallelization)")
     args = parser.parse_args()
 
     # Load regions
@@ -514,25 +999,57 @@ def main():
         season_filter = set(int(s.strip()) for s in args.seasons.split(","))
         by_season = {s: rs for s, rs in by_season.items() if s in season_filter}
 
-    log.info(f"Processing {len(by_season)} seasons")
+    n_seasons = len(by_season)
+    log.info(f"Processing {n_seasons} seasons")
 
-    # Process each season
-    all_results = []
     bp_cfg = cfg.backprojection
+    all_results = []
 
-    for season in sorted(by_season.keys()):
-        log.info(f"\n{'='*60}")
-        log.info(f"Season {season}")
-        log.info(f"{'='*60}")
+    if args.sequential or n_seasons <= 1:
+        # Sequential processing
+        for season in sorted(by_season.keys()):
+            log.info(f"\n{'='*60}")
+            log.info(f"Season {season}")
+            log.info(f"{'='*60}")
 
-        season_results = backproject_season(
-            by_season[season],
-            method=args.method,
-            tolerance=bp_cfg.tolerance,
-            padding=bp_cfg.bounds_padding,
-            n_samples=bp_cfg.n_redistribution_samples,
+            season_results = backproject_season(
+                by_season[season],
+                method=args.method,
+                tolerance=bp_cfg.tolerance,
+                padding=bp_cfg.bounds_padding,
+                n_samples=bp_cfg.n_redistribution_samples,
+            )
+            all_results.extend(season_results)
+    else:
+        # Parallel processing of seasons
+        from parallel import run_parallel_seasons
+
+        # Serialize region data for workers
+        by_season_serialized = {
+            s: [r.raw_data for r in rs]
+            for s, rs in by_season.items()
+        }
+
+        shared_data = {
+            "by_season": by_season_serialized,
+            "method": args.method,
+            "tolerance": bp_cfg.tolerance,
+            "padding": bp_cfg.bounds_padding,
+            "n_samples": bp_cfg.n_redistribution_samples,
+        }
+
+        log.info(f"Using {cfg.parallel.n_workers} workers for parallel season processing")
+
+        season_results = run_parallel_seasons(
+            seasons=sorted(by_season.keys()),
+            process_fn=_process_season_worker,
+            shared_data=shared_data,
+            task_name="Backprojecting",
         )
-        all_results.extend(season_results)
+
+        # Collect results in season order
+        for season in sorted(season_results.keys()):
+            all_results.extend(season_results[season])
 
     # Save results
     log.info(f"\nSaving {len(all_results)} regions to {args.output}")

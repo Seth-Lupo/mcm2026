@@ -3,7 +3,7 @@
 # Sampling
 sampling:
   n_samples: 2000000        # initial random samples per event
-  seed: 42                 # random seed for reproducibility
+  seed: 67                 # random seed for reproducibility
 
 # Local walk refinement - explores from valid points to find more
 # Useful for small/high-dim regions with low acceptance rates
@@ -12,7 +12,7 @@ refinement:
   min_acceptance: 0.15     # only refine if acceptance rate below this
   walks_per_seed: 10       # random walks from each seed point
   steps_per_walk: 10       # steps per walk
-  step_size: 0.02          # step size (fraction of simplex)
+  step_size: 0.01          # step size (fraction of simplex)
   max_seeds: 100           # max seed points to start walks from
 
 # Convex Hull (approximate via extreme points)
@@ -21,19 +21,30 @@ hull:
   max_points: 1000          # subsample if more valid points than this
   include_axis_extremes: true
   max_dim_exact_volume: 7   # use exact ConvexHull for dims <= this, approx above
-  volume_samples: 10000     # Monte Carlo samples for approximate volume (more = accurate)
+  volume_samples: 100000     # Monte Carlo samples for approximate volume (more = accurate)
   fast_volume_dim_threshold: 6  # skip ConvexHull entirely for dims > this (use fast approx)
 
 # Output
 output:
   save_vertices: true
   save_centroid: true
-  precision: 6
+  precision: 10             # decimal places for output (max ~15 for float64)
 
 # Backprojection - constraining earlier weeks by later weeks
 backprojection:
   method: "lp"              # "lp" (linear program) or "sample" (monte carlo)
   n_redistribution_samples: 1000  # for sample method only
-  tolerance: 1e-9           # LP solver tolerance
-  bounds_padding: 0.001     # small padding on bounds for numerical stability
-  edge_intersection_tol: 1e-6  # tolerance for binary search on edge intersections
+  tolerance: 1e-24          # LP solver tolerance
+  bounds_padding: 1e-30      # padding on bounds for numerical stability
+  edge_intersection_tol: 1e-30  # tolerance for binary search on edge intersections
+
+# Parallelization
+parallel:
+  n_workers: 8                # number of CPU workers for parallel tasks
+  batch_size: 100             # batch size for parallel vertex verification
+
+# Numerical stability
+numerical:
+  epsilon: 1e-30            # small value to prevent division by zero
+  jitter: 1e-30             # tiny noise added to degenerate point sets
+  clamp_probabilities: true # clamp values to [0, 1] after operations
