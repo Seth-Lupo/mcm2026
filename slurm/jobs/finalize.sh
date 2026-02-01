@@ -1,7 +1,7 @@
 #!/bin/bash -l
 #SBATCH -J region_finalize
 #SBATCH --time=1-00:00:00
-#SBATCH -p batch
+#SBATCH -p batch,preempt
 #SBATCH -N 1
 #SBATCH -n 8
 #SBATCH --mem=32g
@@ -10,14 +10,13 @@
 #SBATCH --mail-type=END,FAIL
 
 #
-# Region Analysis - Finalize (Sample from hull, verify points, create point clouds)
-# CLI: python region-analysis/finalize.py --input PATH --output PATH --hull-samples N --simplex-samples N --seed S
+# Region Analysis - Finalize
 #
 
 cd "$HOME/mcm2026"
 
 module purge
-module load miniconda/23.10 2>/dev/null || module load anaconda/2021.05
+module load anaconda/2021.05
 source activate region-analysis
 
 export NUMBA_NUM_THREADS=${SLURM_NTASKS:-8}

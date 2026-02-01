@@ -1,7 +1,7 @@
 #!/bin/bash -l
 #SBATCH -J region_pipeline
 #SBATCH --time=4-00:00:00
-#SBATCH -p batch
+#SBATCH -p batch,preempt
 #SBATCH -N 1
 #SBATCH -n 16
 #SBATCH --mem=64g
@@ -11,13 +11,12 @@
 
 #
 # Region Analysis - Full Pipeline (all steps in one job)
-# Uses main.py to run: init -> backproj -> fwdproj -> finalize -> export -> verify
 #
 
 cd "$HOME/mcm2026"
 
 module purge
-module load miniconda/23.10 2>/dev/null || module load anaconda/2021.05
+module load anaconda/2021.05
 source activate region-analysis
 
 export NUMBA_NUM_THREADS=${SLURM_NTASKS:-16}

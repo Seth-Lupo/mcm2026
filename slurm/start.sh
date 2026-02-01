@@ -31,7 +31,7 @@ else
     exit 1
 fi
 
-CLUSTER_HOST="login.cluster.tufts.edu"
+CLUSTER_HOST="login.pax.tufts.edu"
 CLUSTER_SSH="${TUFTS_USER}@${CLUSTER_HOST}"
 
 # Colors for output
@@ -65,7 +65,7 @@ cmd_setup() {
         fi
 
         module purge
-        module load miniconda/23.10 2>/dev/null || module load anaconda/2021.05
+        module load anaconda/2021.05
 
         REPO_URL="${GITHUB_REPO:-https://github.com/your-username/mcm2026.git}"
         if [[ -d ~/mcm2026/.git ]]; then
@@ -86,12 +86,8 @@ cmd_setup() {
 
         source activate region-analysis
 
-        echo "Installing dependencies..."
-        conda install -y numpy scipy numba pandas pyyaml matplotlib -c conda-forge 2>/dev/null || true
-
-        if [[ -f requirements.txt ]]; then
-            pip install --quiet -r requirements.txt 2>/dev/null || pip install --quiet numpy scipy numba pandas pyyaml matplotlib seaborn
-        fi
+        echo "Installing dependencies from requirements.txt..."
+        pip install -r requirements.txt
 
         mkdir -p logs data slurm/jobs
 
@@ -108,7 +104,8 @@ cmd_setup() {
 REMOTE_SETUP
 
     log_info "Uploading SLURM job scripts..."
-    scp -r "$SCRIPT_DIR/jobs" "${CLUSTER_SSH}:~/mcm2026/slurm/"
+    ssh "$CLUSTER_SSH" "mkdir -p ~/mcm2026/slurm/jobs"
+    scp "$SCRIPT_DIR/jobs/"*.sh "${CLUSTER_SSH}:~/mcm2026/slurm/jobs/"
 
     log_info "Setup complete! Run './slurm/start.sh run' or './slurm/start.sh pipeline'"
 }
@@ -119,8 +116,8 @@ REMOTE_SETUP
 cmd_run() {
     log_info "Submitting chained pipeline to SLURM..."
 
-    scp -r "$SCRIPT_DIR/jobs" "${CLUSTER_SSH}:~/mcm2026/slurm/"
-    scp "$PROJECT_DIR/.env" "${CLUSTER_SSH}:~/mcm2026/.env"
+    ssh "$CLUSTER_SSH" "mkdir -p ~/mcm2026/slurm/jobs ~/mcm2026/logs ~/mcm2026/data"
+    scp "$SCRIPT_DIR/jobs/"*.sh "${CLUSTER_SSH}:~/mcm2026/slurm/jobs/"
 
     ssh "$CLUSTER_SSH" 'bash -s' << 'REMOTE_RUN'
         set -e
@@ -182,8 +179,8 @@ REMOTE_RUN
 cmd_pipeline() {
     log_info "Submitting full pipeline as single job..."
 
-    scp -r "$SCRIPT_DIR/jobs" "${CLUSTER_SSH}:~/mcm2026/slurm/"
-    scp "$PROJECT_DIR/.env" "${CLUSTER_SSH}:~/mcm2026/.env"
+    ssh "$CLUSTER_SSH" "mkdir -p ~/mcm2026/slurm/jobs ~/mcm2026/logs ~/mcm2026/data"
+    scp "$SCRIPT_DIR/jobs/"*.sh "${CLUSTER_SSH}:~/mcm2026/slurm/jobs/"
 
     ssh "$CLUSTER_SSH" 'bash -s' << 'REMOTE_PIPELINE'
         set -e
