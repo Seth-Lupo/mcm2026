@@ -65,6 +65,8 @@ def main():
     # Sampling options (defaults from config)
     parser.add_argument("--samples", "-n", type=int, default=cfg.sampling.n_samples,
                         help=f"Number of random samples per event (default: {cfg.sampling.n_samples})")
+    parser.add_argument("--season", type=int, default=None,
+                        help="Single season to analyze (e.g., --season 32)")
     parser.add_argument("--seasons", "-s", default=None,
                         help="Comma-separated seasons to analyze (default: all)")
     parser.add_argument("--seed", type=int, default=cfg.sampling.seed,
@@ -105,6 +107,13 @@ def main():
     steps_run = 0
     steps_failed = 0
 
+    # Handle --season (single) vs --seasons (multiple)
+    seasons_str = None
+    if args.season:
+        seasons_str = str(args.season)
+    elif args.seasons:
+        seasons_str = args.seasons
+
     print("="*70)
     print("  DWTS VOTE REGION ANALYSIS PIPELINE")
     print(f"  Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
@@ -112,15 +121,15 @@ def main():
     print(f"\n  Config: samples={args.samples}, seed={args.seed}")
     print(f"  Hull validity samples: {args.hull_validity_samples}")
     print(f"  Finalize: hull_samples={args.hull_samples}, simplex_samples={args.simplex_samples}")
-    if args.seasons:
-        print(f"  Seasons: {args.seasons}")
+    if seasons_str:
+        print(f"  Seasons: {seasons_str}")
     else:
         print(f"  Seasons: all")
 
     # Build common args
     common_args = []
-    if args.seasons:
-        common_args.extend(["--seasons", args.seasons])
+    if seasons_str:
+        common_args.extend(["--seasons", seasons_str])
     if args.sequential:
         common_args.append("--sequential")
 
