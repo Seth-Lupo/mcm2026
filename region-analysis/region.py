@@ -1,14 +1,14 @@
 """
 Convex hull approximation via extreme points in random directions.
 Fast for any dimension. Includes Monte Carlo validation of hull.
+
+Uses centralized premise logic from premises.py.
 """
 import numpy as np
-from pathlib import Path
 from dataclasses import dataclass
 from typing import Optional, List, Dict, Any, Set
 import json
 import logging
-import importlib.util
 
 from sampler import SampleResult
 from config import get_config
@@ -18,15 +18,7 @@ from geometry import (
     compute_diameter,
     find_extreme_points,
 )
-
-# Load simple-models/premises.py for validation
-_premises_path = Path(__file__).parent.parent / "simple-models" / "premises.py"
-_spec = importlib.util.spec_from_file_location("simple_premises", _premises_path)
-_premises = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(_premises)
-
-validate = _premises.validate
-get_premise_type = _premises.get_premise_type
+from premises import validate_point
 
 log = logging.getLogger(__name__)
 
@@ -36,6 +28,14 @@ def _sample_from_hull(vertices: np.ndarray, n_samples: int, rng: np.random.Gener
     Sample points uniformly from the convex hull of vertices.
 
     Uses Dirichlet sampling for random convex combinations.
+
+    Args:
+        vertices: (n_vertices, n_dims) array of hull vertices
+        n_samples: Number of points to sample
+        rng: Random number generator
+
+    Returns:
+        (n_samples, n_dims) array of sampled points
     """
     n_verts = len(vertices)
     if n_verts == 0:
@@ -49,25 +49,6 @@ def _sample_from_hull(vertices: np.ndarray, n_samples: int, rng: np.random.Gener
 
     # Compute convex combinations
     return weights @ vertices
-
-
-def _verify_point(
-    point: np.ndarray,
-    contestants: List[str],
-    judge_scores: np.ndarray,
-    eliminated: Set[str],
-    placements: Optional[np.ndarray],
-    season: int,
-    is_final: bool,
-) -> bool:
-    """Verify a single point against premise constraints."""
-    n_elim = len(eliminated)
-    premise_type = get_premise_type(season, n_elim, is_final)
-
-    if is_final and placements is not None:
-        return validate(premise_type, contestants, judge_scores, point, actual_placements=placements)
-    else:
-        return validate(premise_type, contestants, judge_scores, point, actual_eliminated=eliminated)
 
 
 def _progress(msg: str, newline: bool = False) -> None:
@@ -163,14 +144,17 @@ class RegionInfo:
 def compute_region(sample_result: SampleResult, hull_validity_samples: int = 10000) -> RegionInfo:
     """
     Compute region properties from valid samples.
-    Uses extreme points method for fast approximation.
 
+    Uses extreme points method for fast convex hull approximation.
     Includes Monte Carlo estimation of hull validity (what fraction of the
     convex hull actually satisfies the premise constraints).
 
     Args:
         sample_result: Result from sampling valid votes
         hull_validity_samples: Number of Monte Carlo samples for hull validity
+
+    Returns:
+        RegionInfo with computed properties
     """
     cfg = get_config()
     event = sample_result.event
@@ -240,7 +224,7 @@ def compute_region(sample_result: SampleResult, hull_validity_samples: int = 100
 
     n_valid_in_hull = 0
     for pt in hull_samples:
-        if _verify_point(pt, event.contestants, judge_scores, eliminated, placements, event.season, event.is_final):
+        if validate_point(pt, event.contestants, judge_scores, eliminated, placements, event.season, event.is_final):
             n_valid_in_hull += 1
 
     base_info.hull_validity = n_valid_in_hull / hull_validity_samples if hull_validity_samples > 0 else 0.0

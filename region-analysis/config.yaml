@@ -3,7 +3,7 @@
 # Sampling
 sampling:
   n_samples: 20000000        # initial random samples per event
-  seed: 67                 # random seed for reproducibility
+  seed: 100                 # random seed for reproducibility
 
 # Convex Hull (approximate via extreme points)
 hull:
@@ -11,7 +11,7 @@ hull:
   max_points: 1000          # subsample if more valid points than this
   include_axis_extremes: true
   max_dim_exact_volume: 4   # use exact ConvexHull for dims <= this, approx above
-  volume_samples: 100000     # Monte Carlo samples for approximate volume (more = accurate)
+  volume_samples: 5000000     # Monte Carlo samples for approximate volume (more = accurate)
   fast_volume_dim_threshold: 4  # skip ConvexHull entirely for dims > this (use fast approx)
 
 # Output

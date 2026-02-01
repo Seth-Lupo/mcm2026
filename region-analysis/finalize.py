@@ -23,17 +23,7 @@ from numba import njit
 from config import get_config
 from structures import WeekRegion, load_regions, save_results
 from geometry import simplex_volume
-
-# Load simple-models/premises.py directly for full access (matches verify.py)
-import importlib.util
-_premises_path = Path(__file__).parent.parent / "simple-models" / "premises.py"
-_spec = importlib.util.spec_from_file_location("simple_premises", _premises_path)
-_premises = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(_premises)
-
-PremiseType = _premises.PremiseType
-get_premise_type = _premises.get_premise_type
-validate = _premises.validate
+from premises import PremiseType, get_premise_type, validate_point
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s | %(message)s")
 log = logging.getLogger(__name__)
@@ -130,25 +120,20 @@ def load_events_dict() -> Dict[Tuple[int, int, bool], EventInfo]:
 
 
 def verify_point(point: np.ndarray, event: EventInfo) -> bool:
-    """Verify a single point against premise constraints using same logic as verify.py."""
-    if event.is_final:
-        if event.placements is None:
-            return False
-        return validate(
-            event.premise_type,
-            event.contestants,
-            event.judge_scores,
-            point,
-            actual_placements=event.placements,
-        )
-    else:
-        return validate(
-            event.premise_type,
-            event.contestants,
-            event.judge_scores,
-            point,
-            actual_eliminated=event.eliminated,
-        )
+    """
+    Verify a single point against premise constraints.
+
+    Uses centralized validate_point from premises.py for consistency.
+    """
+    return validate_point(
+        point=point,
+        contestants=event.contestants,
+        judge_scores=event.judge_scores,
+        eliminated=event.eliminated,
+        placements=event.placements,
+        season=event.season,
+        is_final=event.is_final,
+    )
 
 
 # =============================================================================
@@ -434,8 +419,11 @@ def main():
     cfg = get_config()
 
     parser = argparse.ArgumentParser(description="Finalize regions with verified point clouds")
-    parser.add_argument("--input", "-i", default=str(DATA_DIR / "regions-forwardprojected.json"),
-                        help="Input regions JSON path")
+    parser.add_argument("--regions", "-r", default=None,
+                        choices=["initial", "back", "forward"],
+                        help="Which regions to use: initial (regions.json), back (regions-backprojected.json), forward (regions-forwardprojected.json, default)")
+    parser.add_argument("--input", "-i", default=None,
+                        help="Custom input regions JSON path (overrides --regions)")
     parser.add_argument("--output", "-o", default=str(DATA_DIR / "regions-finalized.json"),
                         help="Output path")
     parser.add_argument("--seasons", "-s", default=None,
@@ -450,9 +438,19 @@ def main():
                         help="Process seasons sequentially")
     args = parser.parse_args()
 
+    # Determine input path
+    if args.input:
+        input_path = Path(args.input)
+    elif args.regions == "initial":
+        input_path = DATA_DIR / "regions.json"
+    elif args.regions == "back":
+        input_path = DATA_DIR / "regions-backprojected.json"
+    else:  # default to forward
+        input_path = DATA_DIR / "regions-forwardprojected.json"
+
     # Load regions
-    log.info(f"Loading regions from {args.input}")
-    regions = load_regions(Path(args.input))
+    log.info(f"Loading regions from {input_path}")
+    regions = load_regions(input_path)
     log.info(f"Loaded {len(regions)} regions")
 
     # Load events

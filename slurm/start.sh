@@ -7,7 +7,8 @@
 #
 # Commands:
 #   setup      - Clone repo and setup environment on cluster
-#   run        - Submit full pipeline (init -> backproj -> fwdproj -> export -> zip)
+#   run        - Submit full pipeline as chained jobs (init -> back -> fwd -> final -> export -> verify -> zip)
+#   pipeline   - Submit full pipeline as single job (uses main.py)
 #   status     - Check job status
 #   download   - Download results to local machine
 #   logs       - View recent job logs
@@ -49,7 +50,6 @@ log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
 cmd_setup() {
     log_info "Setting up environment on Tufts HPC..."
 
-    # First, upload .env so it's available on cluster
     log_info "Uploading configuration..."
     ssh "$CLUSTER_SSH" "mkdir -p ~/mcm2026"
     scp "$PROJECT_DIR/.env" "${CLUSTER_SSH}:~/mcm2026/.env"
@@ -58,18 +58,15 @@ cmd_setup() {
         set -e
         cd ~
 
-        # Load .env if exists
         if [[ -f ~/mcm2026/.env ]]; then
             set -a
             source ~/mcm2026/.env
             set +a
         fi
 
-        # Use miniconda (recommended by Tufts) or anaconda
         module purge
         module load miniconda/23.10 2>/dev/null || module load anaconda/2021.05
 
-        # Clone or update repo
         REPO_URL="${GITHUB_REPO:-https://github.com/your-username/mcm2026.git}"
         if [[ -d ~/mcm2026/.git ]]; then
             echo "Repository exists, pulling latest..."
@@ -82,29 +79,22 @@ cmd_setup() {
         fi
         cd ~/mcm2026
 
-        # Create conda environment if needed
         if ! conda env list | grep -q "^region-analysis "; then
             echo "Creating conda environment with Python 3.11..."
             conda create -n region-analysis python=3.11 pip -y
         fi
 
-        # Activate and install deps
-        # IMPORTANT: Tufts requires "source activate" not "conda activate"
         source activate region-analysis
 
-        echo "Installing dependencies from requirements.txt..."
-        # Install core scientific packages via conda (faster, better optimized)
+        echo "Installing dependencies..."
         conda install -y numpy scipy numba pandas pyyaml matplotlib -c conda-forge 2>/dev/null || true
 
-        # Install remaining from requirements.txt
         if [[ -f requirements.txt ]]; then
             pip install --quiet -r requirements.txt 2>/dev/null || pip install --quiet numpy scipy numba pandas pyyaml matplotlib seaborn
         fi
 
-        # Create directories
-        mkdir -p logs data
+        mkdir -p logs data slurm/jobs
 
-        # Verify setup
         echo ""
         echo "Verifying installation..."
         python -c "import numpy; print(f'  numpy {numpy.__version__}')"
@@ -117,20 +107,18 @@ cmd_setup() {
         conda deactivate
 REMOTE_SETUP
 
-    # Upload job scripts
     log_info "Uploading SLURM job scripts..."
     scp -r "$SCRIPT_DIR/jobs" "${CLUSTER_SSH}:~/mcm2026/slurm/"
 
-    log_info "Setup complete! Run './slurm/start.sh run' to submit the pipeline."
+    log_info "Setup complete! Run './slurm/start.sh run' or './slurm/start.sh pipeline'"
 }
 
 #
-# RUN: Submit the full pipeline with job dependencies
+# RUN: Submit chained jobs (each step as separate job with dependencies)
 #
 cmd_run() {
-    log_info "Submitting pipeline to SLURM..."
+    log_info "Submitting chained pipeline to SLURM..."
 
-    # Upload latest scripts and config
     scp -r "$SCRIPT_DIR/jobs" "${CLUSTER_SSH}:~/mcm2026/slurm/"
     scp "$PROJECT_DIR/.env" "${CLUSTER_SSH}:~/mcm2026/.env"
 
@@ -138,45 +126,90 @@ cmd_run() {
         set -e
         cd ~/mcm2026
 
-        # Load config
         if [[ -f .env ]]; then
             set -a
             source .env
             set +a
         fi
 
-        # Make scripts executable
         chmod +x slurm/jobs/*.sh
-
         mkdir -p logs
 
-        # Submit pipeline with dependencies
-        echo "Submitting initialize job..."
+        echo "Pipeline: init -> backproj -> fwdproj -> finalize -> export -> verify -> zip"
+        echo ""
+
+        echo "1. Submitting initialize..."
         JOB1=$(sbatch --parsable slurm/jobs/initialize.sh)
-        echo "  Job ID: $JOB1"
+        echo "   Job ID: $JOB1"
 
-        echo "Submitting backprojection job (waits for $JOB1)..."
+        echo "2. Submitting backprojection (waits for $JOB1)..."
         JOB2=$(sbatch --parsable --dependency=afterok:$JOB1 slurm/jobs/backproject.sh)
-        echo "  Job ID: $JOB2"
+        echo "   Job ID: $JOB2"
 
-        echo "Submitting forward projection job (waits for $JOB2)..."
+        echo "3. Submitting forward projection (waits for $JOB2)..."
         JOB3=$(sbatch --parsable --dependency=afterok:$JOB2 slurm/jobs/forwardproject.sh)
-        echo "  Job ID: $JOB3"
+        echo "   Job ID: $JOB3"
 
-        echo "Submitting export job (waits for $JOB3)..."
-        JOB4=$(sbatch --parsable --dependency=afterok:$JOB3 slurm/jobs/export.sh)
-        echo "  Job ID: $JOB4"
+        echo "4. Submitting finalize (waits for $JOB3)..."
+        JOB4=$(sbatch --parsable --dependency=afterok:$JOB3 slurm/jobs/finalize.sh)
+        echo "   Job ID: $JOB4"
 
-        echo "Submitting zip/transfer job (waits for $JOB4)..."
-        JOB5=$(sbatch --parsable --dependency=afterok:$JOB4 slurm/jobs/transfer.sh)
-        echo "  Job ID: $JOB5"
+        echo "5. Submitting export (waits for $JOB4)..."
+        JOB5=$(sbatch --parsable --dependency=afterok:$JOB4 slurm/jobs/export.sh)
+        echo "   Job ID: $JOB5"
+
+        echo "6. Submitting verify (waits for $JOB5)..."
+        JOB6=$(sbatch --parsable --dependency=afterok:$JOB5 slurm/jobs/verify.sh)
+        echo "   Job ID: $JOB6"
+
+        echo "7. Submitting zip/transfer (waits for $JOB6)..."
+        JOB7=$(sbatch --parsable --dependency=afterok:$JOB6 slurm/jobs/transfer.sh)
+        echo "   Job ID: $JOB7"
 
         echo ""
         echo "Pipeline submitted!"
-        echo "Chain: init($JOB1) -> backproj($JOB2) -> fwdproj($JOB3) -> export($JOB4) -> zip($JOB5)"
+        echo "Chain: init($JOB1) -> back($JOB2) -> fwd($JOB3) -> final($JOB4) -> export($JOB5) -> verify($JOB6) -> zip($JOB7)"
         echo ""
         echo "Monitor: squeue -u $USER"
 REMOTE_RUN
+
+    log_info "Pipeline submitted! Use './slurm/start.sh status' to monitor."
+}
+
+#
+# PIPELINE: Submit full pipeline as single job (uses main.py)
+#
+cmd_pipeline() {
+    log_info "Submitting full pipeline as single job..."
+
+    scp -r "$SCRIPT_DIR/jobs" "${CLUSTER_SSH}:~/mcm2026/slurm/"
+    scp "$PROJECT_DIR/.env" "${CLUSTER_SSH}:~/mcm2026/.env"
+
+    ssh "$CLUSTER_SSH" 'bash -s' << 'REMOTE_PIPELINE'
+        set -e
+        cd ~/mcm2026
+
+        if [[ -f .env ]]; then
+            set -a
+            source .env
+            set +a
+        fi
+
+        chmod +x slurm/jobs/*.sh
+        mkdir -p logs
+
+        echo "Submitting full pipeline job (main.py)..."
+        JOB1=$(sbatch --parsable slurm/jobs/pipeline.sh)
+        echo "  Job ID: $JOB1"
+
+        echo "Submitting zip/transfer (waits for $JOB1)..."
+        JOB2=$(sbatch --parsable --dependency=afterok:$JOB1 slurm/jobs/transfer.sh)
+        echo "  Job ID: $JOB2"
+
+        echo ""
+        echo "Pipeline submitted: pipeline($JOB1) -> zip($JOB2)"
+        echo "Monitor: squeue -u $USER"
+REMOTE_PIPELINE
 
     log_info "Pipeline submitted! Use './slurm/start.sh status' to monitor."
 }
@@ -198,7 +231,6 @@ cmd_download() {
     LOCAL_DIR="${LOCAL_RESULTS_DIR:-./cluster_results}"
     mkdir -p "$LOCAL_DIR"
 
-    # Check for zip file
     LATEST_ZIP=$(ssh "$CLUSTER_SSH" "ls -t ~/mcm2026/results_*.zip 2>/dev/null | head -1" || echo "")
 
     if [[ -n "$LATEST_ZIP" ]]; then
@@ -262,7 +294,8 @@ Usage: ./slurm/start.sh [command]
 
 Commands:
   setup      Clone repo and setup conda environment on cluster
-  run        Submit full pipeline with job dependencies
+  run        Submit chained jobs: init -> back -> fwd -> final -> export -> verify -> zip
+  pipeline   Submit as single job using main.py (simpler, but no partial recovery)
   status     Check SLURM job status
   download   Download results to local machine
   logs       View recent job logs
@@ -272,11 +305,22 @@ Commands:
 
 Workflow:
   1. cp .env.example .env        # Create config
-  2. nano .env                   # Fill in TUFTS_USER, etc.
+  2. nano .env                   # Fill in TUFTS_USER, GITHUB_REPO, etc.
   3. ./slurm/start.sh setup      # One-time cluster setup
-  4. ./slurm/start.sh run        # Submit pipeline
+  4. ./slurm/start.sh run        # Submit pipeline (or: pipeline)
   5. ./slurm/start.sh status     # Monitor jobs
   6. ./slurm/start.sh download   # Get results when done
+
+Pipeline steps:
+  1. Initialize   - Sample valid vote distributions, compute convex hulls
+  2. Backproject  - Constrain earlier weeks by later weeks
+  3. Forward      - Constrain later weeks by earlier weeks
+  4. Finalize     - Sample from hull, verify points, create point clouds
+  5. Export       - Export to CSV and TXT summaries
+  6. Verify       - Verify results against elimination constraints
+  7. Zip          - Package results for download
+
+Note: Experiment settings (samples, seed, seasons) are in region-analysis/config.yaml
 EOF
 }
 
@@ -284,6 +328,7 @@ EOF
 case "${1:-help}" in
     setup)    cmd_setup ;;
     run)      cmd_run ;;
+    pipeline) cmd_pipeline ;;
     status)   cmd_status ;;
     download) cmd_download ;;
     logs)     cmd_logs ;;

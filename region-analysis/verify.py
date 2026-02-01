@@ -23,22 +23,16 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 import multiprocessing
 
 from config import get_config
-
-# Load simple-models/premises.py directly for full access
-import importlib.util
-_premises_path = Path(__file__).parent.parent / "simple-models" / "premises.py"
-_spec = importlib.util.spec_from_file_location("simple_premises", _premises_path)
-_premises = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(_premises)
-
-PremiseType = _premises.PremiseType
-get_premise_type = _premises.get_premise_type
-validate = _premises.validate
-predict = _premises.predict
-combine_by_rank = _premises.combine_by_rank
-combine_by_percent = _premises.combine_by_percent
-scores_to_ranks = _premises.scores_to_ranks
-scores_to_percent = _premises.scores_to_percent
+from premises import (
+    PremiseType,
+    get_premise_type,
+    validate_point,
+    predict_outcome,
+    combine_by_rank,
+    combine_by_percent,
+    scores_to_ranks,
+    scores_to_percent,
+)
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s | %(message)s")
 log = logging.getLogger(__name__)
@@ -205,18 +199,21 @@ def verify_point_core(
 ) -> VerificationResult:
     """
     Core verification logic for a single point.
+
+    Uses centralized premise functions from premises.py.
     Designed for use in parallel workers.
     """
     n_elim = len(eliminated)
     premise_type = get_premise_type(season, n_elim, is_final)
 
-    # Get prediction
-    outcome = predict(
-        premise_type,
-        contestants,
-        judge_scores,
-        fan_votes,
+    # Get prediction using centralized predict_outcome
+    outcome = predict_outcome(
+        contestants=contestants,
+        judge_scores=judge_scores,
+        fan_votes=fan_votes,
+        season=season,
         n_elim=max(1, n_elim),
+        is_final=is_final,
     )
 
     # Calculate margin
@@ -234,17 +231,16 @@ def verify_point_core(
         else:
             margin = 0.0
 
-    # Validate
-    if is_final and placements is not None:
-        is_valid = validate(
-            premise_type, contestants, judge_scores, fan_votes,
-            actual_placements=placements,
-        )
-    else:
-        is_valid = validate(
-            premise_type, contestants, judge_scores, fan_votes,
-            actual_eliminated=eliminated,
-        )
+    # Validate using centralized validate_point
+    is_valid = validate_point(
+        point=fan_votes,
+        contestants=contestants,
+        judge_scores=judge_scores,
+        eliminated=eliminated,
+        placements=placements,
+        season=season,
+        is_final=is_final,
+    )
 
     return VerificationResult(
         valid=is_valid,

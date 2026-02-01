@@ -81,6 +81,9 @@ def main():
                         help="Samples from hull for finalization (default: 10000)")
     parser.add_argument("--simplex-samples", type=int, default=cfg.hull.volume_samples,
                         help=f"Simplex samples for accuracy estimation (default: {cfg.hull.volume_samples})")
+    parser.add_argument("--finalize-from", choices=["initial", "back", "forward"],
+                        default="forward",
+                        help="Which regions to finalize from: initial, back, or forward (default: forward)")
 
     # Skip options
     parser.add_argument("--skip-init", action="store_true",
@@ -120,7 +123,7 @@ def main():
     print("="*70)
     print(f"\n  Config: samples={args.samples}, seed={args.seed}")
     print(f"  Hull validity samples: {args.hull_validity_samples}")
-    print(f"  Finalize: hull_samples={args.hull_samples}, simplex_samples={args.simplex_samples}")
+    print(f"  Finalize: from={args.finalize_from}, hull_samples={args.hull_samples}, simplex_samples={args.simplex_samples}")
     if seasons_str:
         print(f"  Seasons: {seasons_str}")
     else:
@@ -181,13 +184,13 @@ def main():
     # Step 4: Finalize
     if not args.skip_finalize:
         final_args = common_args.copy()
-        final_args.extend(["--input", str(DATA_DIR / "regions-forwardprojected.json")])
+        final_args.extend(["--regions", args.finalize_from])
         final_args.extend(["--output", str(DATA_DIR / "regions-finalized.json")])
         final_args.extend(["--hull-samples", str(args.hull_samples)])
         final_args.extend(["--simplex-samples", str(args.simplex_samples)])
         final_args.extend(["--seed", str(args.seed)])
 
-        if run_step("Finalize", "finalize.py", final_args):
+        if run_step(f"Finalize (from {args.finalize_from})", "finalize.py", final_args):
             steps_run += 1
         else:
             steps_failed += 1
