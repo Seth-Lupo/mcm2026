@@ -9,7 +9,7 @@ sampling:
 # Useful for small/high-dim regions with low acceptance rates
 refinement:
   enabled: true            # enable local walk refinement
-  min_acceptance: 0.10     # only refine if acceptance rate below this
+  min_acceptance: 0.15     # only refine if acceptance rate below this
   walks_per_seed: 10       # random walks from each seed point
   steps_per_walk: 10       # steps per walk
   step_size: 0.02          # step size (fraction of simplex)
@@ -18,10 +18,11 @@ refinement:
 # Convex Hull (approximate via extreme points)
 hull:
   n_directions: 10000       # random directions to find extreme points
-  max_points: 1000        # subsample if more valid points than this
+  max_points: 1000          # subsample if more valid points than this
   include_axis_extremes: true
   max_dim_exact_volume: 7   # use exact ConvexHull for dims <= this, approx above
-  volume_samples: 10000    # Monte Carlo samples for approximate volume (more = accurate)
+  volume_samples: 10000     # Monte Carlo samples for approximate volume (more = accurate)
+  fast_volume_dim_threshold: 6  # skip ConvexHull entirely for dims > this (use fast approx)
 
 # Output
 output:
@@ -35,3 +36,4 @@ backprojection:
   n_redistribution_samples: 1000  # for sample method only
   tolerance: 1e-9           # LP solver tolerance
   bounds_padding: 0.001     # small padding on bounds for numerical stability
+  edge_intersection_tol: 1e-6  # tolerance for binary search on edge intersections

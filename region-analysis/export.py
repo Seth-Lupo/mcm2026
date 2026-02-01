@@ -49,12 +49,19 @@ def flatten_region(d: Dict[str, Any], projection_type: Optional[str] = None) -> 
     for i, val in enumerate(centroid):
         row[f"centroid_{i}"] = val
 
-    # Add dim_bounds as min/max columns
+    # Add dim_bounds as min/max/delta columns
     dim_bounds = region.get("dim_bounds") or []
     for i, bounds in enumerate(dim_bounds):
         if bounds:
-            row[f"dim_{i}_min"] = bounds[0]
-            row[f"dim_{i}_max"] = bounds[1]
+            # Handle both old format [min, max] and new format {"min":, "max":, "delta":}
+            if isinstance(bounds, dict):
+                row[f"dim_{i}_min"] = bounds.get("min")
+                row[f"dim_{i}_max"] = bounds.get("max")
+                row[f"dim_{i}_delta"] = bounds.get("delta")
+            else:
+                row[f"dim_{i}_min"] = bounds[0]
+                row[f"dim_{i}_max"] = bounds[1]
+                row[f"dim_{i}_delta"] = bounds[1] - bounds[0] if len(bounds) >= 2 else None
 
     # Projection stats
     if projection_type == "back":
@@ -115,7 +122,16 @@ def write_csv(regions: List[Dict[str, Any]], path: Path, projection_type: Option
             return 0
 
     centroid_keys = sorted([k for k in all_keys if k.startswith("centroid_")], key=extract_num)
-    dim_keys = sorted([k for k in all_keys if k.startswith("dim_")], key=lambda k: (extract_num(k), k))
+
+    # Sort dim keys: group by dimension number, then order min/max/delta within each
+    def dim_sort_key(k):
+        parts = k.split("_")
+        dim_num = int(parts[1]) if len(parts) > 1 and parts[1].isdigit() else 0
+        # Order: min=0, max=1, delta=2
+        suffix_order = {"min": 0, "max": 1, "delta": 2}.get(parts[-1], 3)
+        return (dim_num, suffix_order)
+
+    dim_keys = sorted([k for k in all_keys if k.startswith("dim_")], key=dim_sort_key)
 
     fieldnames = main_fields + centroid_keys + dim_keys
 

@@ -21,20 +21,21 @@ import json
 import logging
 import numpy as np
 from scipy.optimize import linprog
-from scipy.spatial import ConvexHull
 from typing import List, Dict, Any, Optional, Tuple
-from dataclasses import dataclass
 from collections import defaultdict
-from math import factorial
+from concurrent.futures import ProcessPoolExecutor
+import multiprocessing
 
 from config import get_config
-
-
-def simplex_volume(n: int) -> float:
-    """Volume of the (n-1)-simplex in projected coordinates."""
-    if n <= 1:
-        return 1.0
-    return 1.0 / factorial(n - 1)
+from geometry import simplex_volume, compute_volume, compute_diameter
+from structures import (
+    WeekRegion,
+    load_regions,
+    save_results,
+    recompute_region_stats,
+    find_eliminated,
+    get_contestant_indices,
+)
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s | %(message)s")
 log = logging.getLogger(__name__)
@@ -43,172 +44,8 @@ DATA_DIR = Path(__file__).parent.parent / "data"
 
 
 # =============================================================================
-# Data structures (same as backprojection)
-# =============================================================================
-
-@dataclass
-class WeekRegion:
-    """Parsed region data for a single week."""
-    season: int
-    week: int
-    is_final: bool
-    contestants: List[str]
-    n_contestants: int
-    premise_type: str
-    n_valid: int
-    vertices: Optional[np.ndarray]
-    dim_bounds: Optional[np.ndarray]
-    centroid: Optional[np.ndarray]
-    raw_data: Dict[str, Any]
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]) -> "WeekRegion":
-        """Parse from JSON dict."""
-        event = d["event"]
-        region = d["region"]
-
-        vertices = None
-        if "vertices" in region and region["vertices"]:
-            vertices = np.array(region["vertices"])
-
-        dim_bounds = None
-        if "dim_bounds" in region and region["dim_bounds"]:
-            dim_bounds = np.array(region["dim_bounds"])
-
-        centroid = None
-        if "centroid" in region and region["centroid"]:
-            centroid = np.array(region["centroid"])
-
-        return cls(
-            season=event["season"],
-            week=event["week"],
-            is_final=event["is_final"],
-            contestants=event["contestants"],
-            n_contestants=event["n_contestants"],
-            premise_type=event["premise_type"],
-            n_valid=d["sampling"]["n_valid"],
-            vertices=vertices,
-            dim_bounds=dim_bounds,
-            centroid=centroid,
-            raw_data=d,
-        )
-
-
-# =============================================================================
-# Volume computation (same as backprojection)
-# =============================================================================
-
-def compute_volume(vertices: np.ndarray) -> float:
-    """Compute convex hull volume with fallback to approximation."""
-    cfg = get_config()
-
-    if len(vertices) < 2:
-        return 0.0
-
-    points = vertices[:, :-1]
-    n_points, dim = points.shape
-
-    if dim == 0 or n_points < dim + 1:
-        return 0.0
-
-    if dim > cfg.hull.max_dim_exact_volume:
-        return _approximate_volume(points, cfg.hull.volume_samples)
-
-    try:
-        hull = ConvexHull(points)
-        return hull.volume
-    except Exception:
-        return _approximate_volume(points, cfg.hull.volume_samples)
-
-
-def _approximate_volume_fast(vertices: np.ndarray) -> float:
-    """Fast volume approximation WITHOUT building ConvexHull."""
-    n_points, dim = vertices.shape
-    if dim == 0 or n_points < dim + 1:
-        return 0.0
-
-    centroid = vertices.mean(axis=0)
-    diffs = vertices - centroid
-    avg_sq_dist = np.mean(np.sum(diffs ** 2, axis=1))
-    r = np.sqrt(avg_sq_dist)
-    return (r ** dim) / factorial(dim)
-
-
-def _approximate_volume(vertices: np.ndarray, n_samples: int = 100000) -> float:
-    """Approximate convex hull volume."""
-    n_points, dim = vertices.shape
-    if dim == 0 or n_points < dim + 1:
-        return 0.0
-
-    if dim > 6:
-        return _approximate_volume_fast(vertices)
-
-    mins = vertices.min(axis=0)
-    maxs = vertices.max(axis=0)
-
-    widths = maxs - mins
-    if np.any(widths == 0):
-        return 0.0
-
-    box_volume = np.prod(widths)
-
-    rng = np.random.default_rng(42)
-    samples = rng.uniform(mins, maxs, size=(n_samples, dim))
-
-    try:
-        from scipy.spatial import ConvexHull
-        hull = ConvexHull(vertices)
-        samples_h = np.hstack([samples, np.ones((n_samples, 1))])
-        inside = np.all(samples_h @ hull.equations.T <= 1e-10, axis=1)
-        fraction_inside = inside.sum() / n_samples
-        return box_volume * fraction_inside
-    except Exception:
-        return _approximate_volume_fast(vertices)
-
-
-def compute_diameter(vertices: np.ndarray) -> float:
-    """Compute diameter (max pairwise distance) of vertices."""
-    if len(vertices) < 2:
-        return 0.0
-    from scipy.spatial.distance import pdist
-    distances = pdist(vertices)
-    return float(distances.max()) if len(distances) > 0 else 0.0
-
-
-# =============================================================================
 # Core forward projection logic
 # =============================================================================
-
-def find_eliminated(week_n: WeekRegion, week_n1: WeekRegion) -> List[str]:
-    """Find contestants eliminated between week N and week N+1."""
-    return [c for c in week_n.contestants if c not in week_n1.contestants]
-
-
-def get_contestant_indices(
-    week_n: WeekRegion,
-    week_n1: WeekRegion,
-) -> Tuple[List[int], List[int], List[int]]:
-    """
-    Get index mappings between weeks.
-
-    Returns:
-        eliminated_indices_n: indices of eliminated in week N
-        survivor_indices_n: indices of survivors in week N
-        survivor_indices_n1: corresponding indices in week N+1
-    """
-    eliminated = find_eliminated(week_n, week_n1)
-    eliminated_indices_n = [week_n.contestants.index(e) for e in eliminated]
-
-    survivor_indices_n = []
-    survivor_indices_n1 = []
-
-    for i, name in enumerate(week_n.contestants):
-        if name in week_n1.contestants:
-            survivor_indices_n.append(i)
-            survivor_indices_n1.append(week_n1.contestants.index(name))
-
-    return eliminated_indices_n, survivor_indices_n, survivor_indices_n1
-
 
 def check_point_came_from_lp(
     point_n1: np.ndarray,
@@ -323,18 +160,75 @@ def check_point_came_from_lp(
 # Region filtering
 # =============================================================================
 
+def get_hull_edges(vertices: np.ndarray) -> List[Tuple[int, int]]:
+    """
+    Get edges of the convex hull.
+
+    For high dimensions, falls back to all pairs (conservative but slower).
+    """
+    n_verts, dim = vertices.shape
+
+    if dim <= 6 and n_verts >= dim + 1:
+        try:
+            from scipy.spatial import ConvexHull
+            projected = vertices[:, :-1]
+            hull = ConvexHull(projected)
+
+            edges = set()
+            for simplex in hull.simplices:
+                for i in range(len(simplex)):
+                    for j in range(i + 1, len(simplex)):
+                        edge = (min(simplex[i], simplex[j]), max(simplex[i], simplex[j]))
+                        edges.add(edge)
+            return list(edges)
+        except Exception:
+            pass
+
+    return [(i, j) for i in range(n_verts) for j in range(i + 1, n_verts)]
+
+
+def _find_single_intersection_forward(args):
+    """
+    Worker function for parallel edge intersection finding.
+    """
+    v_pass, v_fail, eliminated_indices_n, survivor_indices_n, survivor_indices_n1, source_bounds, padding = args
+
+    def check_fn(p):
+        return check_point_came_from_lp(
+            p, eliminated_indices_n, survivor_indices_n, survivor_indices_n1,
+            source_bounds, padding=padding
+        )
+
+    lo, hi = 0.0, 1.0
+    tol, max_iter = 1e-4, 15
+
+    for _ in range(max_iter):
+        mid = (lo + hi) / 2
+        p_mid = (1 - mid) * v_pass + mid * v_fail
+
+        if check_fn(p_mid):
+            lo = mid
+        else:
+            hi = mid
+
+        if hi - lo < tol:
+            break
+
+    return (1 - lo) * v_pass + lo * v_fail
+
+
 def filter_region_by_forward_projection(
     week_n: WeekRegion,
     week_n1: WeekRegion,
     padding: float = 0.001,
 ) -> Tuple[np.ndarray, int]:
     """
-    Filter week N+1's vertices to those that could have come from week N.
+    Compute the intersection of week N+1's region with the forward projection constraint.
 
-    Returns:
-        filtered_vertices: vertices that passed the projection test
-        n_filtered: count of filtered vertices
+    Uses parallel processing for edge intersection finding.
     """
+    cfg = get_config()
+
     if week_n1.vertices is None or len(week_n1.vertices) == 0:
         return np.array([]), 0
 
@@ -347,66 +241,94 @@ def filter_region_by_forward_projection(
     eliminated_indices_n, survivor_indices_n, survivor_indices_n1 = get_contestant_indices(week_n, week_n1)
 
     log.info(f"  Eliminated: {eliminated}")
-    log.info(f"  Checking {len(week_n1.vertices)} vertices...")
 
-    # Filter vertices
-    valid_mask = np.array([
-        check_point_came_from_lp(
-            v,
-            eliminated_indices_n,
-            survivor_indices_n,
-            survivor_indices_n1,
-            week_n.dim_bounds,
-            padding=padding,
-        )
-        for v in week_n1.vertices
-    ])
-    filtered = week_n1.vertices[valid_mask]
+    # Build check function for vertex testing
+    check_fn = lambda p: check_point_came_from_lp(
+        p, eliminated_indices_n, survivor_indices_n, survivor_indices_n1,
+        week_n.dim_bounds, padding=padding,
+    )
 
-    return filtered, len(filtered)
+    vertices = week_n1.vertices
+    n_verts = len(vertices)
 
+    # Step 1: Check all vertices
+    log.info(f"  Checking {n_verts} vertices...")
+    passes = np.array([check_fn(v) for v in vertices])
+    n_pass = passes.sum()
+    log.info(f"  {n_pass}/{n_verts} vertices pass")
 
-def recompute_region_stats(
-    vertices: np.ndarray,
-    original_data: Dict[str, Any],
-) -> Tuple[Dict[str, Any], float]:
-    """Recompute region statistics from filtered vertices."""
-    result = json.loads(json.dumps(original_data))  # deep copy
+    if n_pass == n_verts:
+        return vertices, n_verts
 
-    if len(vertices) == 0:
-        result["region"]["has_hull"] = False
-        result["region"]["n_vertices"] = 0
-        result["region"]["vertices"] = []
-        result["region"]["dim_bounds"] = None
-        result["region"]["centroid"] = None
-        result["region"]["volume"] = 0.0
-        result["region"]["relative_volume"] = 0.0
-        result["region"]["diameter"] = 0.0
-        return result, 0.0
+    if n_pass == 0:
+        return np.array([]), 0
 
-    cfg = get_config()
-    p = cfg.output.precision
+    # Step 2: Collect passing vertices
+    result_points = [vertices[i] for i in range(n_verts) if passes[i]]
 
-    filtered_volume = compute_volume(vertices)
-    diameter = compute_diameter(vertices)
+    # Step 3: Find edge intersections
+    edges = get_hull_edges(vertices)
+    crossing_edges = [(i, j) for i, j in edges if passes[i] != passes[j]]
+    n_crossing = len(crossing_edges)
 
-    # Compute relative volume (compared to full simplex)
-    n_contestants = vertices.shape[1]
-    full_simplex_vol = simplex_volume(n_contestants)
-    relative_volume = filtered_volume / full_simplex_vol if full_simplex_vol > 0 else 0.0
+    log.info(f"  {n_crossing} edges cross boundary (of {len(edges)} total)")
 
-    result["region"]["n_vertices"] = len(vertices)
-    result["region"]["vertices"] = [[round(float(x), p) for x in row] for row in vertices]
-    result["region"]["centroid"] = [round(float(x), p) for x in vertices.mean(axis=0)]
-    result["region"]["dim_bounds"] = [
-        [round(float(vertices[:, i].min()), p), round(float(vertices[:, i].max()), p)]
-        for i in range(vertices.shape[1])
-    ]
-    result["region"]["volume"] = round(float(filtered_volume), p + 4)
-    result["region"]["relative_volume"] = round(float(relative_volume), p + 4)
-    result["region"]["diameter"] = round(float(diameter), p)
+    if n_crossing == 0:
+        all_points = np.array(result_points)
+        return all_points, len(all_points)
 
-    return result, filtered_volume
+    # Sample edges if too many
+    max_edges = 500
+    if n_crossing > max_edges:
+        rng = np.random.default_rng(cfg.sampling.seed)
+        sampled_indices = rng.choice(n_crossing, max_edges, replace=False)
+        crossing_edges = [crossing_edges[i] for i in sampled_indices]
+        log.info(f"  Sampled {max_edges} edges (was {n_crossing})")
+        n_crossing = max_edges
+
+    # Prepare args for parallel processing
+    edge_args = []
+    for i, j in crossing_edges:
+        if passes[i]:
+            v_pass, v_fail = vertices[i], vertices[j]
+        else:
+            v_pass, v_fail = vertices[j], vertices[i]
+
+        edge_args.append((
+            v_pass, v_fail,
+            eliminated_indices_n, survivor_indices_n, survivor_indices_n1,
+            week_n.dim_bounds, padding
+        ))
+
+    # Parallel edge intersection finding
+    n_workers = min(multiprocessing.cpu_count(), 8, n_crossing)
+
+    if n_crossing > 50 and n_workers > 1:
+        log.info(f"  Finding intersections in parallel ({n_workers} workers)...")
+        with ProcessPoolExecutor(max_workers=n_workers) as executor:
+            intersections = list(executor.map(_find_single_intersection_forward, edge_args, chunksize=max(1, n_crossing // n_workers // 4)))
+        result_points.extend(intersections)
+    else:
+        for args in edge_args:
+            result_points.append(_find_single_intersection_forward(args))
+
+    log.info(f"  Added {n_crossing} edge intersection points")
+
+    if len(result_points) == 0:
+        return np.array([]), 0
+
+    all_points = np.array(result_points)
+
+    # Step 4: Extract hull vertices
+    from geometry import find_extreme_points
+    if len(all_points) > 10:
+        projected = all_points[:, :-1]
+        result = find_extreme_points(projected, progress_fn=None)
+        hull_vertices = all_points[result["vertex_indices"]]
+        log.info(f"  Final: {len(hull_vertices)} hull vertices")
+        return hull_vertices, len(hull_vertices)
+
+    return all_points, len(all_points)
 
 
 # =============================================================================
@@ -474,19 +396,6 @@ def forwardproject_season(
             prev_region = WeekRegion.from_dict(prev_data)
 
     return results
-
-
-def load_regions(path: Path) -> List[WeekRegion]:
-    """Load and parse regions from JSON."""
-    with open(path) as f:
-        data = json.load(f)
-    return [WeekRegion.from_dict(d) for d in data]
-
-
-def save_results(results: List[Dict[str, Any]], path: Path) -> None:
-    """Save forward projected results to JSON."""
-    with open(path, "w") as f:
-        json.dump(results, f, indent=2)
 
 
 def main():

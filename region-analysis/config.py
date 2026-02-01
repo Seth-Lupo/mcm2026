@@ -32,6 +32,7 @@ class HullConfig:
     include_axis_extremes: bool = True
     max_dim_exact_volume: int = 6
     volume_samples: int = 100000
+    fast_volume_dim_threshold: int = 6
 
 
 @dataclass
@@ -47,6 +48,7 @@ class BackprojectionConfig:
     n_redistribution_samples: int = 1000
     tolerance: float = 1e-9
     bounds_padding: float = 0.001
+    edge_intersection_tol: float = 1e-6
 
 
 @dataclass
