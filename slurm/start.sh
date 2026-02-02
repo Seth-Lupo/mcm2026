@@ -131,20 +131,34 @@ REMOTE_SETUP
 cmd_run() {
     log_info "Submitting chained pipeline to SLURM..."
 
+    # Check local git status
+    LOCAL_COMMIT=$(git rev-parse HEAD)
+    log_info "Local commit: $LOCAL_COMMIT"
+
     # Single connection for all operations
     ssh -o ControlMaster=auto -o ControlPath=/tmp/ssh-%r@%h:%p -o ControlPersist=60 "$CLUSTER_SSH" "mkdir -p ~/mcm2026/slurm/jobs ~/mcm2026/logs ~/mcm2026/data"
     scp -o ControlPath=/tmp/ssh-%r@%h:%p "$SCRIPT_DIR/jobs/"*.sh "${CLUSTER_SSH}:~/mcm2026/slurm/jobs/"
+    scp -o ControlPath=/tmp/ssh-%r@%h:%p "$PROJECT_DIR/region-analysis/config.yaml" "${CLUSTER_SSH}:~/mcm2026/region-analysis/config.yaml"
 
     ssh -o ControlPath=/tmp/ssh-%r@%h:%p "$CLUSTER_SSH" 'bash -s' << 'REMOTE_RUN'
         set -e
         cd ~/mcm2026
 
         echo "Pulling latest from GitHub..."
-        git pull || echo "Git pull failed, continuing with existing code"
+        git fetch origin
+        git reset --hard origin/main || git reset --hard origin/master
+
+        REMOTE_COMMIT=$(git rev-parse HEAD)
+        echo ""
+        echo "=========================================="
+        echo "REMOTE COMMIT: $REMOTE_COMMIT"
+        echo "=========================================="
+        echo ""
 
         echo "Cleaning old data files..."
         rm -f data/regions*.json data/regions*.csv data/regions*.txt data/events.json
         rm -f logs/*.out logs/*.err
+        rm -rf __pycache__ region-analysis/__pycache__
 
         chmod +x slurm/jobs/*.sh
         mkdir -p logs data
@@ -196,20 +210,34 @@ REMOTE_RUN
 cmd_pipeline() {
     log_info "Submitting full pipeline as single job..."
 
+    # Check local git status
+    LOCAL_COMMIT=$(git rev-parse HEAD)
+    log_info "Local commit: $LOCAL_COMMIT"
+
     # Single connection for all operations
     ssh -o ControlMaster=auto -o ControlPath=/tmp/ssh-%r@%h:%p -o ControlPersist=60 "$CLUSTER_SSH" "mkdir -p ~/mcm2026/slurm/jobs ~/mcm2026/logs ~/mcm2026/data"
     scp -o ControlPath=/tmp/ssh-%r@%h:%p "$SCRIPT_DIR/jobs/"*.sh "${CLUSTER_SSH}:~/mcm2026/slurm/jobs/"
+    scp -o ControlPath=/tmp/ssh-%r@%h:%p "$PROJECT_DIR/region-analysis/config.yaml" "${CLUSTER_SSH}:~/mcm2026/region-analysis/config.yaml"
 
     ssh -o ControlPath=/tmp/ssh-%r@%h:%p "$CLUSTER_SSH" 'bash -s' << 'REMOTE_PIPELINE'
         set -e
         cd ~/mcm2026
 
         echo "Pulling latest from GitHub..."
-        git pull || echo "Git pull failed, continuing with existing code"
+        git fetch origin
+        git reset --hard origin/main || git reset --hard origin/master
+
+        REMOTE_COMMIT=$(git rev-parse HEAD)
+        echo ""
+        echo "=========================================="
+        echo "REMOTE COMMIT: $REMOTE_COMMIT"
+        echo "=========================================="
+        echo ""
 
         echo "Cleaning old data files..."
         rm -f data/regions*.json data/regions*.csv data/regions*.txt data/events.json
         rm -f logs/*.out logs/*.err
+        rm -rf __pycache__ region-analysis/__pycache__
 
         chmod +x slurm/jobs/*.sh
         mkdir -p logs data
