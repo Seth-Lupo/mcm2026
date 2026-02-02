@@ -1,0 +1,15 @@
+name: mcm
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.12
+  - numpy
+  - scipy
+  - numba
+  - pandas
+  - matplotlib
+  - seaborn
+  - pyyaml
+  - requests
+  - pip

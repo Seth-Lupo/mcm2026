@@ -16,8 +16,8 @@
 cd "$HOME/mcm2026"
 
 module purge
-module load miniforge/24.7.1 2>/dev/null || module load miniforge 2>/dev/null || module load python 2>/dev/null || true
-source ~/mcm2026/venv/bin/activate
+module load miniforge/24.11.2-py312 2>/dev/null || module load miniforge/24.7.1-py312 2>/dev/null || module load miniforge 2>/dev/null
+source activate ~/mcm2026/mcm_env
 
 echo "=============================================="
 echo "Region Analysis - Export"
@@ -38,5 +38,5 @@ echo "Finished:   $(date)"
 echo "Exit code:  $EXIT_CODE"
 echo "=============================================="
 
-deactivate
+source deactivate || true
 exit $EXIT_CODE

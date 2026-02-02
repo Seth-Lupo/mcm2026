@@ -78,28 +78,24 @@ cmd_setup() {
 
         mkdir -p logs data slurm/jobs
 
-        # Load Python - try different module names
+        # Load miniforge (per Tufts docs)
         module purge
-        module load miniforge/24.7.1 2>/dev/null || \
-        module load miniforge/latest 2>/dev/null || \
-        module load miniforge 2>/dev/null || \
-        module load python/3.12 2>/dev/null || \
-        module load python/3.11 2>/dev/null || \
-        module load python 2>/dev/null || \
-        echo "Warning: Could not load python module"
+        module load miniforge/24.11.2-py312 2>/dev/null || \
+        module load miniforge/24.7.1-py312 2>/dev/null || \
+        module load miniforge 2>/dev/null
 
-        echo "Python: $(which python) - $(python --version)"
+        echo "Conda: $(which conda)"
 
-        if [[ ! -d venv ]]; then
-            echo "Creating Python venv..."
-            python3 -m venv venv
+        # Create/update conda environment from environment.yml
+        if [[ ! -d ~/mcm2026/mcm_env ]]; then
+            echo "Creating conda environment..."
+            conda env create -f environment.yml -p ~/mcm2026/mcm_env
+        else
+            echo "Updating conda environment..."
+            conda env update -f environment.yml -p ~/mcm2026/mcm_env --prune || true
         fi
 
-        source venv/bin/activate
-
-        echo "Installing dependencies from requirements.txt..."
-        pip install --upgrade pip
-        pip install -r requirements.txt
+        source activate ~/mcm2026/mcm_env
 
         echo ""
         echo "Verifying installation..."
@@ -110,7 +106,7 @@ cmd_setup() {
 
         echo ""
         echo "Setup complete!"
-        deactivate
+        source deactivate || true
 REMOTE_SETUP
 
     log_info "Uploading SLURM job scripts..."
