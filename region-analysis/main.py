@@ -102,6 +102,8 @@ def main():
     # Processing options
     parser.add_argument("--sequential", action="store_true",
                         help="Disable parallel processing")
+    parser.add_argument("--merge", action="store_true",
+                        help="Merge with existing files instead of overwriting (only replaces processed seasons)")
 
     args = parser.parse_args()
 
@@ -128,6 +130,8 @@ def main():
         print(f"  Seasons: {seasons_str}")
     else:
         print(f"  Seasons: all")
+    if args.merge:
+        print(f"  Mode: MERGE (only update processed seasons)")
 
     # Build common args
     common_args = []
@@ -135,6 +139,8 @@ def main():
         common_args.extend(["--seasons", seasons_str])
     if args.sequential:
         common_args.append("--sequential")
+    if args.merge:
+        common_args.append("--merge")
 
     # Step 1: Initialize
     if not args.skip_init:

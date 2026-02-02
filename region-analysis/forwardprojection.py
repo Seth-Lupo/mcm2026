@@ -742,6 +742,8 @@ def main():
                         help="Comma-separated seasons to process")
     parser.add_argument("--sequential", action="store_true",
                         help="Process seasons sequentially (disable parallelization)")
+    parser.add_argument("--merge", action="store_true",
+                        help="Merge with existing output file instead of overwriting (only replaces processed seasons)")
     args = parser.parse_args()
 
     # Load regions
@@ -806,8 +808,16 @@ def main():
             all_results.extend(season_results[season])
 
     # Save results
-    log.info(f"\nSaving {len(all_results)} regions to {args.output}")
-    save_results(all_results, Path(args.output))
+    output_path = Path(args.output)
+    if args.merge and output_path.exists():
+        from structures import merge_results
+        seasons_processed = set(by_season.keys())
+        merged = merge_results(all_results, output_path, seasons_processed)
+        log.info(f"\nMerging {len(all_results)} new regions with existing file ({len(merged)} total)")
+        save_results(merged, output_path)
+    else:
+        log.info(f"\nSaving {len(all_results)} regions to {args.output}")
+        save_results(all_results, output_path)
 
     # Summary
     print("\n" + "=" * 60)

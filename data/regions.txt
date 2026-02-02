@@ -1,31 +1,321 @@
 ======================================================================
 REGION ANALYSIS SUMMARY
-Generated: 2026-02-01 17:23:57
+Generated: 2026-02-02 01:57:14
 Source: regions.json
 ======================================================================
 
 OVERALL STATISTICS
 ----------------------------------------
-Total regions:        9
-With valid hull:      9 (100.0%)
+Total regions:        295
+With valid hull:      295 (100.0%)
 Zero valid points:    0 (0.0%)
 Low valid (<10):      0 (0.0%)
 
 BY PREMISE TYPE
 ----------------------------------------
 Premise          Count  Valid   Avg Rate
-RR_B2                7      7   39.0965%
-RR_B2_MULTI          1      1    9.3048%
-RR_FINAL             1      1    1.6689%
+PP_ELIM            166    166   21.0609%
+PP_FINAL            25     25   14.8213%
+PP_MULTI            28     28    5.9425%
+RR_B2               44     44   40.3923%
+RR_ELIM             11     11   31.5213%
+RR_FINAL             9      9   14.5368%
+RR_MULTI            12     12   13.6730%
 
 SUCCESSFUL REGIONS (non-zero valid points)
 ----------------------------------------------------------------------
-S34W02             RR_B2_MULTI  n=14  valid=1860960  rate=9.3048%  vertices= 399  rel_vol=0.000000
-S34W03             RR_B2        n=12  valid=9103276  rate=45.5164%  vertices= 323  rel_vol=0.000002
-S34W04             RR_B2        n=11  valid=1948461  rate=9.7423%  vertices= 276  rel_vol=0.000009
-S34W06             RR_B2        n=10  valid=9736405  rate=48.6820%  vertices= 275  rel_vol=0.000042
-S34W07             RR_B2        n= 9  valid=7760808  rate=38.8040%  vertices= 226  rel_vol=0.000233
-S34W08             RR_B2        n= 8  valid=10064044  rate=50.3202%  vertices= 204  rel_vol=0.000951
-S34W09             RR_B2        n= 7  valid=12790091  rate=63.9505%  vertices= 168  rel_vol=0.004637
-S34W10             RR_B2        n= 6  valid=3332007  rate=16.6600%  vertices=  99  rel_vol=0.008503
-S34W11 [FINAL]     RR_FINAL     n= 5  valid=333789  rate=1.6689%  vertices=  81  rel_vol=0.014538
+S01W02             RR_ELIM      n= 6  valid=377634  rate=18.8817%  vertices=  59  rel_vol=0.108432
+S01W03             RR_ELIM      n= 5  valid=849333  rate=42.4667%  vertices=  45  rel_vol=0.341455
+S01W04             RR_ELIM      n= 4  valid=334007  rate=16.7004%  vertices=  27  rel_vol=0.190675
+S01W05             RR_ELIM      n= 3  valid=999795  rate=49.9898%  vertices=  16  rel_vol=0.479991
+S01W06 [FINAL]     RR_FINAL     n= 2  valid=999468  rate=49.9734%  vertices=   2  rel_vol=0.249085
+S02W01             RR_ELIM      n=10  valid=525953  rate=26.2977%  vertices= 121  rel_vol=0.000025
+S02W02             RR_ELIM      n= 9  valid=576041  rate=28.8021%  vertices= 105  rel_vol=0.000097
+S02W03             RR_ELIM      n= 8  valid=217234  rate=10.8617%  vertices=  96  rel_vol=0.000280
+S02W04             RR_ELIM      n= 7  valid=759225  rate=37.9612%  vertices=  81  rel_vol=0.001560
+S02W05             RR_ELIM      n= 6  valid=796429  rate=39.8215%  vertices=  79  rel_vol=0.224548
+S02W06             RR_ELIM      n= 5  valid=666051  rate=33.3025%  vertices=  67  rel_vol=0.202908
+S02W07             RR_ELIM      n= 4  valid=832982  rate=41.6491%  vertices=  33  rel_vol=0.344039
+S02W08 [FINAL]     RR_FINAL     n= 3  valid=667042  rate=33.3521%  vertices=  15  rel_vol=0.306362
+S03W01             PP_ELIM      n=11  valid=650308  rate=32.5154%  vertices= 131  rel_vol=0.000009
+S03W02             PP_ELIM      n=10  valid=222573  rate=11.1287%  vertices= 119  rel_vol=0.000020
+S03W03             PP_ELIM      n= 9  valid=252347  rate=12.6174%  vertices=  97  rel_vol=0.000087
+S03W04             PP_ELIM      n= 8  valid=265466  rate=13.2733%  vertices=  83  rel_vol=0.000432
+S03W05             PP_MULTI     n= 7  valid= 99725  rate=4.9863%  vertices=  87  rel_vol=0.000479
+S03W07             PP_ELIM      n= 5  valid=624242  rate=31.2121%  vertices=  48  rel_vol=0.189789
+S03W08             PP_ELIM      n= 4  valid=539542  rate=26.9771%  vertices=  25  rel_vol=0.218115
+S03W09             PP_ELIM      n= 3  valid=666996  rate=33.3498%  vertices=  15  rel_vol=0.302918
+S03W10 [FINAL]     PP_FINAL     n= 2  valid=999425  rate=49.9712%  vertices=   2  rel_vol=0.248311
+S04W02             PP_ELIM      n=11  valid=223293  rate=11.1646%  vertices= 103  rel_vol=0.000007
+S04W03             PP_ELIM      n=10  valid=227240  rate=11.3620%  vertices= 120  rel_vol=0.000012
+S04W04             PP_ELIM      n= 9  valid=469351  rate=23.4675%  vertices= 101  rel_vol=0.000173
+S04W05             PP_ELIM      n= 8  valid=744033  rate=37.2017%  vertices=  96  rel_vol=0.000456
+S04W06             PP_ELIM      n= 7  valid=329190  rate=16.4595%  vertices=  72  rel_vol=0.001396
+S04W07             PP_ELIM      n= 6  valid=487800  rate=24.3900%  vertices=  66  rel_vol=0.109074
+S04W08             PP_ELIM      n= 5  valid=745569  rate=37.2784%  vertices=  62  rel_vol=0.231589
+S04W09             PP_ELIM      n= 4  valid=531849  rate=26.5924%  vertices=  33  rel_vol=0.224444
+S04W10 [FINAL]     PP_FINAL     n= 3  valid=344600  rate=17.2300%  vertices=   9  rel_vol=0.158150
+S05W01             PP_ELIM      n=12  valid=518303  rate=25.9151%  vertices= 143  rel_vol=0.000001
+S05W02             PP_ELIM      n=11  valid=171738  rate=8.5869%  vertices= 119  rel_vol=0.000002
+S05W03             PP_ELIM      n=10  valid=545496  rate=27.2748%  vertices= 114  rel_vol=0.000018
+S05W04             PP_ELIM      n= 9  valid=389788  rate=19.4894%  vertices= 112  rel_vol=0.000105
+S05W05             PP_ELIM      n= 8  valid=467221  rate=23.3610%  vertices= 109  rel_vol=0.000519
+S05W06             PP_ELIM      n= 7  valid=306695  rate=15.3347%  vertices=  73  rel_vol=0.001474
+S05W07             PP_ELIM      n= 6  valid=395358  rate=19.7679%  vertices=  66  rel_vol=0.093711
+S05W08             PP_ELIM      n= 5  valid=441472  rate=22.0736%  vertices=  54  rel_vol=0.149600
+S05W09             PP_ELIM      n= 4  valid=511655  rate=25.5827%  vertices=  33  rel_vol=0.213966
+S05W10 [FINAL]     PP_FINAL     n= 3  valid=416464  rate=20.8232%  vertices=  15  rel_vol=0.196238
+S06W02             PP_MULTI     n=12  valid=151036  rate=7.5518%  vertices= 140  rel_vol=0.000000
+S06W03             PP_ELIM      n=10  valid=282769  rate=14.1384%  vertices= 136  rel_vol=0.000010
+S06W04             PP_ELIM      n= 9  valid=567888  rate=28.3944%  vertices= 117  rel_vol=0.000122
+S06W05             PP_ELIM      n= 8  valid=450811  rate=22.5405%  vertices= 102  rel_vol=0.000410
+S06W06             PP_ELIM      n= 7  valid=558448  rate=27.9224%  vertices=  92  rel_vol=0.001514
+S06W07             PP_ELIM      n= 6  valid=344053  rate=17.2026%  vertices=  65  rel_vol=0.090002
+S06W08             PP_ELIM      n= 5  valid=409110  rate=20.4555%  vertices=  36  rel_vol=0.139843
+S06W09             PP_ELIM      n= 4  valid=579293  rate=28.9646%  vertices=  33  rel_vol=0.251061
+S06W10 [FINAL]     PP_FINAL     n= 3  valid=385046  rate=19.2523%  vertices=  12  rel_vol=0.180508
+S07W01             PP_MULTI     n=13  valid= 97762  rate=4.8881%  vertices= 150  rel_vol=0.000000
+S07W02             PP_MULTI     n=11  valid= 44539  rate=2.2269%  vertices= 122  rel_vol=0.000001
+S07W04             PP_ELIM      n= 9  valid=520717  rate=26.0358%  vertices= 109  rel_vol=0.000141
+S07W05             PP_ELIM      n= 8  valid=356543  rate=17.8271%  vertices=  96  rel_vol=0.000272
+S07W06             PP_ELIM      n= 7  valid=775297  rate=38.7649%  vertices=  90  rel_vol=0.001510
+S07W07             PP_ELIM      n= 6  valid=340448  rate=17.0224%  vertices=  72  rel_vol=0.084003
+S07W08             PP_ELIM      n= 5  valid=486811  rate=24.3406%  vertices=  49  rel_vol=0.153835
+S07W09             PP_ELIM      n= 4  valid=617414  rate=30.8707%  vertices=  32  rel_vol=0.243727
+S07W10 [FINAL]     PP_FINAL     n= 3  valid=352772  rate=17.6386%  vertices=  12  rel_vol=0.166893
+S08W02             PP_ELIM      n=13  valid=218834  rate=10.9417%  vertices= 153  rel_vol=0.000000
+S08W03             PP_ELIM      n=12  valid=317906  rate=15.8953%  vertices= 142  rel_vol=0.000000
+S08W04             PP_MULTI     n=11  valid=236472  rate=11.8236%  vertices= 127  rel_vol=0.000003
+S08W05             PP_ELIM      n= 9  valid=256984  rate=12.8492%  vertices= 127  rel_vol=0.000040
+S08W06             PP_ELIM      n= 8  valid=664174  rate=33.2087%  vertices= 100  rel_vol=0.000464
+S08W07             PP_ELIM      n= 7  valid=578258  rate=28.9129%  vertices= 104  rel_vol=0.001458
+S08W08             PP_ELIM      n= 6  valid=359241  rate=17.9620%  vertices=  80  rel_vol=0.079213
+S08W09             PP_ELIM      n= 5  valid=434785  rate=21.7392%  vertices=  59  rel_vol=0.137155
+S08W10             PP_ELIM      n= 4  valid=675006  rate=33.7503%  vertices=  37  rel_vol=0.278339
+S08W11 [FINAL]     PP_FINAL     n= 3  valid=349010  rate=17.4505%  vertices=  12  rel_vol=0.158456
+S09W01             PP_MULTI     n=16  valid= 96136  rate=4.8068%  vertices= 170  rel_vol=0.000000
+S09W02             PP_ELIM      n=14  valid=298405  rate=14.9202%  vertices= 153  rel_vol=0.000000
+S09W03             PP_MULTI     n=13  valid= 93823  rate=4.6912%  vertices= 141  rel_vol=0.000000
+S09W04             PP_ELIM      n=11  valid=391411  rate=19.5706%  vertices= 131  rel_vol=0.000002
+S09W05             PP_ELIM      n=10  valid=313220  rate=15.6610%  vertices= 123  rel_vol=0.000021
+S09W06             PP_MULTI     n= 9  valid=149220  rate=7.4610%  vertices= 116  rel_vol=0.000034
+S09W07             PP_MULTI     n= 7  valid=165570  rate=8.2785%  vertices=  85  rel_vol=0.000720
+S09W08             PP_ELIM      n= 5  valid=463764  rate=23.1882%  vertices=  46  rel_vol=0.165788
+S09W09             PP_ELIM      n= 4  valid=480207  rate=24.0103%  vertices=  33  rel_vol=0.188900
+S09W10 [FINAL]     PP_FINAL     n= 3  valid=388033  rate=19.4017%  vertices=  12  rel_vol=0.184299
+S10W02             PP_ELIM      n=11  valid=112699  rate=5.6349%  vertices= 128  rel_vol=0.000002
+S10W03             PP_ELIM      n=10  valid=677715  rate=33.8857%  vertices= 122  rel_vol=0.000022
+S10W04             PP_ELIM      n= 9  valid=454828  rate=22.7414%  vertices= 110  rel_vol=0.000081
+S10W05             PP_ELIM      n= 8  valid=635086  rate=31.7543%  vertices=  89  rel_vol=0.000707
+S10W06             PP_ELIM      n= 7  valid=506644  rate=25.3322%  vertices=  66  rel_vol=0.003707
+S10W07             PP_ELIM      n= 6  valid=357930  rate=17.8965%  vertices=  64  rel_vol=0.095452
+S10W08             PP_ELIM      n= 5  valid=610245  rate=30.5123%  vertices=  52  rel_vol=0.188635
+S10W09             PP_ELIM      n= 4  valid=615452  rate=30.7726%  vertices=  27  rel_vol=0.253260
+S10W10 [FINAL]     PP_FINAL     n= 3  valid=347064  rate=17.3532%  vertices=  11  rel_vol=0.166164
+S11W01             PP_ELIM      n=12  valid=384194  rate=19.2097%  vertices= 130  rel_vol=0.000001
+S11W02             PP_ELIM      n=11  valid=754745  rate=37.7373%  vertices= 136  rel_vol=0.000003
+S11W03             PP_ELIM      n=10  valid=460888  rate=23.0444%  vertices= 125  rel_vol=0.000019
+S11W04             PP_ELIM      n= 9  valid=580065  rate=29.0033%  vertices= 107  rel_vol=0.000136
+S11W05             PP_ELIM      n= 8  valid=334906  rate=16.7453%  vertices=  84  rel_vol=0.000434
+S11W06             PP_ELIM      n= 7  valid=164695  rate=8.2348%  vertices=  74  rel_vol=0.000568
+S11W07             PP_ELIM      n= 6  valid=342272  rate=17.1136%  vertices=  57  rel_vol=0.082524
+S11W08             PP_ELIM      n= 5  valid=534939  rate=26.7470%  vertices=  48  rel_vol=0.172448
+S11W09             PP_ELIM      n= 4  valid=499378  rate=24.9689%  vertices=  33  rel_vol=0.204759
+S11W10 [FINAL]     PP_FINAL     n= 3  valid=382799  rate=19.1399%  vertices=  16  rel_vol=0.182936
+S12W02             PP_ELIM      n=11  valid=341824  rate=17.0912%  vertices= 126  rel_vol=0.000004
+S12W03             PP_ELIM      n=10  valid=641233  rate=32.0617%  vertices= 121  rel_vol=0.000017
+S12W04             PP_ELIM      n= 9  valid=326805  rate=16.3403%  vertices= 105  rel_vol=0.000103
+S12W05             PP_ELIM      n= 8  valid=379555  rate=18.9778%  vertices= 100  rel_vol=0.000273
+S12W06             PP_ELIM      n= 7  valid=508672  rate=25.4336%  vertices=  80  rel_vol=0.001667
+S12W07             PP_ELIM      n= 6  valid=376581  rate=18.8290%  vertices=  51  rel_vol=0.079969
+S12W08             PP_ELIM      n= 5  valid=397877  rate=19.8939%  vertices=  42  rel_vol=0.134735
+S12W09             PP_ELIM      n= 4  valid=740287  rate=37.0144%  vertices=  31  rel_vol=0.297925
+S12W10 [FINAL]     PP_FINAL     n= 3  valid=320663  rate=16.0331%  vertices=  12  rel_vol=0.151027
+S13W01             PP_ELIM      n=12  valid=456841  rate=22.8421%  vertices= 135  rel_vol=0.000001
+S13W02             PP_ELIM      n=11  valid=120018  rate=6.0009%  vertices= 125  rel_vol=0.000002
+S13W03             PP_ELIM      n=10  valid=163433  rate=8.1716%  vertices= 114  rel_vol=0.000010
+S13W04             PP_ELIM      n= 9  valid=331640  rate=16.5820%  vertices= 109  rel_vol=0.000049
+S13W05             PP_ELIM      n= 8  valid=531267  rate=26.5634%  vertices=  77  rel_vol=0.000786
+S13W06             PP_ELIM      n= 7  valid=546060  rate=27.3030%  vertices=  82  rel_vol=0.001729
+S13W07             PP_ELIM      n= 6  valid=386224  rate=19.3112%  vertices=  54  rel_vol=0.092862
+S13W08             PP_ELIM      n= 5  valid=618666  rate=30.9333%  vertices=  54  rel_vol=0.192092
+S13W09             PP_ELIM      n= 4  valid=737983  rate=36.8991%  vertices=  38  rel_vol=0.305439
+S13W10 [FINAL]     PP_FINAL     n= 3  valid=336791  rate=16.8395%  vertices=  11  rel_vol=0.162070
+S14W02             PP_ELIM      n=12  valid=505333  rate=25.2667%  vertices= 138  rel_vol=0.000001
+S14W03             PP_ELIM      n=11  valid=256905  rate=12.8453%  vertices= 118  rel_vol=0.000005
+S14W04             PP_ELIM      n=10  valid=328034  rate=16.4017%  vertices= 121  rel_vol=0.000014
+S14W05             PP_ELIM      n= 9  valid=550376  rate=27.5188%  vertices= 118  rel_vol=0.000078
+S14W06             PP_ELIM      n= 8  valid=606069  rate=30.3034%  vertices=  93  rel_vol=0.000552
+S14W07             PP_ELIM      n= 7  valid=324093  rate=16.2047%  vertices=  82  rel_vol=0.001052
+S14W08             PP_MULTI     n= 6  valid=144133  rate=7.2067%  vertices=  80  rel_vol=0.033303
+S14W09             PP_ELIM      n= 4  valid=462408  rate=23.1204%  vertices=  30  rel_vol=0.184116
+S14W10 [FINAL]     PP_FINAL     n= 3  valid=336423  rate=16.8212%  vertices=  12  rel_vol=0.159264
+S15W01             PP_ELIM      n=13  valid=460193  rate=23.0097%  vertices= 139  rel_vol=0.000000
+S15W02             PP_ELIM      n=12  valid=176195  rate=8.8097%  vertices= 139  rel_vol=0.000001
+S15W03             PP_MULTI     n=11  valid= 43119  rate=2.1559%  vertices= 128  rel_vol=0.000002
+S15W04             PP_ELIM      n= 9  valid=371286  rate=18.5643%  vertices= 115  rel_vol=0.000076
+S15W06             PP_ELIM      n= 8  valid=159887  rate=7.9943%  vertices=  85  rel_vol=0.000193
+S15W08             PP_MULTI     n= 7  valid=114563  rate=5.7282%  vertices=  77  rel_vol=0.000534
+S15W09             PP_MULTI     n= 5  valid=209976  rate=10.4988%  vertices=  57  rel_vol=0.066745
+S15W10 [FINAL]     PP_FINAL     n= 3  valid=334270  rate=16.7135%  vertices=  13  rel_vol=0.155415
+S16W02             PP_ELIM      n=12  valid=484028  rate=24.2014%  vertices= 146  rel_vol=0.000001
+S16W03             PP_ELIM      n=11  valid=559690  rate=27.9845%  vertices= 133  rel_vol=0.000004
+S16W04             PP_ELIM      n=10  valid=448838  rate=22.4419%  vertices=  96  rel_vol=0.000027
+S16W05             PP_ELIM      n= 9  valid=503506  rate=25.1753%  vertices= 120  rel_vol=0.000056
+S16W06             PP_ELIM      n= 8  valid=474515  rate=23.7258%  vertices= 104  rel_vol=0.000396
+S16W07             PP_ELIM      n= 7  valid=779197  rate=38.9599%  vertices=  90  rel_vol=0.001968
+S16W08             PP_ELIM      n= 6  valid=614151  rate=30.7076%  vertices=  55  rel_vol=0.131521
+S16W09             PP_ELIM      n= 5  valid=546854  rate=27.3427%  vertices=  50  rel_vol=0.181878
+S16W10 [FINAL]     PP_FINAL     n= 4  valid= 85000  rate=4.2500%  vertices=  29  rel_vol=0.035586
+S17W02             PP_ELIM      n=12  valid=396046  rate=19.8023%  vertices= 130  rel_vol=0.000001
+S17W03             PP_ELIM      n=11  valid=588185  rate=29.4092%  vertices= 124  rel_vol=0.000008
+S17W04             PP_ELIM      n=10  valid=549895  rate=27.4947%  vertices= 129  rel_vol=0.000017
+S17W05             PP_ELIM      n= 9  valid=121862  rate=6.0931%  vertices=  94  rel_vol=0.000043
+S17W07             PP_ELIM      n= 8  valid=282729  rate=14.1364%  vertices=  93  rel_vol=0.000360
+S17W08             PP_ELIM      n= 7  valid=298749  rate=14.9375%  vertices=  71  rel_vol=0.001711
+S17W09             PP_ELIM      n= 6  valid=234470  rate=11.7235%  vertices=  68  rel_vol=0.057416
+S17W10             PP_ELIM      n= 5  valid=495199  rate=24.7599%  vertices=  56  rel_vol=0.171441
+S17W11 [FINAL]     PP_FINAL     n= 4  valid=112250  rate=5.6125%  vertices=  34  rel_vol=0.045247
+S18W01             PP_ELIM      n=12  valid=365783  rate=18.2892%  vertices= 148  rel_vol=0.000001
+S18W02             PP_MULTI     n=11  valid=122476  rate=6.1238%  vertices= 126  rel_vol=0.000002
+S18W05             PP_ELIM      n= 9  valid=282621  rate=14.1311%  vertices= 107  rel_vol=0.000083
+S18W06             PP_ELIM      n= 8  valid=386146  rate=19.3073%  vertices=  89  rel_vol=0.000568
+S18W07             PP_ELIM      n= 7  valid=424841  rate=21.2421%  vertices=  57  rel_vol=0.006032
+S18W08             PP_ELIM      n= 6  valid=315846  rate=15.7923%  vertices=  73  rel_vol=0.082871
+S18W09             PP_ELIM      n= 5  valid=406025  rate=20.3012%  vertices=  46  rel_vol=0.148360
+S18W10 [FINAL]     PP_FINAL     n= 4  valid= 80625  rate=4.0312%  vertices=  30  rel_vol=0.033504
+S19W01             PP_ELIM      n=13  valid=209854  rate=20.9854%  vertices= 153  rel_vol=0.000000
+S19W02             PP_ELIM      n=12  valid=120907  rate=12.0907%  vertices= 137  rel_vol=0.000001
+S19W03             PP_ELIM      n=11  valid=216846  rate=21.6846%  vertices= 131  rel_vol=0.000004
+S19W04             PP_ELIM      n=10  valid=125444  rate=12.5444%  vertices= 112  rel_vol=0.000012
+S19W06             PP_ELIM      n= 9  valid=109851  rate=10.9851%  vertices= 110  rel_vol=0.000067
+S19W07             PP_ELIM      n= 8  valid=182849  rate=18.2849%  vertices=  85  rel_vol=0.000535
+S19W08             PP_ELIM      n= 7  valid=339144  rate=33.9144%  vertices=  85  rel_vol=0.001955
+S19W09             PP_ELIM      n= 6  valid=176963  rate=17.6963%  vertices=  62  rel_vol=0.088422
+S19W10             PP_ELIM      n= 5  valid=313294  rate=31.3294%  vertices=  58  rel_vol=0.200231
+S19W11 [FINAL]     PP_FINAL     n= 4  valid= 44849  rate=4.4849%  vertices=  33  rel_vol=0.036740
+S20W02             PP_ELIM      n=12  valid= 34522  rate=3.4522%  vertices= 142  rel_vol=0.000000
+S20W03             PP_ELIM      n=11  valid=228113  rate=22.8113%  vertices= 129  rel_vol=0.000004
+S20W04             PP_ELIM      n=10  valid=139335  rate=13.9335%  vertices= 109  rel_vol=0.000021
+S20W05             PP_ELIM      n= 9  valid=149156  rate=14.9156%  vertices= 111  rel_vol=0.000059
+S20W06             PP_ELIM      n= 8  valid=155684  rate=15.5684%  vertices=  87  rel_vol=0.000523
+S20W07             PP_ELIM      n= 7  valid= 88697  rate=8.8697%  vertices=  73  rel_vol=0.001187
+S20W08             PP_MULTI     n= 6  valid=107567  rate=10.7567%  vertices=  75  rel_vol=0.048896
+S20W09             PP_ELIM      n= 4  valid=236058  rate=23.6058%  vertices=  25  rel_vol=0.210327
+S20W10 [FINAL]     PP_FINAL     n= 3  valid=189718  rate=18.9718%  vertices=   9  rel_vol=0.179705
+S21W02             PP_MULTI     n=13  valid= 34101  rate=1.7050%  vertices= 127  rel_vol=0.000000
+S21W04             PP_ELIM      n=10  valid=628344  rate=31.4172%  vertices= 109  rel_vol=0.000025
+S21W06             PP_ELIM      n= 9  valid=645960  rate=32.2980%  vertices=  99  rel_vol=0.000230
+S21W07             PP_ELIM      n= 8  valid=225628  rate=11.2814%  vertices=  96  rel_vol=0.000339
+S21W08             PP_ELIM      n= 7  valid=481005  rate=24.0503%  vertices=  82  rel_vol=0.001695
+S21W09             PP_MULTI     n= 6  valid=129914  rate=6.4957%  vertices=  62  rel_vol=0.032012
+S21W11 [FINAL]     PP_FINAL     n= 4  valid= 79459  rate=3.9729%  vertices=  27  rel_vol=0.033901
+S22W02             PP_ELIM      n=12  valid=631042  rate=31.5521%  vertices= 134  rel_vol=0.000001
+S22W03             PP_ELIM      n=11  valid=427106  rate=21.3553%  vertices= 135  rel_vol=0.000003
+S22W04             PP_ELIM      n=10  valid=338847  rate=16.9424%  vertices= 111  rel_vol=0.000035
+S22W06             PP_ELIM      n= 9  valid=477839  rate=23.8920%  vertices= 103  rel_vol=0.000128
+S22W07             PP_MULTI     n= 8  valid= 86515  rate=4.3257%  vertices=  82  rel_vol=0.000418
+S22W08             PP_ELIM      n= 6  valid=237460  rate=11.8730%  vertices=  58  rel_vol=0.063052
+S22W09             PP_MULTI     n= 5  valid=198291  rate=9.9146%  vertices=  50  rel_vol=0.062751
+S22W10 [FINAL]     PP_FINAL     n= 3  valid=347767  rate=17.3883%  vertices=  14  rel_vol=0.164969
+S23W02             PP_ELIM      n=13  valid=281712  rate=14.0856%  vertices= 135  rel_vol=0.000000
+S23W03             PP_ELIM      n=12  valid=367904  rate=18.3952%  vertices= 135  rel_vol=0.000001
+S23W04             PP_MULTI     n=11  valid= 86099  rate=4.3049%  vertices= 119  rel_vol=0.000003
+S23W06             PP_ELIM      n= 9  valid=461178  rate=23.0589%  vertices= 111  rel_vol=0.000098
+S23W07             PP_ELIM      n= 8  valid=311749  rate=15.5875%  vertices=  83  rel_vol=0.000522
+S23W08             PP_ELIM      n= 7  valid=382063  rate=19.1031%  vertices=  91  rel_vol=0.001535
+S23W09             PP_ELIM      n= 6  valid=408114  rate=20.4057%  vertices=  62  rel_vol=0.097982
+S23W10             PP_ELIM      n= 5  valid=363112  rate=18.1556%  vertices=  40  rel_vol=0.120969
+S23W11 [FINAL]     PP_FINAL     n= 4  valid=100406  rate=5.0203%  vertices=  26  rel_vol=0.041920
+S24W02             PP_ELIM      n=12  valid=430990  rate=21.5495%  vertices= 149  rel_vol=0.000000
+S24W03             PP_ELIM      n=11  valid=371184  rate=18.5592%  vertices=  99  rel_vol=0.000010
+S24W04             PP_ELIM      n=10  valid=404797  rate=20.2399%  vertices= 125  rel_vol=0.000021
+S24W05             PP_ELIM      n= 9  valid=277172  rate=13.8586%  vertices=  91  rel_vol=0.000115
+S24W06             PP_ELIM      n= 8  valid=119427  rate=5.9714%  vertices=  98  rel_vol=0.000154
+S24W07             PP_MULTI     n= 7  valid=112538  rate=5.6269%  vertices=  56  rel_vol=0.002509
+S24W08             PP_ELIM      n= 5  valid=644808  rate=32.2404%  vertices=  60  rel_vol=0.203499
+S24W09             PP_ELIM      n= 4  valid=420024  rate=21.0012%  vertices=  31  rel_vol=0.172453
+S24W10 [FINAL]     PP_FINAL     n= 3  valid=317511  rate=15.8755%  vertices=  11  rel_vol=0.149964
+S25W02             PP_MULTI     n=13  valid= 59739  rate=2.9870%  vertices= 127  rel_vol=0.000000
+S25W04             PP_ELIM      n=11  valid=268264  rate=13.4132%  vertices= 130  rel_vol=0.000002
+S25W05             PP_ELIM      n=10  valid=300034  rate=15.0017%  vertices= 104  rel_vol=0.000029
+S25W06             PP_ELIM      n= 9  valid=556267  rate=27.8133%  vertices= 123  rel_vol=0.000075
+S25W07             PP_MULTI     n= 8  valid= 96035  rate=4.8018%  vertices=  82  rel_vol=0.000382
+S25W08             PP_ELIM      n= 6  valid=355314  rate=17.7657%  vertices=  63  rel_vol=0.085751
+S25W09             PP_ELIM      n= 5  valid=343313  rate=17.1656%  vertices=  48  rel_vol=0.113253
+S25W10 [FINAL]     PP_FINAL     n= 4  valid= 94090  rate=4.7045%  vertices=  25  rel_vol=0.039494
+S26W01             PP_MULTI     n=10  valid=102870  rate=5.1435%  vertices= 120  rel_vol=0.000016
+S26W02             PP_MULTI     n= 8  valid= 82844  rate=4.1422%  vertices=  96  rel_vol=0.000245
+S26W03             PP_MULTI     n= 6  valid=146506  rate=7.3253%  vertices=  79  rel_vol=0.029879
+S26W04 [FINAL]     PP_FINAL     n= 3  valid=344689  rate=17.2345%  vertices=  13  rel_vol=0.160141
+S27W01             PP_ELIM      n=13  valid=260298  rate=13.0149%  vertices= 143  rel_vol=0.000000
+S27W02             PP_ELIM      n=12  valid=386819  rate=19.3409%  vertices= 148  rel_vol=0.000000
+S27W03             PP_ELIM      n=11  valid=287810  rate=14.3905%  vertices= 148  rel_vol=0.000002
+S27W04             PP_ELIM      n=10  valid= 59146  rate=2.9573%  vertices= 124  rel_vol=0.000003
+S27W06             PP_ELIM      n= 9  valid=253080  rate=12.6540%  vertices= 103  rel_vol=0.000077
+S27W07             PP_MULTI     n= 8  valid= 79206  rate=3.9603%  vertices=  90  rel_vol=0.000176
+S27W08             PP_MULTI     n= 6  valid=129459  rate=6.4729%  vertices=  64  rel_vol=0.028572
+S27W09 [FINAL]     PP_FINAL     n= 4  valid= 86353  rate=4.3176%  vertices=  36  rel_vol=0.036155
+S28W02             RR_MULTI     n=12  valid=158449  rate=7.9225%  vertices= 137  rel_vol=0.000000
+S28W04             RR_B2        n=10  valid=1100489  rate=55.0245%  vertices= 123  rel_vol=0.000013
+S28W06             RR_B2        n= 9  valid=  4462  rate=0.2231%  vertices=  79  rel_vol=0.000022
+S28W07             RR_B2        n= 8  valid=795859  rate=39.7929%  vertices= 105  rel_vol=0.000428
+S28W08             RR_B2        n= 7  valid=773889  rate=38.6945%  vertices=  93  rel_vol=0.001079
+S28W09             RR_B2        n= 6  valid=1288859  rate=64.4429%  vertices=  69  rel_vol=0.403526
+S28W10             RR_B2        n= 5  valid=1500545  rate=75.0272%  vertices=  48  rel_vol=0.554457
+S28W11 [FINAL]     RR_FINAL     n= 4  valid=249768  rate=12.4884%  vertices=  23  rel_vol=0.112394
+S29W02             RR_B2        n=15  valid=969374  rate=48.4687%  vertices= 171  rel_vol=0.000000
+S29W03             RR_B2        n=14  valid=945590  rate=47.2795%  vertices= 160  rel_vol=0.000000
+S29W04             RR_B2        n=13  valid=716914  rate=35.8457%  vertices= 149  rel_vol=0.000000
+S29W05             RR_B2        n=12  valid=1059313  rate=52.9656%  vertices= 161  rel_vol=0.000000
+S29W06             RR_B2        n=11  valid=895492  rate=44.7746%  vertices= 144  rel_vol=0.000003
+S29W07             RR_MULTI     n=10  valid=353001  rate=17.6501%  vertices= 121  rel_vol=0.000022
+S29W08             RR_B2        n= 8  valid=564202  rate=28.2101%  vertices=  76  rel_vol=0.000556
+S29W09             RR_B2        n= 7  valid=1079266  rate=53.9633%  vertices= 102  rel_vol=0.001220
+S29W10             RR_MULTI     n= 6  valid=200025  rate=10.0013%  vertices=  75  rel_vol=0.061295
+S29W11 [FINAL]     RR_FINAL     n= 4  valid= 83144  rate=4.1572%  vertices=  30  rel_vol=0.033442
+S30W02             RR_B2        n=15  valid=942913  rate=47.1457%  vertices= 170  rel_vol=0.000000
+S30W03             RR_B2        n=14  valid=150134  rate=7.5067%  vertices= 147  rel_vol=0.000000
+S30W04             RR_MULTI     n=13  valid=273809  rate=13.6905%  vertices= 157  rel_vol=0.000000
+S30W05             RR_B2        n=11  valid= 48320  rate=2.4160%  vertices= 119  rel_vol=0.000003
+S30W06             RR_B2        n=10  valid=1204140  rate=60.2070%  vertices= 130  rel_vol=0.000017
+S30W07             RR_B2        n= 9  valid=1254465  rate=62.7233%  vertices= 130  rel_vol=0.000063
+S30W08             RR_MULTI     n= 8  valid=320249  rate=16.0125%  vertices= 109  rel_vol=0.000250
+S30W09             RR_MULTI     n= 6  valid=186549  rate=9.3274%  vertices=  53  rel_vol=0.072063
+S30W10 [FINAL]     RR_FINAL     n= 4  valid=333700  rate=16.6850%  vertices=  27  rel_vol=0.161841
+S31W01             RR_B2        n=16  valid=816550  rate=40.8275%  vertices= 174  rel_vol=0.000000
+S31W02             RR_B2        n=15  valid=797080  rate=39.8540%  vertices= 168  rel_vol=0.000000
+S31W03             RR_B2        n=14  valid=796609  rate=39.8304%  vertices= 156  rel_vol=0.000000
+S31W04             RR_B2        n=13  valid=1001563  rate=50.0782%  vertices= 149  rel_vol=0.000000
+S31W05             RR_MULTI     n=12  valid=  5019  rate=0.2510%  vertices= 115  rel_vol=0.000000
+S31W06             RR_B2        n=10  valid=1112011  rate=55.6006%  vertices= 132  rel_vol=0.000010
+S31W07             RR_B2        n= 9  valid=955005  rate=47.7503%  vertices= 127  rel_vol=0.000075
+S31W08             RR_MULTI     n= 8  valid=467031  rate=23.3515%  vertices= 118  rel_vol=0.000176
+S31W09             RR_MULTI     n= 6  valid=688372  rate=34.4186%  vertices=  76  rel_vol=0.215995
+S31W10 [FINAL]     RR_FINAL     n= 4  valid=166296  rate=8.3148%  vertices=  32  rel_vol=0.071343
+S32W01             RR_B2        n=14  valid=713074  rate=35.6537%  vertices= 164  rel_vol=0.000000
+S32W02             RR_B2        n=13  valid=509667  rate=25.4833%  vertices= 154  rel_vol=0.000000
+S32W03             RR_B2        n=12  valid=996364  rate=49.8182%  vertices= 138  rel_vol=0.000000
+S32W04             RR_B2        n=11  valid=321223  rate=16.0611%  vertices= 136  rel_vol=0.000002
+S32W05             RR_B2        n=10  valid=908870  rate=45.4435%  vertices= 133  rel_vol=0.000019
+S32W06             RR_B2        n= 9  valid=559600  rate=27.9800%  vertices= 113  rel_vol=0.000082
+S32W07             RR_B2        n= 8  valid=223532  rate=11.1766%  vertices=  86  rel_vol=0.000497
+S32W08             RR_B2        n= 7  valid=773867  rate=38.6933%  vertices=  91  rel_vol=0.001425
+S32W09             RR_B2        n= 6  valid=1289070  rate=64.4535%  vertices=  70  rel_vol=0.378449
+S32W11 [FINAL]     RR_FINAL     n= 5  valid= 66962  rate=3.3481%  vertices=  65  rel_vol=0.021315
+S33W02             RR_MULTI     n=13  valid=108258  rate=5.4129%  vertices= 148  rel_vol=0.000000
+S33W03             RR_MULTI     n=11  valid=335064  rate=16.7532%  vertices= 126  rel_vol=0.000003
+S33W04             RR_B2        n= 9  valid=417757  rate=20.8879%  vertices= 118  rel_vol=0.000066
+S33W05             RR_B2        n= 8  valid=885286  rate=44.2643%  vertices= 103  rel_vol=0.000339
+S33W06             RR_B2        n= 7  valid=410717  rate=20.5358%  vertices=  79  rel_vol=0.001691
+S33W07             RR_B2        n= 6  valid=1288658  rate=64.4329%  vertices=  74  rel_vol=0.365735
+S33W09 [FINAL]     RR_FINAL     n= 5  valid= 16805  rate=0.8403%  vertices=  47  rel_vol=0.005400
+S34W02             RR_MULTI     n=14  valid=185687  rate=9.2843%  vertices= 154  rel_vol=0.000000
+S34W03             RR_B2        n=12  valid=909905  rate=45.4952%  vertices= 135  rel_vol=0.000001
+S34W04             RR_B2        n=11  valid=195084  rate=9.7542%  vertices= 134  rel_vol=0.000002
+S34W06             RR_B2        n=10  valid=974809  rate=48.7405%  vertices= 137  rel_vol=0.000015
+S34W07             RR_B2        n= 9  valid=775660  rate=38.7830%  vertices= 118  rel_vol=0.000095
+S34W08             RR_B2        n= 8  valid=1006069  rate=50.3035%  vertices= 109  rel_vol=0.000409
+S34W09             RR_B2        n= 7  valid=1279007  rate=63.9504%  vertices=  91  rel_vol=0.001592
+S34W10             RR_B2        n= 6  valid=333963  rate=16.6982%  vertices=  61  rel_vol=0.123543
+S34W11 [FINAL]     RR_FINAL     n= 5  valid= 33440  rate=1.6720%  vertices=  48  rel_vol=0.011527

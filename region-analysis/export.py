@@ -100,7 +100,7 @@ def flatten_region(d: Dict[str, Any], projection_type: Optional[str] = None) -> 
 
         cloud_stats = fin.get("cloud_statistics", {})
         row["cloud_n_points"] = cloud_stats.get("n_points")
-        row["nearest_to_mean_distance"] = cloud_stats.get("nearest_to_mean_distance")
+
 
         extreme_stats = fin.get("extreme_statistics", {})
         row["cloud_diameter"] = extreme_stats.get("diameter")
@@ -149,8 +149,7 @@ def write_csv(regions: List[Dict[str, Any]], path: Path, projection_type: Option
         main_fields.extend([
             "fp_constrained_by", "fp_iou",
             "fin_status", "hull_acceptance", "simplex_accuracy",
-            "cloud_n_points", "nearest_to_mean_distance",
-            "cloud_diameter", "max_centroid_distance",
+            "cloud_n_points", "cloud_diameter", "max_centroid_distance",
         ])
 
     # Sort numerically, not lexicographically (so centroid_2 comes before centroid_10)
@@ -525,6 +524,7 @@ def write_votes_csv(regions: List[Dict[str, Any]], output_path: Path, data_dir: 
                 proportion_relative_volume_root = proportion_relative_volume ** (1.0 / hull_dim)
             else:
                 proportion_relative_volume_root = 0.0
+
 
         # Skip if no data
         if not representative or not contestants:

@@ -86,6 +86,57 @@ def save_results(results: List[Dict[str, Any]], path: Path) -> None:
         json.dump(results, f, indent=2)
 
 
+def merge_results(
+    new_results: List[Dict[str, Any]],
+    output_path: Path,
+    seasons_processed: Optional[set] = None,
+    weeks_processed: Optional[set] = None,
+) -> List[Dict[str, Any]]:
+    """
+    Merge new results with existing file, replacing only processed seasons/weeks.
+
+    Args:
+        new_results: New region results to merge in
+        output_path: Path to existing JSON file (may not exist)
+        seasons_processed: Set of seasons that were processed (to replace).
+                          If None, infers from new_results.
+        weeks_processed: Optional set of (season, week) tuples to replace.
+                        If provided, only these specific weeks are replaced
+                        instead of entire seasons.
+
+    Returns:
+        Merged list of results
+    """
+    # Load existing if present
+    existing = []
+    if output_path.exists():
+        with open(output_path) as f:
+            existing = json.load(f)
+
+    # Determine what to filter out
+    if weeks_processed is not None:
+        # Week-level filtering: only replace specific (season, week) pairs
+        kept = [
+            r for r in existing
+            if (r.get("event", {}).get("season"), r.get("event", {}).get("week")) not in weeks_processed
+        ]
+    else:
+        # Season-level filtering: replace entire seasons
+        if seasons_processed is None:
+            seasons_processed = {r.get("event", {}).get("season") for r in new_results}
+        kept = [r for r in existing if r.get("event", {}).get("season") not in seasons_processed]
+
+    # Merge and sort by (season, week, is_final)
+    merged = kept + new_results
+    merged.sort(key=lambda r: (
+        r.get("event", {}).get("season", 0),
+        r.get("event", {}).get("is_final", False),
+        r.get("event", {}).get("week", 0),
+    ))
+
+    return merged
+
+
 def recompute_region_stats(
     vertices: np.ndarray,
     original_data: Dict[str, Any],

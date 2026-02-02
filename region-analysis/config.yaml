@@ -11,9 +11,9 @@ hull:
   n_directions: 10000         # 10K directions
   max_points: 200             # cap vertices to avoid memory explosion in high dims
   include_axis_extremes: true
-  max_dim_exact_volume: 20     # use exact ConvexHull for dims <= 5
-  volume_samples: 5000000     # 5M samples for volume
-  fast_volume_dim_threshold: 100
+  max_dim_exact_volume: 5     # use exact ConvexHull for dims <= 5
+  volume_samples: 1000000     # 5M samples for volume
+  fast_volume_dim_threshold: 5
 
 # Output
 output:
@@ -31,7 +31,7 @@ backprojection:
 
 # Parallelization
 parallel:
-  n_workers: 16               # 16 workers = 16GB RAM each, 4 threads each
+  n_workers: 8               # 16 workers = 16GB RAM each, 4 threads each
   batch_size: 1000            # larger batches for better parallelization
 
 # Voting

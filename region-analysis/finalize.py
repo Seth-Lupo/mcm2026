@@ -309,6 +309,7 @@ def finalize_region(
             "relative_volume": 0.0,
             "relative_volume_root": 0.0,
         }
+        result["finalization"]["representative"] = None
         return result
 
     # Sample from hull and verify
@@ -364,14 +365,18 @@ def finalize_region(
         rel_vol_root = 0.0
     result["finalization"]["hull"]["relative_volume_root"] = round(float(rel_vol_root), p)
 
-    # Note: We don't store the full point_cloud to save space.
-    # The hull vertices are in result["finalization"]["hull"]["vertices"].
-    # Key points are stored in cloud_statistics (nearest_to_mean, dim extremes)
-    # and extreme_statistics (diameter_points, farthest_from_centroid).
+    # Use centroid (mean of valid points) as representative
+    centroid = None
+    if cloud_stats["mean"] is not None:
+        centroid = np.array(cloud_stats["mean"])
+    elif len(valid_points) > 0:
+        centroid = valid_points.mean(axis=0)
 
-    # Update region's representative point to nearest-to-mean
-    if cloud_stats["nearest_to_mean"] is not None:
-        result["region"]["representative_point"] = cloud_stats["nearest_to_mean"]
+    if centroid is not None:
+        result["region"]["representative_point"] = [round(float(x), p) for x in centroid]
+        result["finalization"]["representative"] = [round(float(x), p) for x in centroid]
+    else:
+        result["finalization"]["representative"] = None
 
     return result
 
@@ -468,6 +473,8 @@ def main():
                         help="Output path")
     parser.add_argument("--seasons", "-s", default=None,
                         help="Comma-separated seasons to process")
+    parser.add_argument("--weeks", "-w", default=None,
+                        help="Comma-separated weeks to process (requires --seasons)")
     parser.add_argument("--hull-samples", type=int, default=10000,
                         help="Number of samples from hull per region")
     parser.add_argument("--simplex-samples", type=int, default=100000,
@@ -476,6 +483,8 @@ def main():
                         help="Random seed")
     parser.add_argument("--sequential", action="store_true",
                         help="Process seasons sequentially")
+    parser.add_argument("--merge", action="store_true",
+                        help="Merge with existing output file instead of overwriting (only replaces processed seasons)")
     args = parser.parse_args()
 
     # Determine input path
@@ -507,6 +516,18 @@ def main():
     if args.seasons:
         season_filter = set(int(s.strip()) for s in args.seasons.split(","))
         by_season = {s: rs for s, rs in by_season.items() if s in season_filter}
+
+    # Filter weeks if specified (requires --seasons)
+    week_filter = None
+    if args.weeks:
+        if not args.seasons:
+            log.warning("--weeks requires --seasons to be specified, ignoring --weeks")
+        else:
+            week_filter = set(int(w.strip()) for w in args.weeks.split(","))
+            for season in by_season:
+                by_season[season] = [r for r in by_season[season] if r.week in week_filter]
+            # Remove empty seasons
+            by_season = {s: rs for s, rs in by_season.items() if rs}
 
     n_seasons = len(by_season)
     log.info(f"Processing {n_seasons} seasons")
@@ -575,8 +596,21 @@ def main():
             all_results.extend(season_results[season])
 
     # Save results
-    log.info(f"\nSaving {len(all_results)} regions to {args.output}")
-    save_results(all_results, Path(args.output))
+    output_path = Path(args.output)
+    if args.merge and output_path.exists():
+        from structures import merge_results
+        seasons_processed = set(by_season.keys())
+        # If week filter was used, merge at week level instead of season level
+        if week_filter is not None:
+            weeks_processed = {(s, w) for s in seasons_processed for w in week_filter}
+            merged = merge_results(all_results, output_path, weeks_processed=weeks_processed)
+        else:
+            merged = merge_results(all_results, output_path, seasons_processed=seasons_processed)
+        log.info(f"\nMerging {len(all_results)} new regions with existing file ({len(merged)} total)")
+        save_results(merged, output_path)
+    else:
+        log.info(f"\nSaving {len(all_results)} regions to {args.output}")
+        save_results(all_results, output_path)
 
     # Summary
     print("\n" + "=" * 60)

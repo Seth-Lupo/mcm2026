@@ -14,6 +14,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 import argparse
+import json
 import logging
 import numpy as np
 from typing import List, Optional, Dict, Any, Tuple
@@ -111,6 +112,8 @@ def main():
                         help="Process events sequentially (disable parallelization)")
     parser.add_argument("--hull-validity-samples", type=int, default=10000,
                         help="Number of Monte Carlo samples for hull validity estimation (default: 10000)")
+    parser.add_argument("--merge", action="store_true",
+                        help="Merge with existing output file instead of overwriting (only replaces processed seasons)")
     args = parser.parse_args()
 
     # Parse seasons
@@ -238,8 +241,20 @@ def main():
 
     # Save results
     out_path = args.output or str(DATA_DIR / "regions.json")
-    log.info(f"Saving {len(results)} regions to {out_path}")
-    save_regions(results, out_path)
+    out_path_obj = Path(out_path)
+
+    if args.merge and out_path_obj.exists():
+        # Merge with existing file
+        from structures import merge_results
+        new_data = [r.to_dict() for r in results]
+        seasons_processed = set(r.season for r in results)
+        merged = merge_results(new_data, out_path_obj, seasons_processed)
+        log.info(f"Merging {len(results)} new regions with existing file ({len(merged)} total)")
+        with open(out_path, "w") as f:
+            json.dump(merged, f, indent=2)
+    else:
+        log.info(f"Saving {len(results)} regions to {out_path}")
+        save_regions(results, out_path)
 
     # Summary
     print("\n" + "=" * 60)
