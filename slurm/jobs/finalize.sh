@@ -16,7 +16,7 @@
 cd "$HOME/mcm2026"
 
 module purge
-module load python/3.11.0
+module load miniforge/24.7.1 2>/dev/null || module load miniforge 2>/dev/null || module load python 2>/dev/null || true
 source ~/mcm2026/venv/bin/activate
 
 export NUMBA_NUM_THREADS=${SLURM_NTASKS:-8}
@@ -49,5 +49,5 @@ echo "Finished:   $(date)"
 echo "Exit code:  $EXIT_CODE"
 echo "=============================================="
 
-conda deactivate
+deactivate
 exit $EXIT_CODE
