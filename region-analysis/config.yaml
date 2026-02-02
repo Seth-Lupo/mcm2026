@@ -1,44 +1,45 @@
 # Region Analysis Configuration
+# Optimized for 32 CPUs, 128GB RAM
 
 # Sampling
 sampling:
-  n_samples: 20000000        # initial random samples per event
-  seed: 100                 # random seed for reproducibility
+  n_samples: 100000000        # 100M samples (5x increase for better coverage)
+  seed: 100                   # random seed for reproducibility
 
 # Convex Hull (approximate via extreme points)
 hull:
-  n_directions: 10000       # random directions to find extreme points
-  max_points: 1000          # subsample if more valid points than this
+  n_directions: 50000         # 50K directions (5x increase for better hull shape)
+  max_points: 5000            # 5K points (5x increase for hull accuracy)
   include_axis_extremes: true
-  max_dim_exact_volume: 4   # use exact ConvexHull for dims <= this, approx above
-  volume_samples: 5000000     # Monte Carlo samples for approximate volume (more = accurate)
-  fast_volume_dim_threshold: 4  # skip ConvexHull entirely for dims > this (use fast approx)
+  max_dim_exact_volume: 5     # use exact ConvexHull for dims <= 5
+  volume_samples: 50000000    # 50M samples (10x increase for volume accuracy)
+  fast_volume_dim_threshold: 5
 
 # Output
 output:
   save_vertices: true
   save_centroid: true
-  precision: 10             # decimal places for output (max ~15 for float64)
+  precision: 12               # increased precision
 
 # Backprojection - constraining earlier weeks by later weeks
 backprojection:
-  method: "lp"              # "lp" (linear program) or "sample" (monte carlo)
-  n_redistribution_samples: 1000  # for sample method only
-  tolerance: 1e-24          # LP solver tolerance
-  bounds_padding: 1e-30      # padding on bounds for numerical stability
-  edge_intersection_tol: 1e-30  # tolerance for binary search on edge intersections
+  method: "lp"                # "lp" (linear program) or "sample" (monte carlo)
+  n_redistribution_samples: 10000  # 10x increase for sample method
+  tolerance: 1e-24
+  bounds_padding: 1e-30
+  edge_intersection_tol: 1e-30
 
 # Parallelization
 parallel:
-  n_workers: 32               # number of CPU workers for parallel tasks
-  batch_size: 100             # batch size for parallel vertex verification
+  n_workers: 32               # match SLURM allocation
+  batch_size: 1000            # larger batches for better parallelization
 
 # Voting
 voting:
-  votes_per_viewer: 3       # number of votes each viewer can cast
+  votes_per_viewer: 3
 
 # Numerical stability
 numerical:
-  epsilon: 1e-30            # small value to prevent division by zero
-  jitter: 1e-30             # tiny noise added to degenerate point sets
-  clamp_probabilities: true # clamp values to [0, 1] after operations
+  epsilon: 1e-30
+  jitter: 1e-30
+  clamp_probabilities: true
