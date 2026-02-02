@@ -142,8 +142,12 @@ cmd_run() {
         echo "Pulling latest from GitHub..."
         git pull || echo "Git pull failed, continuing with existing code"
 
+        echo "Cleaning old data files..."
+        rm -f data/regions*.json data/regions*.csv data/regions*.txt data/events.json
+        rm -f logs/*.out logs/*.err
+
         chmod +x slurm/jobs/*.sh
-        mkdir -p logs
+        mkdir -p logs data
 
         echo "Pipeline: init -> backproj -> fwdproj -> finalize -> export -> verify -> zip"
         echo ""
@@ -203,8 +207,12 @@ cmd_pipeline() {
         echo "Pulling latest from GitHub..."
         git pull || echo "Git pull failed, continuing with existing code"
 
+        echo "Cleaning old data files..."
+        rm -f data/regions*.json data/regions*.csv data/regions*.txt data/events.json
+        rm -f logs/*.out logs/*.err
+
         chmod +x slurm/jobs/*.sh
-        mkdir -p logs
+        mkdir -p logs data
 
         echo "Submitting full pipeline job (main.py)..."
         JOB1=$(sbatch --parsable slurm/jobs/pipeline.sh)
@@ -246,13 +254,21 @@ cmd_download() {
         scp "${CLUSTER_SSH}:${LATEST_ZIP}" "$LOCAL_DIR/"
 
         ZIPNAME=$(basename "$LATEST_ZIP")
-        log_info "Extracting $ZIPNAME..."
-        unzip -o "$LOCAL_DIR/$ZIPNAME" -d "$LOCAL_DIR/"
-        log_info "Results in $LOCAL_DIR/"
+        # Extract timestamp from filename (results_YYYYMMDD_HHMMSS.zip -> run_YYYYMMDD_HHMMSS)
+        TIMESTAMP=$(echo "$ZIPNAME" | sed 's/results_\(.*\)\.zip/\1/')
+        RUN_DIR="$LOCAL_DIR/run_$TIMESTAMP"
+
+        log_info "Extracting to $RUN_DIR..."
+        mkdir -p "$RUN_DIR"
+        unzip -o "$LOCAL_DIR/$ZIPNAME" -d "$RUN_DIR/"
+        log_info "Results in $RUN_DIR/"
     else
         log_warn "No zip found. Downloading data/ directly..."
-        scp -r "${CLUSTER_SSH}:~/mcm2026/data" "$LOCAL_DIR/"
-        log_info "Data downloaded to $LOCAL_DIR/data/"
+        TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+        RUN_DIR="$LOCAL_DIR/run_$TIMESTAMP"
+        mkdir -p "$RUN_DIR"
+        scp -r "${CLUSTER_SSH}:~/mcm2026/data" "$RUN_DIR/"
+        log_info "Data downloaded to $RUN_DIR/"
     fi
 }
 
