@@ -3,16 +3,16 @@
 
 # Sampling
 sampling:
-  n_samples: 10000000         # 10M samples (reduced to avoid OOM)
+  n_samples: 2000000          # 2M samples (reduced to avoid OOM)
   seed: 100                   # random seed for reproducibility
 
 # Convex Hull (approximate via extreme points)
 hull:
-  n_directions: 50000         # 50K directions (5x increase for better hull shape)
-  max_points: 5000            # 5K points (5x increase for hull accuracy)
+  n_directions: 10000         # 10K directions
+  max_points: 200             # cap vertices to avoid memory explosion in high dims
   include_axis_extremes: true
   max_dim_exact_volume: 5     # use exact ConvexHull for dims <= 5
-  volume_samples: 50000000    # 50M samples (10x increase for volume accuracy)
+  volume_samples: 5000000     # 5M samples for volume
   fast_volume_dim_threshold: 100
 
 # Output
