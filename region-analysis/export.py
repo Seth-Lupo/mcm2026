@@ -396,74 +396,97 @@ def load_viewership(data_dir: Path) -> Dict[tuple, float]:
     """
     Load viewership data and create mapping from (season, week) to viewers in millions.
 
+    Uses the Week column from viewership.csv (manually mapped).
+    For weeks without data, linearly interpolates between surrounding weeks.
     Returns dict mapping (season, week) -> viewership_millions
     """
     viewership_path = data_dir / "viewership.csv"
     if not viewership_path.exists():
         return {}
 
-    import re
-
-    viewership = {}
+    # First pass: load raw data
+    raw_viewership = {}
+    seasons_seen = set()
 
     with open(viewership_path, "r") as f:
         reader = csv.DictReader(f)
         for row in reader:
             season = int(row["Season"])
-            label = row["EpisodeLabel"]
+            seasons_seen.add(season)
             viewers = float(row["ViewersMillions"])
+            week_str = row.get("Week", "").strip()
 
-            # Try to extract week number from label
-            week = None
-
-            # Match patterns like "Week 1", "Week 2:", "Week 10"
-            week_match = re.search(r'Week\s*(\d+)', label, re.IGNORECASE)
-            if week_match:
-                week = int(week_match.group(1))
-
-            # Match patterns like "Episode 101" -> week 1, "Episode 302" -> week 2
-            if week is None:
-                ep_match = re.search(r'Episode\s*(\d)0(\d)', label)
-                if ep_match:
-                    # Episode XYZ where X is season digit, YZ is episode/week
-                    week = int(ep_match.group(2))
-
-            # Match "Performance show X" or "Results show X"
-            if week is None:
-                perf_match = re.search(r'(?:Performance|Results)\s+show\s+(\d+)', label, re.IGNORECASE)
-                if perf_match:
-                    week = int(perf_match.group(1))
-
-            # Match "Top X Perform" patterns (season 14)
-            if week is None:
-                top_match = re.search(r'Top\s+(\d+)\s+Perform', label, re.IGNORECASE)
-                if top_match:
-                    # Map top N to approximate week
-                    top_n = int(top_match.group(1))
-                    # Rough mapping - this varies by season
-                    week = 14 - top_n  # approximate
-
-            # Match simple row numbers for season 11
-            if week is None and season == 11:
-                row_match = re.search(r'Row\s+(\d+)', label)
-                if row_match:
-                    week = int(row_match.group(1))
-
-            # Skip results shows (they don't have eliminations, just announcements)
-            if week is not None and 'Result' in label and 'Final' not in label:
+            # Skip rows without a week mapping
+            if not week_str:
                 continue
 
-            # Skip specials
-            if 'Special' in label or 'Road to' in label or 'Anniversary' in label:
-                continue
+            week = int(week_str)
+            key = (season, week)
 
-            if week is not None:
-                key = (season, week)
-                # Keep maximum viewership for the week (performance show, not results)
-                if key not in viewership or viewers > viewership[key]:
-                    viewership[key] = viewers
+            # Keep maximum viewership for the week (in case of multi-night weeks)
+            if key not in raw_viewership or viewers > raw_viewership[key]:
+                raw_viewership[key] = viewers
+
+    # Second pass: interpolate treating all data as continuous timeline
+    # (season 19 week 10 -> season 19 week 11 -> season 20 week 1 -> ...)
+    viewership = dict(raw_viewership)
+
+    # Sort all known data points chronologically
+    known_points = sorted(raw_viewership.keys(), key=lambda x: (x[0], x[1]))
+
+    if len(known_points) >= 2:
+        # For any query (season, week), find surrounding known points and interpolate
+        # We need to handle requests that come from the finalized data
+        pass  # Interpolation happens on-demand below
 
     return viewership
+
+
+def _interpolate_viewership(viewership: Dict[tuple, float], season: int, week: int) -> Optional[float]:
+    """
+    Interpolate viewership for a missing (season, week) using continuous timeline.
+    Treats week 11 of season N as consecutive with week 1 of season N+1.
+    """
+    if (season, week) in viewership:
+        return viewership[(season, week)]
+
+    # Sort all known points chronologically
+    known_points = sorted(viewership.keys(), key=lambda x: (x[0], x[1]))
+    if len(known_points) < 2:
+        return None
+
+    # Find surrounding points
+    lower_point = None
+    upper_point = None
+
+    for s, w in known_points:
+        if (s, w) < (season, week):
+            lower_point = (s, w)
+        elif (s, w) > (season, week) and upper_point is None:
+            upper_point = (s, w)
+            break
+
+    if lower_point is None or upper_point is None:
+        return None
+
+    # Calculate position in timeline (approximate weeks since start)
+    def timeline_pos(s, w):
+        # Assume ~11 weeks per season on average
+        return s * 11 + w
+
+    lower_pos = timeline_pos(*lower_point)
+    upper_pos = timeline_pos(*upper_point)
+    target_pos = timeline_pos(season, week)
+
+    if upper_pos == lower_pos:
+        return viewership[lower_point]
+
+    # Linear interpolation
+    ratio = (target_pos - lower_pos) / (upper_pos - lower_pos)
+    lower_val = viewership[lower_point]
+    upper_val = viewership[upper_point]
+
+    return lower_val + ratio * (upper_val - lower_val)
 
 
 def write_votes_csv(regions: List[Dict[str, Any]], output_path: Path, data_dir: Path) -> None:
@@ -475,6 +498,7 @@ def write_votes_csv(regions: List[Dict[str, Any]], output_path: Path, data_dir: 
     - proportion, proportion_min, proportion_max, proportion_range
     - absolute, absolute_min, absolute_max, absolute_range (scaled by viewership * votes_per_viewer)
     - proportion_volume, proportion_relative_volume, proportion_relative_volume_root (hull geometry)
+    - volume_cut (finalized_volume / initial_volume - how much volume remains after propagation)
     """
     from config import get_config
     cfg = get_config()
@@ -482,6 +506,20 @@ def write_votes_csv(regions: List[Dict[str, Any]], output_path: Path, data_dir: 
 
     # Load viewership data
     viewership = load_viewership(data_dir)
+
+    # Load initial regions to get original volumes (before projection)
+    initial_volumes = {}
+    initial_path = data_dir / "regions.json"
+    if initial_path.exists():
+        with open(initial_path) as f:
+            initial_regions = json.load(f)
+        for r in initial_regions:
+            ev = r.get("event", {})
+            reg = r.get("region", {})
+            key = (ev.get("season"), ev.get("week"), ev.get("is_final", False))
+            vol = reg.get("volume")
+            if vol is not None:
+                initial_volumes[key] = vol
 
     rows = []
 
@@ -503,8 +541,10 @@ def write_votes_csv(regions: List[Dict[str, Any]], output_path: Path, data_dir: 
         # Get dim_bounds for min/max
         dim_bounds = region_data.get("dim_bounds", [])
 
-        # Get viewership for this season/week (in millions)
-        viewers_millions = viewership.get((season, week), None)
+        # Get viewership for this season/week (in millions), with interpolation for missing
+        viewers_millions = viewership.get((season, week))
+        if viewers_millions is None:
+            viewers_millions = _interpolate_viewership(viewership, season, week)
 
         # Total votes = viewers * 1_000_000 * votes_per_viewer
         total_votes = None
@@ -525,6 +565,14 @@ def write_votes_csv(regions: List[Dict[str, Any]], output_path: Path, data_dir: 
             else:
                 proportion_relative_volume_root = 0.0
 
+        # Calculate proportion_volume_reduction: finalized_volume / initial_volume
+        # This shows fraction of volume remaining after propagation (1.0 = no change, 0.5 = halved, 0 = collapsed)
+        proportion_volume_reduction = None
+        initial_vol = initial_volumes.get((season, week, is_final))
+        if initial_vol is not None and initial_vol > 0 and proportion_volume is not None:
+            proportion_volume_reduction = proportion_volume / initial_vol
+        elif proportion_volume == 0 or proportion_volume is None:
+            proportion_volume_reduction = 0.0
 
         # Skip if no data
         if not representative or not contestants:
@@ -571,6 +619,7 @@ def write_votes_csv(regions: List[Dict[str, Any]], output_path: Path, data_dir: 
                 "proportion_volume": float(proportion_volume) if proportion_volume is not None else None,
                 "proportion_relative_volume": float(proportion_relative_volume) if proportion_relative_volume is not None else None,
                 "proportion_relative_volume_root": round(float(proportion_relative_volume_root), 6) if proportion_relative_volume_root is not None else None,
+                "proportion_volume_reduction": round(float(proportion_volume_reduction), 6) if proportion_volume_reduction is not None else None,
                 "absolute": round(abs_votes) if abs_votes is not None else None,
                 "absolute_min": round(abs_min) if abs_min is not None else None,
                 "absolute_max": round(abs_max) if abs_max is not None else None,
@@ -587,6 +636,7 @@ def write_votes_csv(regions: List[Dict[str, Any]], output_path: Path, data_dir: 
         "season", "week", "is_final", "name", "viewers_millions",
         "proportion", "proportion_min", "proportion_max", "proportion_range",
         "proportion_volume", "proportion_relative_volume", "proportion_relative_volume_root",
+        "proportion_volume_reduction",
         "absolute", "absolute_min", "absolute_max", "absolute_range",
     ]
 
