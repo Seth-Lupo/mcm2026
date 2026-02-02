@@ -1,11 +1,11 @@
 #!/bin/bash -l
 #SBATCH -J region_finalize
 #SBATCH --time=1-00:00:00
-#SBATCH -p batch,preempt
+#SBATCH -p largemem,batch,preempt
 #SBATCH -N 1
 #SBATCH -n 1
-#SBATCH --cpus-per-task=32
-#SBATCH --mem=128g
+#SBATCH --cpus-per-task=64
+#SBATCH --mem=256g
 #SBATCH --output=logs/finalize_%j.out
 #SBATCH --error=logs/finalize_%j.err
 #SBATCH --mail-type=END,FAIL
@@ -20,8 +20,8 @@ module purge
 module load miniforge/24.11.2-py312 2>/dev/null || module load miniforge/24.7.1-py312 2>/dev/null || module load miniforge 2>/dev/null
 source activate ~/mcm2026/mcm_env
 
-export NUMBA_NUM_THREADS=${SLURM_CPUS_PER_TASK:-32}
-export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-32}
+export NUMBA_NUM_THREADS=${SLURM_CPUS_PER_TASK:-64}
+export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-64}
 
 echo "=============================================="
 echo "Region Analysis - Finalize"
