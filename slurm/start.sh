@@ -64,9 +64,6 @@ cmd_setup() {
             set +a
         fi
 
-        module purge
-        module load anaconda/2021.05
-
         REPO_URL="${GITHUB_REPO:-https://github.com/your-username/mcm2026.git}"
         if [[ -d ~/mcm2026/.git ]]; then
             echo "Repository exists, pulling latest..."
@@ -79,17 +76,22 @@ cmd_setup() {
         fi
         cd ~/mcm2026
 
-        if ! conda env list | grep -q "^region-analysis "; then
-            echo "Creating conda environment with Python 3.11..."
-            conda create -n region-analysis python=3.11 pip -y
+        mkdir -p logs data slurm/jobs
+
+        # Use venv instead of conda
+        module purge
+        module load python/3.11.0
+
+        if [[ ! -d venv ]]; then
+            echo "Creating Python venv..."
+            python -m venv venv
         fi
 
-        source activate region-analysis
+        source venv/bin/activate
 
         echo "Installing dependencies from requirements.txt..."
+        pip install --upgrade pip
         pip install -r requirements.txt
-
-        mkdir -p logs data slurm/jobs
 
         echo ""
         echo "Verifying installation..."
@@ -100,7 +102,7 @@ cmd_setup() {
 
         echo ""
         echo "Setup complete!"
-        conda deactivate
+        deactivate
 REMOTE_SETUP
 
     log_info "Uploading SLURM job scripts..."
@@ -123,11 +125,8 @@ cmd_run() {
         set -e
         cd ~/mcm2026
 
-        if [[ -f .env ]]; then
-            set -a
-            source .env
-            set +a
-        fi
+        echo "Pulling latest from GitHub..."
+        git pull || echo "Git pull failed, continuing with existing code"
 
         chmod +x slurm/jobs/*.sh
         mkdir -p logs
@@ -186,11 +185,8 @@ cmd_pipeline() {
         set -e
         cd ~/mcm2026
 
-        if [[ -f .env ]]; then
-            set -a
-            source .env
-            set +a
-        fi
+        echo "Pulling latest from GitHub..."
+        git pull || echo "Git pull failed, continuing with existing code"
 
         chmod +x slurm/jobs/*.sh
         mkdir -p logs

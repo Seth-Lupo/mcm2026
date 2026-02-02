@@ -1,0 +1,31 @@
+======================================================================
+REGION ANALYSIS SUMMARY
+Generated: 2026-02-01 17:23:57
+Source: regions.json
+======================================================================
+
+OVERALL STATISTICS
+----------------------------------------
+Total regions:        9
+With valid hull:      9 (100.0%)
+Zero valid points:    0 (0.0%)
+Low valid (<10):      0 (0.0%)
+
+BY PREMISE TYPE
+----------------------------------------
+Premise          Count  Valid   Avg Rate
+RR_B2                7      7   39.0965%
+RR_B2_MULTI          1      1    9.3048%
+RR_FINAL             1      1    1.6689%
+
+SUCCESSFUL REGIONS (non-zero valid points)
+----------------------------------------------------------------------
+S34W02             RR_B2_MULTI  n=14  valid=1860960  rate=9.3048%  vertices= 399  rel_vol=0.000000
+S34W03             RR_B2        n=12  valid=9103276  rate=45.5164%  vertices= 323  rel_vol=0.000002
+S34W04             RR_B2        n=11  valid=1948461  rate=9.7423%  vertices= 276  rel_vol=0.000009
+S34W06             RR_B2        n=10  valid=9736405  rate=48.6820%  vertices= 275  rel_vol=0.000042
+S34W07             RR_B2        n= 9  valid=7760808  rate=38.8040%  vertices= 226  rel_vol=0.000233
+S34W08             RR_B2        n= 8  valid=10064044  rate=50.3202%  vertices= 204  rel_vol=0.000951
+S34W09             RR_B2        n= 7  valid=12790091  rate=63.9505%  vertices= 168  rel_vol=0.004637
+S34W10             RR_B2        n= 6  valid=3332007  rate=16.6600%  vertices=  99  rel_vol=0.008503
+S34W11 [FINAL]     RR_FINAL     n= 5  valid=333789  rate=1.6689%  vertices=  81  rel_vol=0.014538

@@ -16,8 +16,8 @@
 cd "$HOME/mcm2026"
 
 module purge
-module load anaconda/2021.05
-source activate region-analysis
+module load python/3.11.0
+source ~/mcm2026/venv/bin/activate
 
 export NUMBA_NUM_THREADS=${SLURM_NTASKS:-16}
 export OMP_NUM_THREADS=${SLURM_NTASKS:-16}

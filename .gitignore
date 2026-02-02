@@ -1,7 +1,5 @@
 venv
-data/reddit.txt
-data/reddit1.txt
-data
+data/regions-*.*
 
 # Environment secrets
 .env

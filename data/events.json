@@ -1,0 +1,8735 @@
+[
+  {
+    "season": 1,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "John O'Hurley",
+      "Kelly Monaco",
+      "Evander Holyfield",
+      "Rachel Hunter",
+      "Joey McIntyre",
+      "Trista Sutter"
+    ],
+    "judge_scores": [
+      26.0,
+      17.0,
+      14.0,
+      24.0,
+      21.0,
+      19.0
+    ],
+    "eliminated": [
+      "Trista Sutter"
+    ]
+  },
+  {
+    "season": 1,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "John O'Hurley",
+      "Kelly Monaco",
+      "Evander Holyfield",
+      "Rachel Hunter",
+      "Joey McIntyre"
+    ],
+    "judge_scores": [
+      24.0,
+      21.0,
+      13.0,
+      26.0,
+      22.0
+    ],
+    "eliminated": [
+      "Evander Holyfield"
+    ]
+  },
+  {
+    "season": 1,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 4,
+    "contestants": [
+      "John O'Hurley",
+      "Kelly Monaco",
+      "Rachel Hunter",
+      "Joey McIntyre"
+    ],
+    "judge_scores": [
+      21.0,
+      26.0,
+      25.0,
+      20.0
+    ],
+    "eliminated": [
+      "Rachel Hunter"
+    ]
+  },
+  {
+    "season": 1,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 3,
+    "contestants": [
+      "John O'Hurley",
+      "Kelly Monaco",
+      "Joey McIntyre"
+    ],
+    "judge_scores": [
+      27.0,
+      23.5,
+      22.5
+    ],
+    "eliminated": [
+      "Joey McIntyre"
+    ]
+  },
+  {
+    "season": 1,
+    "week": 6,
+    "is_final": true,
+    "n_contestants": 2,
+    "contestants": [
+      "John O'Hurley",
+      "Kelly Monaco"
+    ],
+    "judge_scores": [
+      27.0,
+      27.5
+    ],
+    "eliminated": [],
+    "placements": [
+      2,
+      1
+    ]
+  },
+  {
+    "season": 2,
+    "week": 1,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Tatum O'Neal",
+      "Tia Carrere",
+      "George Hamilton",
+      "Lisa Rinna",
+      "Stacy Keibler",
+      "Jerry Rice",
+      "Giselle Fernandez",
+      "Master P",
+      "Drew Lachey",
+      "Kenny Mayne"
+    ],
+    "judge_scores": [
+      23.0,
+      20.0,
+      18.0,
+      19.0,
+      22.0,
+      21.0,
+      23.0,
+      12.0,
+      24.0,
+      13.0
+    ],
+    "eliminated": [
+      "Kenny Mayne"
+    ]
+  },
+  {
+    "season": 2,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Tatum O'Neal",
+      "Tia Carrere",
+      "George Hamilton",
+      "Lisa Rinna",
+      "Stacy Keibler",
+      "Jerry Rice",
+      "Giselle Fernandez",
+      "Master P",
+      "Drew Lachey"
+    ],
+    "judge_scores": [
+      17.0,
+      22.0,
+      22.0,
+      20.0,
+      29.0,
+      23.0,
+      24.0,
+      16.0,
+      27.0
+    ],
+    "eliminated": [
+      "Tatum O'Neal"
+    ]
+  },
+  {
+    "season": 2,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Tia Carrere",
+      "George Hamilton",
+      "Lisa Rinna",
+      "Stacy Keibler",
+      "Jerry Rice",
+      "Giselle Fernandez",
+      "Master P",
+      "Drew Lachey"
+    ],
+    "judge_scores": [
+      26.0,
+      22.0,
+      25.0,
+      27.0,
+      19.0,
+      22.0,
+      14.0,
+      27.0
+    ],
+    "eliminated": [
+      "Giselle Fernandez"
+    ]
+  },
+  {
+    "season": 2,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Tia Carrere",
+      "George Hamilton",
+      "Lisa Rinna",
+      "Stacy Keibler",
+      "Jerry Rice",
+      "Master P",
+      "Drew Lachey"
+    ],
+    "judge_scores": [
+      25.0,
+      21.0,
+      26.0,
+      26.0,
+      24.0,
+      8.0,
+      28.0
+    ],
+    "eliminated": [
+      "Master P"
+    ]
+  },
+  {
+    "season": 2,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Tia Carrere",
+      "George Hamilton",
+      "Lisa Rinna",
+      "Stacy Keibler",
+      "Jerry Rice",
+      "Drew Lachey"
+    ],
+    "judge_scores": [
+      22.0,
+      24.0,
+      25.0,
+      30.0,
+      23.0,
+      27.0
+    ],
+    "eliminated": [
+      "Tia Carrere"
+    ]
+  },
+  {
+    "season": 2,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "George Hamilton",
+      "Lisa Rinna",
+      "Stacy Keibler",
+      "Jerry Rice",
+      "Drew Lachey"
+    ],
+    "judge_scores": [
+      23.0,
+      27.0,
+      30.0,
+      23.0,
+      30.0
+    ],
+    "eliminated": [
+      "George Hamilton"
+    ]
+  },
+  {
+    "season": 2,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 4,
+    "contestants": [
+      "Lisa Rinna",
+      "Stacy Keibler",
+      "Jerry Rice",
+      "Drew Lachey"
+    ],
+    "judge_scores": [
+      26.5,
+      27.5,
+      20.5,
+      27.5
+    ],
+    "eliminated": [
+      "Lisa Rinna"
+    ]
+  },
+  {
+    "season": 2,
+    "week": 8,
+    "is_final": true,
+    "n_contestants": 3,
+    "contestants": [
+      "Stacy Keibler",
+      "Jerry Rice",
+      "Drew Lachey"
+    ],
+    "judge_scores": [
+      28.67,
+      26.67,
+      29.0
+    ],
+    "eliminated": [],
+    "placements": [
+      3,
+      2,
+      1
+    ]
+  },
+  {
+    "season": 3,
+    "week": 1,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Harry Hamlin",
+      "Vivica A. Fox",
+      "Monique Coleman",
+      "Joey Lawrence",
+      "Mario Lopez",
+      "Emmitt Smith",
+      "Shanna Moakler",
+      "Willa Ford",
+      "Sara Evans",
+      "Jerry Springer",
+      "Tucker Carlson"
+    ],
+    "judge_scores": [
+      17.0,
+      22.0,
+      19.0,
+      21.0,
+      26.0,
+      24.0,
+      18.0,
+      22.0,
+      15.0,
+      16.0,
+      12.0
+    ],
+    "eliminated": [
+      "Tucker Carlson"
+    ]
+  },
+  {
+    "season": 3,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Harry Hamlin",
+      "Vivica A. Fox",
+      "Monique Coleman",
+      "Joey Lawrence",
+      "Mario Lopez",
+      "Emmitt Smith",
+      "Shanna Moakler",
+      "Willa Ford",
+      "Sara Evans",
+      "Jerry Springer"
+    ],
+    "judge_scores": [
+      21.0,
+      24.0,
+      26.0,
+      29.0,
+      21.0,
+      24.0,
+      22.0,
+      23.0,
+      21.0,
+      19.0
+    ],
+    "eliminated": [
+      "Shanna Moakler"
+    ]
+  },
+  {
+    "season": 3,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Harry Hamlin",
+      "Vivica A. Fox",
+      "Monique Coleman",
+      "Joey Lawrence",
+      "Mario Lopez",
+      "Emmitt Smith",
+      "Willa Ford",
+      "Sara Evans",
+      "Jerry Springer"
+    ],
+    "judge_scores": [
+      22.0,
+      27.0,
+      27.0,
+      22.0,
+      22.0,
+      19.0,
+      22.0,
+      25.0,
+      21.0
+    ],
+    "eliminated": [
+      "Harry Hamlin"
+    ]
+  },
+  {
+    "season": 3,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Vivica A. Fox",
+      "Monique Coleman",
+      "Joey Lawrence",
+      "Mario Lopez",
+      "Emmitt Smith",
+      "Willa Ford",
+      "Sara Evans",
+      "Jerry Springer"
+    ],
+    "judge_scores": [
+      24.0,
+      24.0,
+      27.0,
+      29.0,
+      24.0,
+      28.0,
+      20.0,
+      22.0
+    ],
+    "eliminated": [
+      "Vivica A. Fox"
+    ]
+  },
+  {
+    "season": 3,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Monique Coleman",
+      "Joey Lawrence",
+      "Mario Lopez",
+      "Emmitt Smith",
+      "Willa Ford",
+      "Sara Evans",
+      "Jerry Springer"
+    ],
+    "judge_scores": [
+      27.0,
+      25.0,
+      27.0,
+      27.0,
+      27.0,
+      24.0,
+      24.0
+    ],
+    "eliminated": [
+      "Sara Evans",
+      "Willa Ford"
+    ]
+  },
+  {
+    "season": 3,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "Monique Coleman",
+      "Joey Lawrence",
+      "Mario Lopez",
+      "Emmitt Smith",
+      "Jerry Springer"
+    ],
+    "judge_scores": [
+      27.0,
+      28.5,
+      28.0,
+      28.5,
+      23.0
+    ],
+    "eliminated": [
+      "Jerry Springer"
+    ]
+  },
+  {
+    "season": 3,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 4,
+    "contestants": [
+      "Monique Coleman",
+      "Joey Lawrence",
+      "Mario Lopez",
+      "Emmitt Smith"
+    ],
+    "judge_scores": [
+      26.5,
+      27.0,
+      28.5,
+      27.0
+    ],
+    "eliminated": [
+      "Monique Coleman"
+    ]
+  },
+  {
+    "season": 3,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 3,
+    "contestants": [
+      "Joey Lawrence",
+      "Mario Lopez",
+      "Emmitt Smith"
+    ],
+    "judge_scores": [
+      29.5,
+      29.5,
+      29.5
+    ],
+    "eliminated": [
+      "Joey Lawrence"
+    ]
+  },
+  {
+    "season": 3,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 2,
+    "contestants": [
+      "Mario Lopez",
+      "Emmitt Smith"
+    ],
+    "judge_scores": [
+      29.67,
+      29.67
+    ],
+    "eliminated": [],
+    "placements": [
+      2,
+      1
+    ]
+  },
+  {
+    "season": 4,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "John Ratzenberger",
+      "Ian Ziering",
+      "Clyde Drexler",
+      "Laila Ali",
+      "Apolo Anton Ohno",
+      "Shandi Finnessey",
+      "Paulina Porizkova",
+      "Heather Mills",
+      "Billy Ray Cyrus",
+      "Joey Fatone",
+      "Leeza Gibbons"
+    ],
+    "judge_scores": [
+      21.0,
+      22.0,
+      18.0,
+      27.0,
+      26.0,
+      20.0,
+      21.0,
+      24.0,
+      21.0,
+      24.0,
+      21.0
+    ],
+    "eliminated": [
+      "Paulina Porizkova"
+    ]
+  },
+  {
+    "season": 4,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "John Ratzenberger",
+      "Ian Ziering",
+      "Clyde Drexler",
+      "Laila Ali",
+      "Apolo Anton Ohno",
+      "Shandi Finnessey",
+      "Heather Mills",
+      "Billy Ray Cyrus",
+      "Joey Fatone",
+      "Leeza Gibbons"
+    ],
+    "judge_scores": [
+      20.0,
+      24.0,
+      16.0,
+      21.0,
+      23.0,
+      21.0,
+      24.0,
+      21.0,
+      24.0,
+      24.0
+    ],
+    "eliminated": [
+      "Shandi Finnessey"
+    ]
+  },
+  {
+    "season": 4,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "John Ratzenberger",
+      "Ian Ziering",
+      "Clyde Drexler",
+      "Laila Ali",
+      "Apolo Anton Ohno",
+      "Heather Mills",
+      "Billy Ray Cyrus",
+      "Joey Fatone",
+      "Leeza Gibbons"
+    ],
+    "judge_scores": [
+      16.0,
+      24.0,
+      15.0,
+      21.0,
+      26.0,
+      23.0,
+      21.0,
+      28.0,
+      16.0
+    ],
+    "eliminated": [
+      "Leeza Gibbons"
+    ]
+  },
+  {
+    "season": 4,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "John Ratzenberger",
+      "Ian Ziering",
+      "Clyde Drexler",
+      "Laila Ali",
+      "Apolo Anton Ohno",
+      "Heather Mills",
+      "Billy Ray Cyrus",
+      "Joey Fatone"
+    ],
+    "judge_scores": [
+      18.0,
+      24.0,
+      13.0,
+      28.0,
+      30.0,
+      21.0,
+      17.0,
+      25.0
+    ],
+    "eliminated": [
+      "Clyde Drexler"
+    ]
+  },
+  {
+    "season": 4,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "John Ratzenberger",
+      "Ian Ziering",
+      "Laila Ali",
+      "Apolo Anton Ohno",
+      "Heather Mills",
+      "Billy Ray Cyrus",
+      "Joey Fatone"
+    ],
+    "judge_scores": [
+      19.0,
+      24.0,
+      28.0,
+      28.0,
+      23.0,
+      21.0,
+      27.0
+    ],
+    "eliminated": [
+      "Heather Mills"
+    ]
+  },
+  {
+    "season": 4,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "John Ratzenberger",
+      "Ian Ziering",
+      "Laila Ali",
+      "Apolo Anton Ohno",
+      "Billy Ray Cyrus",
+      "Joey Fatone"
+    ],
+    "judge_scores": [
+      22.5,
+      27.0,
+      29.5,
+      27.0,
+      19.0,
+      29.5
+    ],
+    "eliminated": [
+      "John Ratzenberger"
+    ]
+  },
+  {
+    "season": 4,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "Ian Ziering",
+      "Laila Ali",
+      "Apolo Anton Ohno",
+      "Billy Ray Cyrus",
+      "Joey Fatone"
+    ],
+    "judge_scores": [
+      23.5,
+      26.5,
+      29.0,
+      19.0,
+      27.5
+    ],
+    "eliminated": [
+      "Billy Ray Cyrus"
+    ]
+  },
+  {
+    "season": 4,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 4,
+    "contestants": [
+      "Ian Ziering",
+      "Laila Ali",
+      "Apolo Anton Ohno",
+      "Joey Fatone"
+    ],
+    "judge_scores": [
+      29.0,
+      30.0,
+      29.5,
+      30.0
+    ],
+    "eliminated": [
+      "Ian Ziering"
+    ]
+  },
+  {
+    "season": 4,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 3,
+    "contestants": [
+      "Laila Ali",
+      "Apolo Anton Ohno",
+      "Joey Fatone"
+    ],
+    "judge_scores": [
+      28.33,
+      29.33,
+      28.67
+    ],
+    "eliminated": [],
+    "placements": [
+      3,
+      1,
+      2
+    ]
+  },
+  {
+    "season": 5,
+    "week": 1,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "Cameron Mathison",
+      "Jane Seymour",
+      "Sabrina Bryan",
+      "Jennie Garth",
+      "Floyd Mayweather Jr. ",
+      "Josie Maran",
+      "Albert Reed",
+      "Helio Castroneves",
+      "Mel B",
+      "Wayne Newton",
+      "Marie Osmond",
+      "Mark Cuban"
+    ],
+    "judge_scores": [
+      21.0,
+      24.0,
+      26.0,
+      21.0,
+      18.0,
+      16.0,
+      21.0,
+      25.0,
+      24.0,
+      19.0,
+      21.0,
+      21.0
+    ],
+    "eliminated": [
+      "Josie Maran"
+    ]
+  },
+  {
+    "season": 5,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Cameron Mathison",
+      "Jane Seymour",
+      "Sabrina Bryan",
+      "Jennie Garth",
+      "Floyd Mayweather Jr. ",
+      "Albert Reed",
+      "Helio Castroneves",
+      "Mel B",
+      "Wayne Newton",
+      "Marie Osmond",
+      "Mark Cuban"
+    ],
+    "judge_scores": [
+      21.0,
+      21.0,
+      26.0,
+      21.0,
+      21.0,
+      21.0,
+      27.0,
+      23.0,
+      15.0,
+      24.0,
+      18.0
+    ],
+    "eliminated": [
+      "Albert Reed"
+    ]
+  },
+  {
+    "season": 5,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Cameron Mathison",
+      "Jane Seymour",
+      "Sabrina Bryan",
+      "Jennie Garth",
+      "Floyd Mayweather Jr. ",
+      "Helio Castroneves",
+      "Mel B",
+      "Wayne Newton",
+      "Marie Osmond",
+      "Mark Cuban"
+    ],
+    "judge_scores": [
+      23.0,
+      27.0,
+      27.0,
+      26.0,
+      21.0,
+      24.0,
+      27.0,
+      18.0,
+      26.0,
+      20.0
+    ],
+    "eliminated": [
+      "Wayne Newton"
+    ]
+  },
+  {
+    "season": 5,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Cameron Mathison",
+      "Jane Seymour",
+      "Sabrina Bryan",
+      "Jennie Garth",
+      "Floyd Mayweather Jr. ",
+      "Helio Castroneves",
+      "Mel B",
+      "Marie Osmond",
+      "Mark Cuban"
+    ],
+    "judge_scores": [
+      27.0,
+      26.0,
+      30.0,
+      27.0,
+      23.0,
+      27.0,
+      26.0,
+      26.0,
+      22.0
+    ],
+    "eliminated": [
+      "Floyd Mayweather Jr. "
+    ]
+  },
+  {
+    "season": 5,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Cameron Mathison",
+      "Jane Seymour",
+      "Sabrina Bryan",
+      "Jennie Garth",
+      "Helio Castroneves",
+      "Mel B",
+      "Marie Osmond",
+      "Mark Cuban"
+    ],
+    "judge_scores": [
+      26.0,
+      26.0,
+      28.0,
+      25.0,
+      23.0,
+      29.0,
+      21.0,
+      21.0
+    ],
+    "eliminated": [
+      "Mark Cuban"
+    ]
+  },
+  {
+    "season": 5,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Cameron Mathison",
+      "Jane Seymour",
+      "Sabrina Bryan",
+      "Jennie Garth",
+      "Helio Castroneves",
+      "Mel B",
+      "Marie Osmond"
+    ],
+    "judge_scores": [
+      25.0,
+      22.0,
+      25.0,
+      27.0,
+      28.0,
+      30.0,
+      23.0
+    ],
+    "eliminated": [
+      "Sabrina Bryan"
+    ]
+  },
+  {
+    "season": 5,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Cameron Mathison",
+      "Jane Seymour",
+      "Jennie Garth",
+      "Helio Castroneves",
+      "Mel B",
+      "Marie Osmond"
+    ],
+    "judge_scores": [
+      25.5,
+      25.0,
+      26.5,
+      26.0,
+      27.0,
+      26.0
+    ],
+    "eliminated": [
+      "Jane Seymour"
+    ]
+  },
+  {
+    "season": 5,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "Cameron Mathison",
+      "Jennie Garth",
+      "Helio Castroneves",
+      "Mel B",
+      "Marie Osmond"
+    ],
+    "judge_scores": [
+      25.5,
+      25.0,
+      28.5,
+      28.0,
+      24.5
+    ],
+    "eliminated": [
+      "Cameron Mathison"
+    ]
+  },
+  {
+    "season": 5,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 4,
+    "contestants": [
+      "Jennie Garth",
+      "Helio Castroneves",
+      "Mel B",
+      "Marie Osmond"
+    ],
+    "judge_scores": [
+      29.0,
+      30.0,
+      30.0,
+      28.0
+    ],
+    "eliminated": [
+      "Jennie Garth"
+    ]
+  },
+  {
+    "season": 5,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 3,
+    "contestants": [
+      "Helio Castroneves",
+      "Mel B",
+      "Marie Osmond"
+    ],
+    "judge_scores": [
+      28.0,
+      28.33,
+      23.0
+    ],
+    "eliminated": [],
+    "placements": [
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "season": 6,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "Cristian de la Fuente",
+      "Steve Guttenberg",
+      "Priscilla Presley",
+      "Marlee Matlin",
+      "Shannon Elizabeth",
+      "Marissa Jaret Winokur",
+      "Jason Taylor",
+      "Kristi Yamaguchi",
+      "Monica Seles",
+      "Penn Jillette",
+      "Adam Carolla",
+      "Mario"
+    ],
+    "judge_scores": [
+      20.0,
+      16.0,
+      21.0,
+      24.0,
+      24.0,
+      21.0,
+      27.0,
+      27.0,
+      15.0,
+      17.0,
+      19.0,
+      26.0
+    ],
+    "eliminated": [
+      "Penn Jillette",
+      "Monica Seles"
+    ]
+  },
+  {
+    "season": 6,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Cristian de la Fuente",
+      "Steve Guttenberg",
+      "Priscilla Presley",
+      "Marlee Matlin",
+      "Shannon Elizabeth",
+      "Marissa Jaret Winokur",
+      "Jason Taylor",
+      "Kristi Yamaguchi",
+      "Adam Carolla",
+      "Mario"
+    ],
+    "judge_scores": [
+      25.0,
+      21.0,
+      26.0,
+      21.0,
+      24.0,
+      19.0,
+      23.0,
+      27.0,
+      21.0,
+      21.0
+    ],
+    "eliminated": [
+      "Steve Guttenberg"
+    ]
+  },
+  {
+    "season": 6,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Cristian de la Fuente",
+      "Priscilla Presley",
+      "Marlee Matlin",
+      "Shannon Elizabeth",
+      "Marissa Jaret Winokur",
+      "Jason Taylor",
+      "Kristi Yamaguchi",
+      "Adam Carolla",
+      "Mario"
+    ],
+    "judge_scores": [
+      26.0,
+      22.0,
+      24.0,
+      28.0,
+      24.0,
+      29.0,
+      29.0,
+      19.0,
+      24.0
+    ],
+    "eliminated": [
+      "Adam Carolla"
+    ]
+  },
+  {
+    "season": 6,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Cristian de la Fuente",
+      "Priscilla Presley",
+      "Marlee Matlin",
+      "Shannon Elizabeth",
+      "Marissa Jaret Winokur",
+      "Jason Taylor",
+      "Kristi Yamaguchi",
+      "Mario"
+    ],
+    "judge_scores": [
+      23.0,
+      21.0,
+      22.0,
+      23.0,
+      24.0,
+      27.0,
+      29.0,
+      27.0
+    ],
+    "eliminated": [
+      "Priscilla Presley"
+    ]
+  },
+  {
+    "season": 6,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Cristian de la Fuente",
+      "Marlee Matlin",
+      "Shannon Elizabeth",
+      "Marissa Jaret Winokur",
+      "Jason Taylor",
+      "Kristi Yamaguchi",
+      "Mario"
+    ],
+    "judge_scores": [
+      27.0,
+      21.0,
+      24.0,
+      26.0,
+      24.0,
+      30.0,
+      28.0
+    ],
+    "eliminated": [
+      "Marlee Matlin"
+    ]
+  },
+  {
+    "season": 6,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Cristian de la Fuente",
+      "Shannon Elizabeth",
+      "Marissa Jaret Winokur",
+      "Jason Taylor",
+      "Kristi Yamaguchi",
+      "Mario"
+    ],
+    "judge_scores": [
+      23.0,
+      25.5,
+      26.0,
+      27.5,
+      27.0,
+      25.5
+    ],
+    "eliminated": [
+      "Shannon Elizabeth"
+    ]
+  },
+  {
+    "season": 6,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "Cristian de la Fuente",
+      "Marissa Jaret Winokur",
+      "Jason Taylor",
+      "Kristi Yamaguchi",
+      "Mario"
+    ],
+    "judge_scores": [
+      28.5,
+      25.0,
+      26.0,
+      27.5,
+      26.5
+    ],
+    "eliminated": [
+      "Mario"
+    ]
+  },
+  {
+    "season": 6,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 4,
+    "contestants": [
+      "Cristian de la Fuente",
+      "Marissa Jaret Winokur",
+      "Jason Taylor",
+      "Kristi Yamaguchi"
+    ],
+    "judge_scores": [
+      28.0,
+      26.0,
+      27.5,
+      28.5
+    ],
+    "eliminated": [
+      "Marissa Jaret Winokur"
+    ]
+  },
+  {
+    "season": 6,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 3,
+    "contestants": [
+      "Cristian de la Fuente",
+      "Jason Taylor",
+      "Kristi Yamaguchi"
+    ],
+    "judge_scores": [
+      26.0,
+      28.5,
+      30.0
+    ],
+    "eliminated": [],
+    "placements": [
+      3,
+      2,
+      1
+    ]
+  },
+  {
+    "season": 7,
+    "week": 1,
+    "is_final": false,
+    "n_contestants": 13,
+    "contestants": [
+      "Ted McGinley",
+      "Cloris Leachman",
+      "Susan Lucci",
+      "Cody Linley",
+      "Misty May-Treanor",
+      "Maurice Greene",
+      "Warren Sapp",
+      "Jeffrey Ross",
+      "Toni Braxton",
+      "Lance Bass",
+      "Kim Kardashian",
+      "Rocco DiSpirito",
+      "Brooke Burke"
+    ],
+    "judge_scores": [
+      18.5,
+      16.0,
+      18.5,
+      20.5,
+      21.0,
+      19.5,
+      21.5,
+      12.0,
+      22.5,
+      21.5,
+      18.5,
+      17.5,
+      24.5
+    ],
+    "eliminated": [
+      "Ted McGinley",
+      "Jeffrey Ross"
+    ]
+  },
+  {
+    "season": 7,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Cloris Leachman",
+      "Susan Lucci",
+      "Cody Linley",
+      "Misty May-Treanor",
+      "Maurice Greene",
+      "Warren Sapp",
+      "Toni Braxton",
+      "Lance Bass",
+      "Kim Kardashian",
+      "Rocco DiSpirito",
+      "Brooke Burke"
+    ],
+    "judge_scores": [
+      15.0,
+      21.0,
+      21.0,
+      21.0,
+      19.0,
+      24.0,
+      23.0,
+      20.0,
+      17.0,
+      16.0,
+      24.0
+    ],
+    "eliminated": [
+      "Kim Kardashian",
+      "Misty May-Treanor"
+    ]
+  },
+  {
+    "season": 7,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Cloris Leachman",
+      "Susan Lucci",
+      "Cody Linley",
+      "Maurice Greene",
+      "Warren Sapp",
+      "Toni Braxton",
+      "Lance Bass",
+      "Rocco DiSpirito",
+      "Brooke Burke"
+    ],
+    "judge_scores": [
+      22.0,
+      24.0,
+      23.0,
+      20.0,
+      22.0,
+      22.0,
+      26.0,
+      18.0,
+      26.0
+    ],
+    "eliminated": [
+      "Rocco DiSpirito"
+    ]
+  },
+  {
+    "season": 7,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Cloris Leachman",
+      "Susan Lucci",
+      "Cody Linley",
+      "Maurice Greene",
+      "Warren Sapp",
+      "Toni Braxton",
+      "Lance Bass",
+      "Brooke Burke"
+    ],
+    "judge_scores": [
+      21.0,
+      22.0,
+      28.0,
+      27.0,
+      25.0,
+      22.0,
+      21.0,
+      29.0
+    ],
+    "eliminated": [
+      "Toni Braxton"
+    ]
+  },
+  {
+    "season": 7,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Cloris Leachman",
+      "Susan Lucci",
+      "Cody Linley",
+      "Maurice Greene",
+      "Warren Sapp",
+      "Lance Bass",
+      "Brooke Burke"
+    ],
+    "judge_scores": [
+      15.0,
+      23.0,
+      23.0,
+      21.0,
+      25.0,
+      27.0,
+      26.0
+    ],
+    "eliminated": [
+      "Cloris Leachman"
+    ]
+  },
+  {
+    "season": 7,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Susan Lucci",
+      "Cody Linley",
+      "Maurice Greene",
+      "Warren Sapp",
+      "Lance Bass",
+      "Brooke Burke"
+    ],
+    "judge_scores": [
+      24.0,
+      22.0,
+      25.0,
+      21.0,
+      25.0,
+      30.0
+    ],
+    "eliminated": [
+      "Susan Lucci"
+    ]
+  },
+  {
+    "season": 7,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "Cody Linley",
+      "Maurice Greene",
+      "Warren Sapp",
+      "Lance Bass",
+      "Brooke Burke"
+    ],
+    "judge_scores": [
+      24.0,
+      24.0,
+      27.0,
+      25.0,
+      27.5
+    ],
+    "eliminated": [
+      "Maurice Greene"
+    ]
+  },
+  {
+    "season": 7,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 4,
+    "contestants": [
+      "Cody Linley",
+      "Warren Sapp",
+      "Lance Bass",
+      "Brooke Burke"
+    ],
+    "judge_scores": [
+      23.0,
+      24.5,
+      28.5,
+      24.5
+    ],
+    "eliminated": [
+      "Cody Linley"
+    ]
+  },
+  {
+    "season": 7,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 3,
+    "contestants": [
+      "Warren Sapp",
+      "Lance Bass",
+      "Brooke Burke"
+    ],
+    "judge_scores": [
+      27.5,
+      27.5,
+      30.0
+    ],
+    "eliminated": [],
+    "placements": [
+      2,
+      3,
+      1
+    ]
+  },
+  {
+    "season": 8,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 13,
+    "contestants": [
+      "Gilles Marini",
+      "Denise Richards",
+      "David Alan Grier",
+      "Lawrence Taylor",
+      "Ty Murray",
+      "Shawn Johnson",
+      "Steve Wozniak",
+      "Belinda Carlisle",
+      "Chuck Wicks",
+      "Lil' Kim",
+      "Steve-O",
+      "Holly Madison",
+      "Melissa Rycroft"
+    ],
+    "judge_scores": [
+      27.0,
+      21.0,
+      17.0,
+      20.0,
+      20.0,
+      24.0,
+      17.0,
+      18.0,
+      20.0,
+      23.0,
+      14.0,
+      18.0,
+      26.0
+    ],
+    "eliminated": [
+      "Belinda Carlisle"
+    ]
+  },
+  {
+    "season": 8,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "Gilles Marini",
+      "Denise Richards",
+      "David Alan Grier",
+      "Lawrence Taylor",
+      "Ty Murray",
+      "Shawn Johnson",
+      "Steve Wozniak",
+      "Chuck Wicks",
+      "Lil' Kim",
+      "Steve-O",
+      "Holly Madison",
+      "Melissa Rycroft"
+    ],
+    "judge_scores": [
+      27.0,
+      16.0,
+      24.0,
+      20.0,
+      23.0,
+      27.0,
+      10.0,
+      23.0,
+      25.0,
+      15.0,
+      17.0,
+      27.0
+    ],
+    "eliminated": [
+      "Denise Richards"
+    ]
+  },
+  {
+    "season": 8,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Gilles Marini",
+      "David Alan Grier",
+      "Lawrence Taylor",
+      "Ty Murray",
+      "Shawn Johnson",
+      "Steve Wozniak",
+      "Chuck Wicks",
+      "Lil' Kim",
+      "Steve-O",
+      "Holly Madison",
+      "Melissa Rycroft"
+    ],
+    "judge_scores": [
+      30.0,
+      22.0,
+      19.0,
+      25.0,
+      25.0,
+      12.0,
+      22.0,
+      27.0,
+      15.0,
+      16.0,
+      29.0
+    ],
+    "eliminated": [
+      "Holly Madison",
+      "Steve Wozniak"
+    ]
+  },
+  {
+    "season": 8,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Gilles Marini",
+      "David Alan Grier",
+      "Lawrence Taylor",
+      "Ty Murray",
+      "Shawn Johnson",
+      "Chuck Wicks",
+      "Lil' Kim",
+      "Steve-O",
+      "Melissa Rycroft"
+    ],
+    "judge_scores": [
+      29.0,
+      22.0,
+      20.0,
+      21.0,
+      26.0,
+      23.0,
+      26.0,
+      18.0,
+      25.0
+    ],
+    "eliminated": [
+      "David Alan Grier"
+    ]
+  },
+  {
+    "season": 8,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Gilles Marini",
+      "Lawrence Taylor",
+      "Ty Murray",
+      "Shawn Johnson",
+      "Chuck Wicks",
+      "Lil' Kim",
+      "Steve-O",
+      "Melissa Rycroft"
+    ],
+    "judge_scores": [
+      26.0,
+      22.0,
+      18.0,
+      26.0,
+      23.0,
+      28.0,
+      16.0,
+      27.0
+    ],
+    "eliminated": [
+      "Steve-O"
+    ]
+  },
+  {
+    "season": 8,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Gilles Marini",
+      "Lawrence Taylor",
+      "Ty Murray",
+      "Shawn Johnson",
+      "Chuck Wicks",
+      "Lil' Kim",
+      "Melissa Rycroft"
+    ],
+    "judge_scores": [
+      27.0,
+      21.0,
+      24.0,
+      28.0,
+      27.0,
+      26.0,
+      29.0
+    ],
+    "eliminated": [
+      "Lawrence Taylor"
+    ]
+  },
+  {
+    "season": 8,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Gilles Marini",
+      "Ty Murray",
+      "Shawn Johnson",
+      "Chuck Wicks",
+      "Lil' Kim",
+      "Melissa Rycroft"
+    ],
+    "judge_scores": [
+      27.5,
+      26.0,
+      26.0,
+      25.5,
+      28.0,
+      23.0
+    ],
+    "eliminated": [
+      "Chuck Wicks"
+    ]
+  },
+  {
+    "season": 8,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "Gilles Marini",
+      "Ty Murray",
+      "Shawn Johnson",
+      "Lil' Kim",
+      "Melissa Rycroft"
+    ],
+    "judge_scores": [
+      28.0,
+      23.0,
+      28.0,
+      26.0,
+      28.5
+    ],
+    "eliminated": [
+      "Lil' Kim"
+    ]
+  },
+  {
+    "season": 8,
+    "week": 10,
+    "is_final": false,
+    "n_contestants": 4,
+    "contestants": [
+      "Gilles Marini",
+      "Ty Murray",
+      "Shawn Johnson",
+      "Melissa Rycroft"
+    ],
+    "judge_scores": [
+      30.0,
+      24.0,
+      28.0,
+      27.5
+    ],
+    "eliminated": [
+      "Ty Murray"
+    ]
+  },
+  {
+    "season": 8,
+    "week": 11,
+    "is_final": true,
+    "n_contestants": 3,
+    "contestants": [
+      "Gilles Marini",
+      "Shawn Johnson",
+      "Melissa Rycroft"
+    ],
+    "judge_scores": [
+      29.0,
+      30.0,
+      28.5
+    ],
+    "eliminated": [],
+    "placements": [
+      2,
+      1,
+      3
+    ]
+  },
+  {
+    "season": 9,
+    "week": 1,
+    "is_final": false,
+    "n_contestants": 16,
+    "contestants": [
+      "Ashley Hamiliton",
+      "Debi Mazar",
+      "Melissa Joan Hart",
+      "Mark Dacascos",
+      "Chuck Liddell",
+      "Natalie Coughlin",
+      "Louie Vito",
+      "Michael Irvin",
+      "Joanna Krupa",
+      "Kathy Ireland",
+      "Tom DeLay",
+      "Macy Gray",
+      "Aaron Carter",
+      "Mya",
+      "Donny Osmond",
+      "Kelly Osbourne"
+    ],
+    "judge_scores": [
+      19.0,
+      22.0,
+      24.0,
+      29.0,
+      22.0,
+      27.0,
+      27.0,
+      19.0,
+      34.0,
+      20.0,
+      20.0,
+      19.0,
+      32.0,
+      31.0,
+      30.0,
+      31.0
+    ],
+    "eliminated": [
+      "Ashley Hamiliton",
+      "Macy Gray"
+    ]
+  },
+  {
+    "season": 9,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 14,
+    "contestants": [
+      "Debi Mazar",
+      "Melissa Joan Hart",
+      "Mark Dacascos",
+      "Chuck Liddell",
+      "Natalie Coughlin",
+      "Louie Vito",
+      "Michael Irvin",
+      "Joanna Krupa",
+      "Kathy Ireland",
+      "Tom DeLay",
+      "Aaron Carter",
+      "Mya",
+      "Donny Osmond",
+      "Kelly Osbourne"
+    ],
+    "judge_scores": [
+      21.0,
+      19.0,
+      21.0,
+      19.0,
+      21.0,
+      19.0,
+      20.0,
+      20.0,
+      18.0,
+      18.0,
+      27.0,
+      27.0,
+      25.0,
+      19.0
+    ],
+    "eliminated": [
+      "Kathy Ireland"
+    ]
+  },
+  {
+    "season": 9,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 13,
+    "contestants": [
+      "Debi Mazar",
+      "Melissa Joan Hart",
+      "Mark Dacascos",
+      "Chuck Liddell",
+      "Natalie Coughlin",
+      "Louie Vito",
+      "Michael Irvin",
+      "Joanna Krupa",
+      "Tom DeLay",
+      "Aaron Carter",
+      "Mya",
+      "Donny Osmond",
+      "Kelly Osbourne"
+    ],
+    "judge_scores": [
+      17.0,
+      19.0,
+      18.0,
+      17.0,
+      26.0,
+      20.0,
+      14.0,
+      23.0,
+      15.0,
+      21.0,
+      27.0,
+      21.0,
+      20.0
+    ],
+    "eliminated": [
+      "Tom DeLay",
+      "Debi Mazar"
+    ]
+  },
+  {
+    "season": 9,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Melissa Joan Hart",
+      "Mark Dacascos",
+      "Chuck Liddell",
+      "Natalie Coughlin",
+      "Louie Vito",
+      "Michael Irvin",
+      "Joanna Krupa",
+      "Aaron Carter",
+      "Mya",
+      "Donny Osmond",
+      "Kelly Osbourne"
+    ],
+    "judge_scores": [
+      28.0,
+      22.0,
+      17.0,
+      24.0,
+      16.0,
+      16.0,
+      26.0,
+      18.0,
+      28.0,
+      24.0,
+      23.0
+    ],
+    "eliminated": [
+      "Chuck Liddell"
+    ]
+  },
+  {
+    "season": 9,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Melissa Joan Hart",
+      "Mark Dacascos",
+      "Natalie Coughlin",
+      "Louie Vito",
+      "Michael Irvin",
+      "Joanna Krupa",
+      "Aaron Carter",
+      "Mya",
+      "Donny Osmond",
+      "Kelly Osbourne"
+    ],
+    "judge_scores": [
+      23.0,
+      26.0,
+      22.0,
+      22.0,
+      21.0,
+      24.0,
+      24.0,
+      27.0,
+      29.0,
+      24.0
+    ],
+    "eliminated": [
+      "Natalie Coughlin"
+    ]
+  },
+  {
+    "season": 9,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Melissa Joan Hart",
+      "Mark Dacascos",
+      "Louie Vito",
+      "Michael Irvin",
+      "Joanna Krupa",
+      "Aaron Carter",
+      "Mya",
+      "Donny Osmond",
+      "Kelly Osbourne"
+    ],
+    "judge_scores": [
+      24.0,
+      32.0,
+      24.0,
+      22.0,
+      36.0,
+      33.0,
+      33.0,
+      31.0,
+      25.0
+    ],
+    "eliminated": [
+      "Melissa Joan Hart",
+      "Louie Vito"
+    ]
+  },
+  {
+    "season": 9,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Mark Dacascos",
+      "Michael Irvin",
+      "Joanna Krupa",
+      "Aaron Carter",
+      "Mya",
+      "Donny Osmond",
+      "Kelly Osbourne"
+    ],
+    "judge_scores": [
+      21.5,
+      23.5,
+      27.5,
+      26.5,
+      24.5,
+      26.0,
+      26.0
+    ],
+    "eliminated": [
+      "Michael Irvin",
+      "Mark Dacascos"
+    ]
+  },
+  {
+    "season": 9,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "Joanna Krupa",
+      "Aaron Carter",
+      "Mya",
+      "Donny Osmond",
+      "Kelly Osbourne"
+    ],
+    "judge_scores": [
+      26.0,
+      25.0,
+      29.5,
+      25.0,
+      25.5
+    ],
+    "eliminated": [
+      "Aaron Carter"
+    ]
+  },
+  {
+    "season": 9,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 4,
+    "contestants": [
+      "Joanna Krupa",
+      "Mya",
+      "Donny Osmond",
+      "Kelly Osbourne"
+    ],
+    "judge_scores": [
+      27.0,
+      29.0,
+      24.67,
+      26.0
+    ],
+    "eliminated": [
+      "Joanna Krupa"
+    ]
+  },
+  {
+    "season": 9,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 3,
+    "contestants": [
+      "Mya",
+      "Donny Osmond",
+      "Kelly Osbourne"
+    ],
+    "judge_scores": [
+      28.33,
+      29.0,
+      25.22
+    ],
+    "eliminated": [],
+    "placements": [
+      2,
+      1,
+      3
+    ]
+  },
+  {
+    "season": 10,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Aiden Turner",
+      "Shannen Doherty",
+      "Niecy Nash",
+      "Buzz Aldrin",
+      "Chad Ochocinco",
+      "Evan Lysacek",
+      "Pamela Anderson",
+      "Nicole Scherzinger",
+      "Erin Andrews",
+      "Kate Gosselin",
+      "Jake Pavelka"
+    ],
+    "judge_scores": [
+      19.0,
+      20.0,
+      21.0,
+      12.0,
+      16.0,
+      24.0,
+      22.0,
+      28.0,
+      23.0,
+      15.0,
+      20.0
+    ],
+    "eliminated": [
+      "Shannen Doherty"
+    ]
+  },
+  {
+    "season": 10,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Aiden Turner",
+      "Niecy Nash",
+      "Buzz Aldrin",
+      "Chad Ochocinco",
+      "Evan Lysacek",
+      "Pamela Anderson",
+      "Nicole Scherzinger",
+      "Erin Andrews",
+      "Kate Gosselin",
+      "Jake Pavelka"
+    ],
+    "judge_scores": [
+      20.0,
+      21.0,
+      13.0,
+      20.0,
+      26.0,
+      21.0,
+      23.0,
+      23.0,
+      15.0,
+      21.0
+    ],
+    "eliminated": [
+      "Buzz Aldrin"
+    ]
+  },
+  {
+    "season": 10,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Aiden Turner",
+      "Niecy Nash",
+      "Chad Ochocinco",
+      "Evan Lysacek",
+      "Pamela Anderson",
+      "Nicole Scherzinger",
+      "Erin Andrews",
+      "Kate Gosselin",
+      "Jake Pavelka"
+    ],
+    "judge_scores": [
+      16.5,
+      18.0,
+      22.0,
+      26.0,
+      23.5,
+      25.0,
+      19.5,
+      16.0,
+      19.0
+    ],
+    "eliminated": [
+      "Aiden Turner"
+    ]
+  },
+  {
+    "season": 10,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Niecy Nash",
+      "Chad Ochocinco",
+      "Evan Lysacek",
+      "Pamela Anderson",
+      "Nicole Scherzinger",
+      "Erin Andrews",
+      "Kate Gosselin",
+      "Jake Pavelka"
+    ],
+    "judge_scores": [
+      18.0,
+      18.0,
+      27.0,
+      21.0,
+      29.0,
+      22.0,
+      15.0,
+      23.0
+    ],
+    "eliminated": [
+      "Kate Gosselin"
+    ]
+  },
+  {
+    "season": 10,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Niecy Nash",
+      "Chad Ochocinco",
+      "Evan Lysacek",
+      "Pamela Anderson",
+      "Nicole Scherzinger",
+      "Erin Andrews",
+      "Jake Pavelka"
+    ],
+    "judge_scores": [
+      26.0,
+      31.0,
+      27.0,
+      30.0,
+      36.0,
+      34.0,
+      25.0
+    ],
+    "eliminated": [
+      "Jake Pavelka"
+    ]
+  },
+  {
+    "season": 10,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Niecy Nash",
+      "Chad Ochocinco",
+      "Evan Lysacek",
+      "Pamela Anderson",
+      "Nicole Scherzinger",
+      "Erin Andrews"
+    ],
+    "judge_scores": [
+      24.5,
+      26.0,
+      27.0,
+      25.5,
+      27.0,
+      25.5
+    ],
+    "eliminated": [
+      "Pamela Anderson"
+    ]
+  },
+  {
+    "season": 10,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "Niecy Nash",
+      "Chad Ochocinco",
+      "Evan Lysacek",
+      "Nicole Scherzinger",
+      "Erin Andrews"
+    ],
+    "judge_scores": [
+      21.5,
+      22.5,
+      26.5,
+      29.5,
+      26.5
+    ],
+    "eliminated": [
+      "Niecy Nash"
+    ]
+  },
+  {
+    "season": 10,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 4,
+    "contestants": [
+      "Chad Ochocinco",
+      "Evan Lysacek",
+      "Nicole Scherzinger",
+      "Erin Andrews"
+    ],
+    "judge_scores": [
+      26.0,
+      29.5,
+      29.5,
+      28.0
+    ],
+    "eliminated": [
+      "Chad Ochocinco"
+    ]
+  },
+  {
+    "season": 10,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 3,
+    "contestants": [
+      "Evan Lysacek",
+      "Nicole Scherzinger",
+      "Erin Andrews"
+    ],
+    "judge_scores": [
+      26.89,
+      28.78,
+      27.0
+    ],
+    "eliminated": [],
+    "placements": [
+      2,
+      1,
+      3
+    ]
+  },
+  {
+    "season": 11,
+    "week": 1,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "David Hasselhoff",
+      "Florence Henderson",
+      "Kyle Massey",
+      "Jennifer Grey",
+      "Rick Fox",
+      "Kurt Warner",
+      "Margaret Cho",
+      "Michael Bolton",
+      "Brandy",
+      "The Situation",
+      "Audrina Patridge",
+      "Bristol Palin"
+    ],
+    "judge_scores": [
+      15.0,
+      18.0,
+      23.0,
+      24.0,
+      22.0,
+      19.0,
+      15.0,
+      16.0,
+      23.0,
+      15.0,
+      19.0,
+      18.0
+    ],
+    "eliminated": [
+      "David Hasselhoff"
+    ]
+  },
+  {
+    "season": 11,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Florence Henderson",
+      "Kyle Massey",
+      "Jennifer Grey",
+      "Rick Fox",
+      "Kurt Warner",
+      "Margaret Cho",
+      "Michael Bolton",
+      "Brandy",
+      "The Situation",
+      "Audrina Patridge",
+      "Bristol Palin"
+    ],
+    "judge_scores": [
+      19.0,
+      22.0,
+      24.0,
+      21.0,
+      21.0,
+      18.0,
+      12.0,
+      21.0,
+      18.0,
+      23.0,
+      22.0
+    ],
+    "eliminated": [
+      "Michael Bolton"
+    ]
+  },
+  {
+    "season": 11,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Florence Henderson",
+      "Kyle Massey",
+      "Jennifer Grey",
+      "Rick Fox",
+      "Kurt Warner",
+      "Margaret Cho",
+      "Brandy",
+      "The Situation",
+      "Audrina Patridge",
+      "Bristol Palin"
+    ],
+    "judge_scores": [
+      20.0,
+      23.0,
+      24.0,
+      24.0,
+      23.0,
+      18.0,
+      24.0,
+      20.0,
+      26.0,
+      19.0
+    ],
+    "eliminated": [
+      "Margaret Cho"
+    ]
+  },
+  {
+    "season": 11,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Florence Henderson",
+      "Kyle Massey",
+      "Jennifer Grey",
+      "Rick Fox",
+      "Kurt Warner",
+      "Brandy",
+      "The Situation",
+      "Audrina Patridge",
+      "Bristol Palin"
+    ],
+    "judge_scores": [
+      17.5,
+      20.0,
+      28.0,
+      19.5,
+      17.0,
+      24.0,
+      14.0,
+      23.0,
+      16.0
+    ],
+    "eliminated": [
+      "The Situation"
+    ]
+  },
+  {
+    "season": 11,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Florence Henderson",
+      "Kyle Massey",
+      "Jennifer Grey",
+      "Rick Fox",
+      "Kurt Warner",
+      "Brandy",
+      "Audrina Patridge",
+      "Bristol Palin"
+    ],
+    "judge_scores": [
+      21.0,
+      20.0,
+      25.0,
+      24.0,
+      24.0,
+      27.0,
+      23.0,
+      18.0
+    ],
+    "eliminated": [
+      "Florence Henderson"
+    ]
+  },
+  {
+    "season": 11,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Kyle Massey",
+      "Jennifer Grey",
+      "Rick Fox",
+      "Kurt Warner",
+      "Brandy",
+      "Audrina Patridge",
+      "Bristol Palin"
+    ],
+    "judge_scores": [
+      30.0,
+      29.0,
+      30.0,
+      22.0,
+      36.0,
+      32.0,
+      28.0
+    ],
+    "eliminated": [
+      "Audrina Patridge"
+    ]
+  },
+  {
+    "season": 11,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Kyle Massey",
+      "Jennifer Grey",
+      "Rick Fox",
+      "Kurt Warner",
+      "Brandy",
+      "Bristol Palin"
+    ],
+    "judge_scores": [
+      33.5,
+      36.5,
+      34.5,
+      35.0,
+      36.5,
+      32.5
+    ],
+    "eliminated": [
+      "Rick Fox"
+    ]
+  },
+  {
+    "season": 11,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "Kyle Massey",
+      "Jennifer Grey",
+      "Kurt Warner",
+      "Brandy",
+      "Bristol Palin"
+    ],
+    "judge_scores": [
+      28.0,
+      28.5,
+      24.0,
+      28.5,
+      23.5
+    ],
+    "eliminated": [
+      "Kurt Warner"
+    ]
+  },
+  {
+    "season": 11,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 4,
+    "contestants": [
+      "Kyle Massey",
+      "Jennifer Grey",
+      "Brandy",
+      "Bristol Palin"
+    ],
+    "judge_scores": [
+      29.0,
+      30.0,
+      28.5,
+      26.5
+    ],
+    "eliminated": [
+      "Brandy"
+    ]
+  },
+  {
+    "season": 11,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 3,
+    "contestants": [
+      "Kyle Massey",
+      "Jennifer Grey",
+      "Bristol Palin"
+    ],
+    "judge_scores": [
+      27.33,
+      30.0,
+      25.67
+    ],
+    "eliminated": [],
+    "placements": [
+      2,
+      1,
+      3
+    ]
+  },
+  {
+    "season": 12,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Ralph Macchio",
+      "Chelsea Kane",
+      "Kirstie Alley",
+      "Hines Ward",
+      "Sugar Ray Leonard",
+      "Chris Jericho",
+      "Petra Nemcova",
+      "Mike Catherwood",
+      "Romeo",
+      "Wendy Williams",
+      "Kendra Wilkinson"
+    ],
+    "judge_scores": [
+      21.0,
+      18.0,
+      20.0,
+      23.0,
+      17.0,
+      23.0,
+      18.0,
+      17.0,
+      23.0,
+      17.0,
+      19.0
+    ],
+    "eliminated": [
+      "Mike Catherwood"
+    ]
+  },
+  {
+    "season": 12,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Ralph Macchio",
+      "Chelsea Kane",
+      "Kirstie Alley",
+      "Hines Ward",
+      "Sugar Ray Leonard",
+      "Chris Jericho",
+      "Petra Nemcova",
+      "Romeo",
+      "Wendy Williams",
+      "Kendra Wilkinson"
+    ],
+    "judge_scores": [
+      21.0,
+      23.0,
+      21.0,
+      25.0,
+      20.0,
+      21.0,
+      25.0,
+      20.0,
+      15.0,
+      23.0
+    ],
+    "eliminated": [
+      "Wendy Williams"
+    ]
+  },
+  {
+    "season": 12,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Ralph Macchio",
+      "Chelsea Kane",
+      "Kirstie Alley",
+      "Hines Ward",
+      "Sugar Ray Leonard",
+      "Chris Jericho",
+      "Petra Nemcova",
+      "Romeo",
+      "Kendra Wilkinson"
+    ],
+    "judge_scores": [
+      25.0,
+      26.0,
+      22.0,
+      25.0,
+      21.0,
+      23.0,
+      23.0,
+      23.0,
+      18.0
+    ],
+    "eliminated": [
+      "Sugar Ray Leonard"
+    ]
+  },
+  {
+    "season": 12,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Ralph Macchio",
+      "Chelsea Kane",
+      "Kirstie Alley",
+      "Hines Ward",
+      "Chris Jericho",
+      "Petra Nemcova",
+      "Romeo",
+      "Kendra Wilkinson"
+    ],
+    "judge_scores": [
+      22.0,
+      26.0,
+      23.0,
+      27.0,
+      26.0,
+      22.0,
+      26.0,
+      22.0
+    ],
+    "eliminated": [
+      "Petra Nemcova"
+    ]
+  },
+  {
+    "season": 12,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Ralph Macchio",
+      "Chelsea Kane",
+      "Kirstie Alley",
+      "Hines Ward",
+      "Chris Jericho",
+      "Romeo",
+      "Kendra Wilkinson"
+    ],
+    "judge_scores": [
+      24.0,
+      28.0,
+      26.0,
+      27.0,
+      22.0,
+      28.0,
+      25.0
+    ],
+    "eliminated": [
+      "Chris Jericho"
+    ]
+  },
+  {
+    "season": 12,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Ralph Macchio",
+      "Chelsea Kane",
+      "Kirstie Alley",
+      "Hines Ward",
+      "Romeo",
+      "Kendra Wilkinson"
+    ],
+    "judge_scores": [
+      33.0,
+      32.0,
+      30.0,
+      33.0,
+      30.0,
+      30.5
+    ],
+    "eliminated": [
+      "Kendra Wilkinson"
+    ]
+  },
+  {
+    "season": 12,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "Ralph Macchio",
+      "Chelsea Kane",
+      "Kirstie Alley",
+      "Hines Ward",
+      "Romeo"
+    ],
+    "judge_scores": [
+      23.0,
+      27.5,
+      26.5,
+      27.0,
+      26.0
+    ],
+    "eliminated": [
+      "Romeo"
+    ]
+  },
+  {
+    "season": 12,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 4,
+    "contestants": [
+      "Ralph Macchio",
+      "Chelsea Kane",
+      "Kirstie Alley",
+      "Hines Ward"
+    ],
+    "judge_scores": [
+      24.0,
+      36.5,
+      27.0,
+      30.0
+    ],
+    "eliminated": [
+      "Ralph Macchio"
+    ]
+  },
+  {
+    "season": 12,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 3,
+    "contestants": [
+      "Chelsea Kane",
+      "Kirstie Alley",
+      "Hines Ward"
+    ],
+    "judge_scores": [
+      29.67,
+      28.0,
+      29.67
+    ],
+    "eliminated": [],
+    "placements": [
+      3,
+      2,
+      1
+    ]
+  },
+  {
+    "season": 13,
+    "week": 1,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "Elisabetta Canalis",
+      "David Arquette",
+      "Ricki Lake",
+      "J.R. Martinez",
+      "Metta World Peace (Ron)",
+      "Hope Solo",
+      "Chynna Phillips",
+      "Kristin Cavallari",
+      "Carson Kressley",
+      "Chaz Bono",
+      "Nancy Grace",
+      "Rob Kardashian"
+    ],
+    "judge_scores": [
+      15.0,
+      18.0,
+      20.0,
+      22.0,
+      14.0,
+      21.0,
+      22.0,
+      19.0,
+      17.0,
+      17.0,
+      16.0,
+      16.0
+    ],
+    "eliminated": [
+      "Metta World Peace (Ron)"
+    ]
+  },
+  {
+    "season": 13,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Elisabetta Canalis",
+      "David Arquette",
+      "Ricki Lake",
+      "J.R. Martinez",
+      "Hope Solo",
+      "Chynna Phillips",
+      "Kristin Cavallari",
+      "Carson Kressley",
+      "Chaz Bono",
+      "Nancy Grace",
+      "Rob Kardashian"
+    ],
+    "judge_scores": [
+      21.0,
+      18.0,
+      23.0,
+      22.0,
+      19.0,
+      21.0,
+      22.0,
+      18.0,
+      17.0,
+      21.0,
+      21.0
+    ],
+    "eliminated": [
+      "Elisabetta Canalis"
+    ]
+  },
+  {
+    "season": 13,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "David Arquette",
+      "Ricki Lake",
+      "J.R. Martinez",
+      "Hope Solo",
+      "Chynna Phillips",
+      "Kristin Cavallari",
+      "Carson Kressley",
+      "Chaz Bono",
+      "Nancy Grace",
+      "Rob Kardashian"
+    ],
+    "judge_scores": [
+      24.0,
+      27.0,
+      26.0,
+      24.0,
+      26.0,
+      24.0,
+      23.0,
+      18.0,
+      21.0,
+      24.0
+    ],
+    "eliminated": [
+      "Kristin Cavallari"
+    ]
+  },
+  {
+    "season": 13,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "David Arquette",
+      "Ricki Lake",
+      "J.R. Martinez",
+      "Hope Solo",
+      "Chynna Phillips",
+      "Carson Kressley",
+      "Chaz Bono",
+      "Nancy Grace",
+      "Rob Kardashian"
+    ],
+    "judge_scores": [
+      23.0,
+      29.0,
+      26.0,
+      24.0,
+      21.0,
+      20.0,
+      21.0,
+      21.0,
+      24.0
+    ],
+    "eliminated": [
+      "Chynna Phillips"
+    ]
+  },
+  {
+    "season": 13,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "David Arquette",
+      "Ricki Lake",
+      "J.R. Martinez",
+      "Hope Solo",
+      "Carson Kressley",
+      "Chaz Bono",
+      "Nancy Grace",
+      "Rob Kardashian"
+    ],
+    "judge_scores": [
+      25.0,
+      24.0,
+      28.0,
+      24.0,
+      19.0,
+      21.0,
+      22.0,
+      25.0
+    ],
+    "eliminated": [
+      "Carson Kressley"
+    ]
+  },
+  {
+    "season": 13,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "David Arquette",
+      "Ricki Lake",
+      "J.R. Martinez",
+      "Hope Solo",
+      "Chaz Bono",
+      "Nancy Grace",
+      "Rob Kardashian"
+    ],
+    "judge_scores": [
+      23.0,
+      29.0,
+      29.0,
+      20.0,
+      19.0,
+      24.0,
+      22.0
+    ],
+    "eliminated": [
+      "Chaz Bono"
+    ]
+  },
+  {
+    "season": 13,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "David Arquette",
+      "Ricki Lake",
+      "J.R. Martinez",
+      "Hope Solo",
+      "Nancy Grace",
+      "Rob Kardashian"
+    ],
+    "judge_scores": [
+      23.5,
+      26.5,
+      24.0,
+      25.0,
+      22.0,
+      25.5
+    ],
+    "eliminated": [
+      "David Arquette"
+    ]
+  },
+  {
+    "season": 13,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "Ricki Lake",
+      "J.R. Martinez",
+      "Hope Solo",
+      "Nancy Grace",
+      "Rob Kardashian"
+    ],
+    "judge_scores": [
+      26.0,
+      30.0,
+      26.0,
+      22.0,
+      25.5
+    ],
+    "eliminated": [
+      "Nancy Grace"
+    ]
+  },
+  {
+    "season": 13,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 4,
+    "contestants": [
+      "Ricki Lake",
+      "J.R. Martinez",
+      "Hope Solo",
+      "Rob Kardashian"
+    ],
+    "judge_scores": [
+      33.5,
+      28.0,
+      24.5,
+      32.5
+    ],
+    "eliminated": [
+      "Hope Solo"
+    ]
+  },
+  {
+    "season": 13,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 3,
+    "contestants": [
+      "Ricki Lake",
+      "J.R. Martinez",
+      "Rob Kardashian"
+    ],
+    "judge_scores": [
+      28.0,
+      28.17,
+      28.33
+    ],
+    "eliminated": [],
+    "placements": [
+      3,
+      1,
+      2
+    ]
+  },
+  {
+    "season": 14,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "William Levy",
+      "Jack Wagner",
+      "Sherri Sheperd",
+      "Jaleel White",
+      "Roshon Fegan",
+      "Melissa Gilbert",
+      "Martina Navratilova",
+      "Donald Driver",
+      "Gavin DeGraw",
+      "Gladys Knight",
+      "Katherine Jenkins",
+      "Maria Menounos"
+    ],
+    "judge_scores": [
+      25.0,
+      21.0,
+      23.0,
+      22.0,
+      26.0,
+      20.0,
+      17.0,
+      24.0,
+      21.0,
+      19.0,
+      26.0,
+      25.0
+    ],
+    "eliminated": [
+      "Martina Navratilova"
+    ]
+  },
+  {
+    "season": 14,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "William Levy",
+      "Jack Wagner",
+      "Sherri Sheperd",
+      "Jaleel White",
+      "Roshon Fegan",
+      "Melissa Gilbert",
+      "Donald Driver",
+      "Gavin DeGraw",
+      "Gladys Knight",
+      "Katherine Jenkins",
+      "Maria Menounos"
+    ],
+    "judge_scores": [
+      28.0,
+      24.0,
+      24.0,
+      25.0,
+      25.0,
+      24.0,
+      26.0,
+      24.0,
+      24.0,
+      29.0,
+      27.0
+    ],
+    "eliminated": [
+      "Jack Wagner"
+    ]
+  },
+  {
+    "season": 14,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "William Levy",
+      "Sherri Sheperd",
+      "Jaleel White",
+      "Roshon Fegan",
+      "Melissa Gilbert",
+      "Donald Driver",
+      "Gavin DeGraw",
+      "Gladys Knight",
+      "Katherine Jenkins",
+      "Maria Menounos"
+    ],
+    "judge_scores": [
+      22.0,
+      21.0,
+      22.0,
+      26.0,
+      22.0,
+      27.0,
+      23.0,
+      20.0,
+      24.0,
+      26.0
+    ],
+    "eliminated": [
+      "Sherri Sheperd"
+    ]
+  },
+  {
+    "season": 14,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "William Levy",
+      "Jaleel White",
+      "Roshon Fegan",
+      "Melissa Gilbert",
+      "Donald Driver",
+      "Gavin DeGraw",
+      "Gladys Knight",
+      "Katherine Jenkins",
+      "Maria Menounos"
+    ],
+    "judge_scores": [
+      29.0,
+      24.0,
+      26.0,
+      21.0,
+      27.0,
+      19.0,
+      22.0,
+      29.0,
+      27.0
+    ],
+    "eliminated": [
+      "Gavin DeGraw"
+    ]
+  },
+  {
+    "season": 14,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "William Levy",
+      "Jaleel White",
+      "Roshon Fegan",
+      "Melissa Gilbert",
+      "Donald Driver",
+      "Gladys Knight",
+      "Katherine Jenkins",
+      "Maria Menounos"
+    ],
+    "judge_scores": [
+      36.0,
+      37.0,
+      28.0,
+      30.0,
+      34.0,
+      24.0,
+      39.0,
+      30.0
+    ],
+    "eliminated": [
+      "Gladys Knight"
+    ]
+  },
+  {
+    "season": 14,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "William Levy",
+      "Jaleel White",
+      "Roshon Fegan",
+      "Melissa Gilbert",
+      "Donald Driver",
+      "Katherine Jenkins",
+      "Maria Menounos"
+    ],
+    "judge_scores": [
+      26.5,
+      25.5,
+      26.0,
+      23.5,
+      26.5,
+      27.0,
+      28.5
+    ],
+    "eliminated": [
+      "Jaleel White"
+    ]
+  },
+  {
+    "season": 14,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "William Levy",
+      "Roshon Fegan",
+      "Melissa Gilbert",
+      "Donald Driver",
+      "Katherine Jenkins",
+      "Maria Menounos"
+    ],
+    "judge_scores": [
+      28.5,
+      28.0,
+      25.5,
+      27.5,
+      27.5,
+      26.5
+    ],
+    "eliminated": [
+      "Roshon Fegan",
+      "Melissa Gilbert"
+    ]
+  },
+  {
+    "season": 14,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 4,
+    "contestants": [
+      "William Levy",
+      "Donald Driver",
+      "Katherine Jenkins",
+      "Maria Menounos"
+    ],
+    "judge_scores": [
+      29.0,
+      28.5,
+      28.0,
+      29.5
+    ],
+    "eliminated": [
+      "Maria Menounos"
+    ]
+  },
+  {
+    "season": 14,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 3,
+    "contestants": [
+      "William Levy",
+      "Donald Driver",
+      "Katherine Jenkins"
+    ],
+    "judge_scores": [
+      29.67,
+      29.67,
+      30.0
+    ],
+    "eliminated": [],
+    "placements": [
+      3,
+      1,
+      2
+    ]
+  },
+  {
+    "season": 15,
+    "week": 1,
+    "is_final": false,
+    "n_contestants": 13,
+    "contestants": [
+      "Gilles Marini",
+      "Sabrina Bryan",
+      "Kirstie Alley",
+      "Kelly Monaco",
+      "Apolo Anton Ohno",
+      "Emmitt Smith",
+      "Shawn Johnson",
+      "Pamela Anderson",
+      "Helio Castroneves",
+      "Joey Fatone",
+      "Drew Lachey",
+      "Bristol Palin",
+      "Melissa Rycroft"
+    ],
+    "judge_scores": [
+      24.0,
+      22.5,
+      19.0,
+      21.5,
+      22.0,
+      24.5,
+      22.0,
+      17.0,
+      21.5,
+      20.5,
+      21.5,
+      19.5,
+      21.0
+    ],
+    "eliminated": [
+      "Pamela Anderson"
+    ]
+  },
+  {
+    "season": 15,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "Gilles Marini",
+      "Sabrina Bryan",
+      "Kirstie Alley",
+      "Kelly Monaco",
+      "Apolo Anton Ohno",
+      "Emmitt Smith",
+      "Shawn Johnson",
+      "Helio Castroneves",
+      "Joey Fatone",
+      "Drew Lachey",
+      "Bristol Palin",
+      "Melissa Rycroft"
+    ],
+    "judge_scores": [
+      25.5,
+      26.0,
+      21.0,
+      22.0,
+      24.5,
+      22.5,
+      25.0,
+      23.0,
+      22.5,
+      22.5,
+      18.0,
+      23.5
+    ],
+    "eliminated": [
+      "Joey Fatone"
+    ]
+  },
+  {
+    "season": 15,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Gilles Marini",
+      "Sabrina Bryan",
+      "Kirstie Alley",
+      "Kelly Monaco",
+      "Apolo Anton Ohno",
+      "Emmitt Smith",
+      "Shawn Johnson",
+      "Helio Castroneves",
+      "Drew Lachey",
+      "Bristol Palin",
+      "Melissa Rycroft"
+    ],
+    "judge_scores": [
+      25.5,
+      25.5,
+      24.0,
+      27.0,
+      25.5,
+      25.0,
+      26.5,
+      25.5,
+      24.0,
+      22.5,
+      27.0
+    ],
+    "eliminated": [
+      "Drew Lachey",
+      "Helio Castroneves"
+    ]
+  },
+  {
+    "season": 15,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Gilles Marini",
+      "Sabrina Bryan",
+      "Kirstie Alley",
+      "Kelly Monaco",
+      "Apolo Anton Ohno",
+      "Emmitt Smith",
+      "Shawn Johnson",
+      "Bristol Palin",
+      "Melissa Rycroft"
+    ],
+    "judge_scores": [
+      39.5,
+      35.5,
+      30.0,
+      37.5,
+      34.5,
+      36.0,
+      39.5,
+      32.0,
+      37.0
+    ],
+    "eliminated": [
+      "Bristol Palin"
+    ]
+  },
+  {
+    "season": 15,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Gilles Marini",
+      "Sabrina Bryan",
+      "Kirstie Alley",
+      "Kelly Monaco",
+      "Apolo Anton Ohno",
+      "Emmitt Smith",
+      "Shawn Johnson",
+      "Melissa Rycroft"
+    ],
+    "judge_scores": [
+      27.5,
+      30.0,
+      27.5,
+      27.0,
+      30.0,
+      26.5,
+      28.0,
+      29.5
+    ],
+    "eliminated": [
+      "Sabrina Bryan"
+    ]
+  },
+  {
+    "season": 15,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Gilles Marini",
+      "Kirstie Alley",
+      "Kelly Monaco",
+      "Apolo Anton Ohno",
+      "Emmitt Smith",
+      "Shawn Johnson",
+      "Melissa Rycroft"
+    ],
+    "judge_scores": [
+      29.28,
+      25.5,
+      28.33,
+      29.28,
+      29.06,
+      27.83,
+      30.0
+    ],
+    "eliminated": [
+      "Kirstie Alley",
+      "Gilles Marini"
+    ]
+  },
+  {
+    "season": 15,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "Kelly Monaco",
+      "Apolo Anton Ohno",
+      "Emmitt Smith",
+      "Shawn Johnson",
+      "Melissa Rycroft"
+    ],
+    "judge_scores": [
+      27.11,
+      28.61,
+      27.0,
+      29.5,
+      28.78
+    ],
+    "eliminated": [
+      "Apolo Anton Ohno",
+      "Emmitt Smith"
+    ]
+  },
+  {
+    "season": 15,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 3,
+    "contestants": [
+      "Kelly Monaco",
+      "Shawn Johnson",
+      "Melissa Rycroft"
+    ],
+    "judge_scores": [
+      29.11,
+      28.94,
+      29.33
+    ],
+    "eliminated": [],
+    "placements": [
+      3,
+      2,
+      1
+    ]
+  },
+  {
+    "season": 16,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "Ingo Rademacher",
+      "Zendaya",
+      "Dorothy Hamill",
+      "Victor Ortiz",
+      "Alexandra Raisman",
+      "Jacoby Jones",
+      "D. L. Hughley",
+      "Andy Dick",
+      "Wynonna Judd",
+      "Kellie Pickler",
+      "Lisa Vanderpump",
+      "Sean Lowe"
+    ],
+    "judge_scores": [
+      20.0,
+      26.0,
+      15.0,
+      18.0,
+      24.0,
+      23.0,
+      16.0,
+      20.0,
+      18.0,
+      26.0,
+      18.0,
+      20.0
+    ],
+    "eliminated": [
+      "Dorothy Hamill"
+    ]
+  },
+  {
+    "season": 16,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Ingo Rademacher",
+      "Zendaya",
+      "Victor Ortiz",
+      "Alexandra Raisman",
+      "Jacoby Jones",
+      "D. L. Hughley",
+      "Andy Dick",
+      "Wynonna Judd",
+      "Kellie Pickler",
+      "Lisa Vanderpump",
+      "Sean Lowe"
+    ],
+    "judge_scores": [
+      21.0,
+      26.0,
+      23.0,
+      23.0,
+      26.0,
+      16.0,
+      18.0,
+      15.0,
+      25.0,
+      21.0,
+      21.0
+    ],
+    "eliminated": [
+      "Wynonna Judd"
+    ]
+  },
+  {
+    "season": 16,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Ingo Rademacher",
+      "Zendaya",
+      "Victor Ortiz",
+      "Alexandra Raisman",
+      "Jacoby Jones",
+      "D. L. Hughley",
+      "Andy Dick",
+      "Kellie Pickler",
+      "Lisa Vanderpump",
+      "Sean Lowe"
+    ],
+    "judge_scores": [
+      23.0,
+      26.0,
+      18.0,
+      27.0,
+      24.0,
+      21.0,
+      21.0,
+      26.0,
+      18.0,
+      20.0
+    ],
+    "eliminated": [
+      "Lisa Vanderpump"
+    ]
+  },
+  {
+    "season": 16,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Ingo Rademacher",
+      "Zendaya",
+      "Victor Ortiz",
+      "Alexandra Raisman",
+      "Jacoby Jones",
+      "D. L. Hughley",
+      "Andy Dick",
+      "Kellie Pickler",
+      "Sean Lowe"
+    ],
+    "judge_scores": [
+      21.0,
+      29.0,
+      21.0,
+      25.0,
+      26.0,
+      18.0,
+      18.0,
+      27.0,
+      24.0
+    ],
+    "eliminated": [
+      "D. L. Hughley"
+    ]
+  },
+  {
+    "season": 16,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Ingo Rademacher",
+      "Zendaya",
+      "Victor Ortiz",
+      "Alexandra Raisman",
+      "Jacoby Jones",
+      "Andy Dick",
+      "Kellie Pickler",
+      "Sean Lowe"
+    ],
+    "judge_scores": [
+      23.0,
+      25.5,
+      20.0,
+      26.0,
+      22.5,
+      21.5,
+      27.0,
+      23.0
+    ],
+    "eliminated": [
+      "Victor Ortiz"
+    ]
+  },
+  {
+    "season": 16,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Ingo Rademacher",
+      "Zendaya",
+      "Alexandra Raisman",
+      "Jacoby Jones",
+      "Andy Dick",
+      "Kellie Pickler",
+      "Sean Lowe"
+    ],
+    "judge_scores": [
+      25.0,
+      30.0,
+      32.0,
+      27.0,
+      17.0,
+      29.0,
+      24.0
+    ],
+    "eliminated": [
+      "Andy Dick"
+    ]
+  },
+  {
+    "season": 16,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Ingo Rademacher",
+      "Zendaya",
+      "Alexandra Raisman",
+      "Jacoby Jones",
+      "Kellie Pickler",
+      "Sean Lowe"
+    ],
+    "judge_scores": [
+      24.0,
+      29.0,
+      28.0,
+      26.0,
+      27.5,
+      21.0
+    ],
+    "eliminated": [
+      "Sean Lowe"
+    ]
+  },
+  {
+    "season": 16,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "Ingo Rademacher",
+      "Zendaya",
+      "Alexandra Raisman",
+      "Jacoby Jones",
+      "Kellie Pickler"
+    ],
+    "judge_scores": [
+      25.5,
+      27.5,
+      29.5,
+      29.5,
+      29.0
+    ],
+    "eliminated": [
+      "Ingo Rademacher"
+    ]
+  },
+  {
+    "season": 16,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 4,
+    "contestants": [
+      "Zendaya",
+      "Alexandra Raisman",
+      "Jacoby Jones",
+      "Kellie Pickler"
+    ],
+    "judge_scores": [
+      30.0,
+      29.0,
+      28.0,
+      30.0
+    ],
+    "eliminated": [],
+    "placements": [
+      2,
+      4,
+      3,
+      1
+    ]
+  },
+  {
+    "season": 17,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "Valerie Harper",
+      "Brant Daugherty",
+      "Elizabeth Berkley Lauren",
+      "Leah Remini",
+      "Corbin Bleu",
+      "Amber Riley",
+      "Keyshawn Johnson",
+      "Bill Engvall",
+      "Christina Milian",
+      "Nicole \"Snooki\" Polizzi",
+      "Jack Osbourne",
+      "Bill Nye"
+    ],
+    "judge_scores": [
+      19.0,
+      23.0,
+      25.0,
+      24.0,
+      26.0,
+      24.0,
+      18.0,
+      21.0,
+      25.0,
+      20.0,
+      24.0,
+      17.0
+    ],
+    "eliminated": [
+      "Keyshawn Johnson"
+    ]
+  },
+  {
+    "season": 17,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Valerie Harper",
+      "Brant Daugherty",
+      "Elizabeth Berkley Lauren",
+      "Leah Remini",
+      "Corbin Bleu",
+      "Amber Riley",
+      "Bill Engvall",
+      "Christina Milian",
+      "Nicole \"Snooki\" Polizzi",
+      "Jack Osbourne",
+      "Bill Nye"
+    ],
+    "judge_scores": [
+      16.0,
+      27.0,
+      25.0,
+      24.0,
+      26.0,
+      24.0,
+      24.0,
+      26.0,
+      25.0,
+      22.0,
+      16.0
+    ],
+    "eliminated": [
+      "Bill Nye"
+    ]
+  },
+  {
+    "season": 17,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Valerie Harper",
+      "Brant Daugherty",
+      "Elizabeth Berkley Lauren",
+      "Leah Remini",
+      "Corbin Bleu",
+      "Amber Riley",
+      "Bill Engvall",
+      "Christina Milian",
+      "Nicole \"Snooki\" Polizzi",
+      "Jack Osbourne"
+    ],
+    "judge_scores": [
+      18.0,
+      21.0,
+      27.0,
+      24.0,
+      27.0,
+      27.0,
+      21.0,
+      24.0,
+      24.0,
+      24.0
+    ],
+    "eliminated": [
+      "Valerie Harper"
+    ]
+  },
+  {
+    "season": 17,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Brant Daugherty",
+      "Elizabeth Berkley Lauren",
+      "Leah Remini",
+      "Corbin Bleu",
+      "Amber Riley",
+      "Bill Engvall",
+      "Christina Milian",
+      "Nicole \"Snooki\" Polizzi",
+      "Jack Osbourne"
+    ],
+    "judge_scores": [
+      27.0,
+      26.0,
+      22.0,
+      28.0,
+      26.0,
+      24.0,
+      28.0,
+      27.0,
+      27.0
+    ],
+    "eliminated": [
+      "Christina Milian"
+    ]
+  },
+  {
+    "season": 17,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Brant Daugherty",
+      "Elizabeth Berkley Lauren",
+      "Leah Remini",
+      "Corbin Bleu",
+      "Amber Riley",
+      "Bill Engvall",
+      "Nicole \"Snooki\" Polizzi",
+      "Jack Osbourne"
+    ],
+    "judge_scores": [
+      28.5,
+      27.0,
+      26.5,
+      29.5,
+      29.5,
+      25.0,
+      27.0,
+      28.5
+    ],
+    "eliminated": [
+      "Nicole \"Snooki\" Polizzi"
+    ]
+  },
+  {
+    "season": 17,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Brant Daugherty",
+      "Elizabeth Berkley Lauren",
+      "Leah Remini",
+      "Corbin Bleu",
+      "Amber Riley",
+      "Bill Engvall",
+      "Jack Osbourne"
+    ],
+    "judge_scores": [
+      27.0,
+      25.0,
+      28.0,
+      30.0,
+      28.0,
+      24.0,
+      30.0
+    ],
+    "eliminated": [
+      "Brant Daugherty"
+    ]
+  },
+  {
+    "season": 17,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Elizabeth Berkley Lauren",
+      "Leah Remini",
+      "Corbin Bleu",
+      "Amber Riley",
+      "Bill Engvall",
+      "Jack Osbourne"
+    ],
+    "judge_scores": [
+      28.0,
+      27.0,
+      29.0,
+      25.5,
+      21.0,
+      27.0
+    ],
+    "eliminated": [
+      "Elizabeth Berkley Lauren"
+    ]
+  },
+  {
+    "season": 17,
+    "week": 10,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "Leah Remini",
+      "Corbin Bleu",
+      "Amber Riley",
+      "Bill Engvall",
+      "Jack Osbourne"
+    ],
+    "judge_scores": [
+      32.5,
+      37.5,
+      39.5,
+      30.0,
+      35.5
+    ],
+    "eliminated": [
+      "Leah Remini"
+    ]
+  },
+  {
+    "season": 17,
+    "week": 11,
+    "is_final": true,
+    "n_contestants": 4,
+    "contestants": [
+      "Corbin Bleu",
+      "Amber Riley",
+      "Bill Engvall",
+      "Jack Osbourne"
+    ],
+    "judge_scores": [
+      29.67,
+      31.33,
+      25.5,
+      28.0
+    ],
+    "eliminated": [],
+    "placements": [
+      2,
+      1,
+      4,
+      3
+    ]
+  },
+  {
+    "season": 18,
+    "week": 1,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "Billy Dee Williams",
+      "Danica McKellar",
+      "James Maslow",
+      "Candace Cameron Bure",
+      "Sean Avery",
+      "Diana Nyad",
+      "Charlie White",
+      "Amy Purdy",
+      "Meryl Davis",
+      "Drew Carey",
+      "Cody Simpson",
+      "NeNe Leakes"
+    ],
+    "judge_scores": [
+      15.0,
+      24.0,
+      21.0,
+      25.0,
+      20.0,
+      18.0,
+      27.0,
+      24.0,
+      24.0,
+      21.0,
+      22.0,
+      21.0
+    ],
+    "eliminated": [
+      "Diana Nyad"
+    ]
+  },
+  {
+    "season": 18,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Billy Dee Williams",
+      "Danica McKellar",
+      "James Maslow",
+      "Candace Cameron Bure",
+      "Sean Avery",
+      "Charlie White",
+      "Amy Purdy",
+      "Meryl Davis",
+      "Drew Carey",
+      "Cody Simpson",
+      "NeNe Leakes"
+    ],
+    "judge_scores": [
+      15.0,
+      24.0,
+      25.0,
+      21.0,
+      21.0,
+      25.0,
+      24.0,
+      25.0,
+      21.0,
+      22.0,
+      21.0
+    ],
+    "eliminated": [
+      "Billy Dee Williams",
+      "Sean Avery"
+    ]
+  },
+  {
+    "season": 18,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Danica McKellar",
+      "James Maslow",
+      "Candace Cameron Bure",
+      "Charlie White",
+      "Amy Purdy",
+      "Meryl Davis",
+      "Drew Carey",
+      "Cody Simpson",
+      "NeNe Leakes"
+    ],
+    "judge_scores": [
+      39.0,
+      40.0,
+      35.0,
+      37.0,
+      37.0,
+      36.0,
+      28.0,
+      34.0,
+      36.0
+    ],
+    "eliminated": [
+      "Cody Simpson"
+    ]
+  },
+  {
+    "season": 18,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Danica McKellar",
+      "James Maslow",
+      "Candace Cameron Bure",
+      "Charlie White",
+      "Amy Purdy",
+      "Meryl Davis",
+      "Drew Carey",
+      "NeNe Leakes"
+    ],
+    "judge_scores": [
+      36.0,
+      35.0,
+      32.0,
+      36.0,
+      38.0,
+      40.0,
+      32.0,
+      33.0
+    ],
+    "eliminated": [
+      "Drew Carey"
+    ]
+  },
+  {
+    "season": 18,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Danica McKellar",
+      "James Maslow",
+      "Candace Cameron Bure",
+      "Charlie White",
+      "Amy Purdy",
+      "Meryl Davis",
+      "NeNe Leakes"
+    ],
+    "judge_scores": [
+      36.0,
+      35.0,
+      37.0,
+      35.5,
+      37.5,
+      39.0,
+      33.0
+    ],
+    "eliminated": [
+      "NeNe Leakes"
+    ]
+  },
+  {
+    "season": 18,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Danica McKellar",
+      "James Maslow",
+      "Candace Cameron Bure",
+      "Charlie White",
+      "Amy Purdy",
+      "Meryl Davis"
+    ],
+    "judge_scores": [
+      38.0,
+      36.0,
+      36.0,
+      40.0,
+      40.0,
+      36.0
+    ],
+    "eliminated": [
+      "Danica McKellar"
+    ]
+  },
+  {
+    "season": 18,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "James Maslow",
+      "Candace Cameron Bure",
+      "Charlie White",
+      "Amy Purdy",
+      "Meryl Davis"
+    ],
+    "judge_scores": [
+      38.0,
+      36.0,
+      38.0,
+      39.0,
+      40.0
+    ],
+    "eliminated": [
+      "Charlie White"
+    ]
+  },
+  {
+    "season": 18,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 4,
+    "contestants": [
+      "James Maslow",
+      "Candace Cameron Bure",
+      "Amy Purdy",
+      "Meryl Davis"
+    ],
+    "judge_scores": [
+      29.0,
+      26.0,
+      29.67,
+      30.0
+    ],
+    "eliminated": [],
+    "placements": [
+      4,
+      3,
+      2,
+      1
+    ]
+  },
+  {
+    "season": 19,
+    "week": 1,
+    "is_final": false,
+    "n_contestants": 13,
+    "contestants": [
+      "Antonio Sabato Jr.",
+      "Jonathan Bennett",
+      "Lea Thompson",
+      "Janel Parrish",
+      "Alfonso Ribeiro",
+      "Lolo Jones",
+      "Randy Couture",
+      "Tommy Chong",
+      "Betsey Johnson",
+      "Michael Waltrip",
+      "Tavis Smiley",
+      "Bethany Mota",
+      "Sadie Robertson"
+    ],
+    "judge_scores": [
+      25.0,
+      30.0,
+      32.0,
+      29.0,
+      36.0,
+      22.0,
+      31.0,
+      27.0,
+      20.0,
+      25.0,
+      29.0,
+      32.0,
+      34.0
+    ],
+    "eliminated": [
+      "Lolo Jones"
+    ]
+  },
+  {
+    "season": 19,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "Antonio Sabato Jr.",
+      "Jonathan Bennett",
+      "Lea Thompson",
+      "Janel Parrish",
+      "Alfonso Ribeiro",
+      "Randy Couture",
+      "Tommy Chong",
+      "Betsey Johnson",
+      "Michael Waltrip",
+      "Tavis Smiley",
+      "Bethany Mota",
+      "Sadie Robertson"
+    ],
+    "judge_scores": [
+      31.0,
+      30.0,
+      35.0,
+      34.0,
+      32.0,
+      28.0,
+      28.0,
+      28.0,
+      24.0,
+      28.0,
+      33.0,
+      31.0
+    ],
+    "eliminated": [
+      "Tavis Smiley"
+    ]
+  },
+  {
+    "season": 19,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Antonio Sabato Jr.",
+      "Jonathan Bennett",
+      "Lea Thompson",
+      "Janel Parrish",
+      "Alfonso Ribeiro",
+      "Randy Couture",
+      "Tommy Chong",
+      "Betsey Johnson",
+      "Michael Waltrip",
+      "Bethany Mota",
+      "Sadie Robertson"
+    ],
+    "judge_scores": [
+      29.0,
+      32.0,
+      31.0,
+      40.0,
+      32.0,
+      26.0,
+      34.0,
+      29.0,
+      28.0,
+      40.0,
+      32.0
+    ],
+    "eliminated": [
+      "Randy Couture"
+    ]
+  },
+  {
+    "season": 19,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Antonio Sabato Jr.",
+      "Jonathan Bennett",
+      "Lea Thompson",
+      "Janel Parrish",
+      "Alfonso Ribeiro",
+      "Tommy Chong",
+      "Betsey Johnson",
+      "Michael Waltrip",
+      "Bethany Mota",
+      "Sadie Robertson"
+    ],
+    "judge_scores": [
+      29.0,
+      24.0,
+      39.0,
+      36.0,
+      40.0,
+      28.0,
+      29.0,
+      25.0,
+      33.0,
+      37.0
+    ],
+    "eliminated": [
+      "Betsey Johnson"
+    ]
+  },
+  {
+    "season": 19,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Antonio Sabato Jr.",
+      "Jonathan Bennett",
+      "Lea Thompson",
+      "Janel Parrish",
+      "Alfonso Ribeiro",
+      "Tommy Chong",
+      "Michael Waltrip",
+      "Bethany Mota",
+      "Sadie Robertson"
+    ],
+    "judge_scores": [
+      28.0,
+      32.0,
+      32.0,
+      33.0,
+      39.0,
+      28.0,
+      30.0,
+      36.0,
+      35.0
+    ],
+    "eliminated": [
+      "Jonathan Bennett"
+    ]
+  },
+  {
+    "season": 19,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Antonio Sabato Jr.",
+      "Lea Thompson",
+      "Janel Parrish",
+      "Alfonso Ribeiro",
+      "Tommy Chong",
+      "Michael Waltrip",
+      "Bethany Mota",
+      "Sadie Robertson"
+    ],
+    "judge_scores": [
+      29.5,
+      35.0,
+      33.5,
+      34.0,
+      30.0,
+      28.0,
+      37.5,
+      31.0
+    ],
+    "eliminated": [
+      "Antonio Sabato Jr."
+    ]
+  },
+  {
+    "season": 19,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Lea Thompson",
+      "Janel Parrish",
+      "Alfonso Ribeiro",
+      "Tommy Chong",
+      "Michael Waltrip",
+      "Bethany Mota",
+      "Sadie Robertson"
+    ],
+    "judge_scores": [
+      32.0,
+      43.0,
+      41.0,
+      29.0,
+      25.0,
+      40.0,
+      38.0
+    ],
+    "eliminated": [
+      "Michael Waltrip"
+    ]
+  },
+  {
+    "season": 19,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Lea Thompson",
+      "Janel Parrish",
+      "Alfonso Ribeiro",
+      "Tommy Chong",
+      "Bethany Mota",
+      "Sadie Robertson"
+    ],
+    "judge_scores": [
+      35.0,
+      38.5,
+      38.5,
+      28.5,
+      37.0,
+      36.5
+    ],
+    "eliminated": [
+      "Lea Thompson"
+    ]
+  },
+  {
+    "season": 19,
+    "week": 10,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "Janel Parrish",
+      "Alfonso Ribeiro",
+      "Tommy Chong",
+      "Bethany Mota",
+      "Sadie Robertson"
+    ],
+    "judge_scores": [
+      39.0,
+      37.5,
+      31.0,
+      38.0,
+      37.0
+    ],
+    "eliminated": [
+      "Tommy Chong"
+    ]
+  },
+  {
+    "season": 19,
+    "week": 11,
+    "is_final": true,
+    "n_contestants": 4,
+    "contestants": [
+      "Janel Parrish",
+      "Alfonso Ribeiro",
+      "Bethany Mota",
+      "Sadie Robertson"
+    ],
+    "judge_scores": [
+      39.0,
+      40.0,
+      38.0,
+      39.33
+    ],
+    "eliminated": [],
+    "placements": [
+      3,
+      1,
+      4,
+      2
+    ]
+  },
+  {
+    "season": 20,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "Suzanne Somers",
+      "Willow Shields",
+      "Riker Lynch",
+      "Rumer Willis",
+      "Nastia Liukin",
+      "Michael Sam",
+      "Robert Herjavec",
+      "Charlotte McKinney",
+      "Noah Galloway",
+      "Redfoo",
+      "Patti LaBelle",
+      "Chris Soules"
+    ],
+    "judge_scores": [
+      28.0,
+      32.0,
+      32.0,
+      32.0,
+      34.0,
+      28.0,
+      28.0,
+      26.0,
+      27.0,
+      31.0,
+      28.0,
+      21.0
+    ],
+    "eliminated": [
+      "Redfoo"
+    ]
+  },
+  {
+    "season": 20,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Suzanne Somers",
+      "Willow Shields",
+      "Riker Lynch",
+      "Rumer Willis",
+      "Nastia Liukin",
+      "Michael Sam",
+      "Robert Herjavec",
+      "Charlotte McKinney",
+      "Noah Galloway",
+      "Patti LaBelle",
+      "Chris Soules"
+    ],
+    "judge_scores": [
+      25.0,
+      32.0,
+      34.0,
+      33.0,
+      34.0,
+      24.0,
+      29.0,
+      22.0,
+      30.0,
+      22.0,
+      28.0
+    ],
+    "eliminated": [
+      "Charlotte McKinney"
+    ]
+  },
+  {
+    "season": 20,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Suzanne Somers",
+      "Willow Shields",
+      "Riker Lynch",
+      "Rumer Willis",
+      "Nastia Liukin",
+      "Michael Sam",
+      "Robert Herjavec",
+      "Noah Galloway",
+      "Patti LaBelle",
+      "Chris Soules"
+    ],
+    "judge_scores": [
+      28.0,
+      39.0,
+      34.0,
+      35.0,
+      36.0,
+      30.0,
+      34.0,
+      32.0,
+      30.0,
+      27.0
+    ],
+    "eliminated": [
+      "Michael Sam"
+    ]
+  },
+  {
+    "season": 20,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Suzanne Somers",
+      "Willow Shields",
+      "Riker Lynch",
+      "Rumer Willis",
+      "Nastia Liukin",
+      "Robert Herjavec",
+      "Noah Galloway",
+      "Patti LaBelle",
+      "Chris Soules"
+    ],
+    "judge_scores": [
+      28.0,
+      34.0,
+      38.0,
+      39.0,
+      38.0,
+      24.0,
+      28.0,
+      27.0,
+      27.0
+    ],
+    "eliminated": [
+      "Suzanne Somers"
+    ]
+  },
+  {
+    "season": 20,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Willow Shields",
+      "Riker Lynch",
+      "Rumer Willis",
+      "Nastia Liukin",
+      "Robert Herjavec",
+      "Noah Galloway",
+      "Patti LaBelle",
+      "Chris Soules"
+    ],
+    "judge_scores": [
+      36.5,
+      38.0,
+      35.5,
+      36.5,
+      33.5,
+      34.0,
+      34.0,
+      35.0
+    ],
+    "eliminated": [
+      "Patti LaBelle"
+    ]
+  },
+  {
+    "season": 20,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Willow Shields",
+      "Riker Lynch",
+      "Rumer Willis",
+      "Nastia Liukin",
+      "Robert Herjavec",
+      "Noah Galloway",
+      "Chris Soules"
+    ],
+    "judge_scores": [
+      39.0,
+      37.0,
+      37.0,
+      41.0,
+      31.0,
+      38.0,
+      31.0
+    ],
+    "eliminated": [
+      "Willow Shields"
+    ]
+  },
+  {
+    "season": 20,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Riker Lynch",
+      "Rumer Willis",
+      "Nastia Liukin",
+      "Robert Herjavec",
+      "Noah Galloway",
+      "Chris Soules"
+    ],
+    "judge_scores": [
+      39.0,
+      40.0,
+      38.0,
+      31.0,
+      31.5,
+      32.0
+    ],
+    "eliminated": [
+      "Robert Herjavec",
+      "Chris Soules"
+    ]
+  },
+  {
+    "season": 20,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 4,
+    "contestants": [
+      "Riker Lynch",
+      "Rumer Willis",
+      "Nastia Liukin",
+      "Noah Galloway"
+    ],
+    "judge_scores": [
+      40.0,
+      39.0,
+      40.0,
+      38.0
+    ],
+    "eliminated": [
+      "Nastia Liukin"
+    ]
+  },
+  {
+    "season": 20,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 3,
+    "contestants": [
+      "Riker Lynch",
+      "Rumer Willis",
+      "Noah Galloway"
+    ],
+    "judge_scores": [
+      40.0,
+      40.0,
+      36.0
+    ],
+    "eliminated": [],
+    "placements": [
+      2,
+      1,
+      3
+    ]
+  },
+  {
+    "season": 21,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 13,
+    "contestants": [
+      "Gary Busey",
+      "Alexa PenaVega",
+      "Carlos PenaVega",
+      "Victor Espinoza",
+      "Alek Skarlatos",
+      "Chaka Khan",
+      "Andy Grammer",
+      "Tamar Braxton",
+      "Nick Carter",
+      "Hayes Grier",
+      "Bindi Irwin",
+      "Kim Zolciak-Biermann",
+      "Paula Deen"
+    ],
+    "judge_scores": [
+      16.5,
+      23.0,
+      22.5,
+      18.5,
+      22.5,
+      15.0,
+      22.0,
+      24.5,
+      22.5,
+      22.5,
+      24.0,
+      18.5,
+      18.5
+    ],
+    "eliminated": [
+      "Chaka Khan",
+      "Victor Espinoza",
+      "Kim Zolciak-Biermann"
+    ]
+  },
+  {
+    "season": 21,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Gary Busey",
+      "Alexa PenaVega",
+      "Carlos PenaVega",
+      "Alek Skarlatos",
+      "Andy Grammer",
+      "Tamar Braxton",
+      "Nick Carter",
+      "Hayes Grier",
+      "Bindi Irwin",
+      "Paula Deen"
+    ],
+    "judge_scores": [
+      16.0,
+      21.0,
+      25.0,
+      24.0,
+      23.0,
+      27.0,
+      27.0,
+      27.0,
+      28.0,
+      18.0
+    ],
+    "eliminated": [
+      "Gary Busey"
+    ]
+  },
+  {
+    "season": 21,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Alexa PenaVega",
+      "Carlos PenaVega",
+      "Alek Skarlatos",
+      "Andy Grammer",
+      "Tamar Braxton",
+      "Nick Carter",
+      "Hayes Grier",
+      "Bindi Irwin",
+      "Paula Deen"
+    ],
+    "judge_scores": [
+      30.0,
+      38.0,
+      30.0,
+      40.0,
+      40.0,
+      39.0,
+      32.0,
+      40.0,
+      24.0
+    ],
+    "eliminated": [
+      "Paula Deen"
+    ]
+  },
+  {
+    "season": 21,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Alexa PenaVega",
+      "Carlos PenaVega",
+      "Alek Skarlatos",
+      "Andy Grammer",
+      "Tamar Braxton",
+      "Nick Carter",
+      "Hayes Grier",
+      "Bindi Irwin"
+    ],
+    "judge_scores": [
+      27.5,
+      28.0,
+      26.5,
+      28.0,
+      27.0,
+      27.0,
+      28.0,
+      29.0
+    ],
+    "eliminated": [
+      "Hayes Grier"
+    ]
+  },
+  {
+    "season": 21,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Alexa PenaVega",
+      "Carlos PenaVega",
+      "Alek Skarlatos",
+      "Andy Grammer",
+      "Tamar Braxton",
+      "Nick Carter",
+      "Bindi Irwin"
+    ],
+    "judge_scores": [
+      27.0,
+      29.0,
+      25.0,
+      24.0,
+      28.0,
+      33.0,
+      28.0
+    ],
+    "eliminated": [
+      "Andy Grammer"
+    ]
+  },
+  {
+    "season": 21,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Alexa PenaVega",
+      "Carlos PenaVega",
+      "Alek Skarlatos",
+      "Tamar Braxton",
+      "Nick Carter",
+      "Bindi Irwin"
+    ],
+    "judge_scores": [
+      30.0,
+      27.0,
+      25.5,
+      24.5,
+      27.5,
+      30.0
+    ],
+    "eliminated": [
+      "Tamar Braxton",
+      "Alexa PenaVega"
+    ]
+  },
+  {
+    "season": 21,
+    "week": 11,
+    "is_final": true,
+    "n_contestants": 4,
+    "contestants": [
+      "Carlos PenaVega",
+      "Alek Skarlatos",
+      "Nick Carter",
+      "Bindi Irwin"
+    ],
+    "judge_scores": [
+      30.0,
+      28.0,
+      30.0,
+      30.0
+    ],
+    "eliminated": [],
+    "placements": [
+      4,
+      3,
+      2,
+      1
+    ]
+  },
+  {
+    "season": 22,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "Mischa Barton",
+      "Kim Fields",
+      "Jodie Sweetin",
+      "Doug Flutie",
+      "Von Miller",
+      "Antonio Brown",
+      "Paige VanZant",
+      "Geraldo Rivera",
+      "Nyle DiMarco",
+      "Ginger Zee",
+      "Wanya Morris",
+      "Marla Maples"
+    ],
+    "judge_scores": [
+      15.0,
+      19.0,
+      21.0,
+      20.0,
+      20.0,
+      19.0,
+      24.0,
+      13.0,
+      20.0,
+      21.0,
+      24.0,
+      20.0
+    ],
+    "eliminated": [
+      "Geraldo Rivera"
+    ]
+  },
+  {
+    "season": 22,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Mischa Barton",
+      "Kim Fields",
+      "Jodie Sweetin",
+      "Doug Flutie",
+      "Von Miller",
+      "Antonio Brown",
+      "Paige VanZant",
+      "Nyle DiMarco",
+      "Ginger Zee",
+      "Wanya Morris",
+      "Marla Maples"
+    ],
+    "judge_scores": [
+      18.0,
+      22.0,
+      23.0,
+      20.0,
+      20.0,
+      20.0,
+      23.0,
+      25.0,
+      21.0,
+      24.0,
+      21.0
+    ],
+    "eliminated": [
+      "Mischa Barton"
+    ]
+  },
+  {
+    "season": 22,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Kim Fields",
+      "Jodie Sweetin",
+      "Doug Flutie",
+      "Von Miller",
+      "Antonio Brown",
+      "Paige VanZant",
+      "Nyle DiMarco",
+      "Ginger Zee",
+      "Wanya Morris",
+      "Marla Maples"
+    ],
+    "judge_scores": [
+      32.0,
+      27.0,
+      24.0,
+      32.0,
+      35.0,
+      36.0,
+      34.0,
+      36.0,
+      35.0,
+      28.0
+    ],
+    "eliminated": [
+      "Marla Maples"
+    ]
+  },
+  {
+    "season": 22,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Kim Fields",
+      "Jodie Sweetin",
+      "Doug Flutie",
+      "Von Miller",
+      "Antonio Brown",
+      "Paige VanZant",
+      "Nyle DiMarco",
+      "Ginger Zee",
+      "Wanya Morris"
+    ],
+    "judge_scores": [
+      24.0,
+      25.0,
+      21.0,
+      24.0,
+      27.0,
+      28.0,
+      25.0,
+      24.0,
+      29.0
+    ],
+    "eliminated": [
+      "Doug Flutie"
+    ]
+  },
+  {
+    "season": 22,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Kim Fields",
+      "Jodie Sweetin",
+      "Von Miller",
+      "Antonio Brown",
+      "Paige VanZant",
+      "Nyle DiMarco",
+      "Ginger Zee",
+      "Wanya Morris"
+    ],
+    "judge_scores": [
+      26.0,
+      25.5,
+      26.0,
+      26.0,
+      27.5,
+      28.0,
+      27.5,
+      27.5
+    ],
+    "eliminated": [
+      "Kim Fields",
+      "Von Miller"
+    ]
+  },
+  {
+    "season": 22,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Jodie Sweetin",
+      "Antonio Brown",
+      "Paige VanZant",
+      "Nyle DiMarco",
+      "Ginger Zee",
+      "Wanya Morris"
+    ],
+    "judge_scores": [
+      30.0,
+      27.0,
+      28.0,
+      29.0,
+      30.0,
+      25.0
+    ],
+    "eliminated": [
+      "Jodie Sweetin"
+    ]
+  },
+  {
+    "season": 22,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "Antonio Brown",
+      "Paige VanZant",
+      "Nyle DiMarco",
+      "Ginger Zee",
+      "Wanya Morris"
+    ],
+    "judge_scores": [
+      27.5,
+      29.5,
+      28.5,
+      28.0,
+      30.0
+    ],
+    "eliminated": [
+      "Antonio Brown",
+      "Wanya Morris"
+    ]
+  },
+  {
+    "season": 22,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 3,
+    "contestants": [
+      "Paige VanZant",
+      "Nyle DiMarco",
+      "Ginger Zee"
+    ],
+    "judge_scores": [
+      29.67,
+      29.0,
+      28.33
+    ],
+    "eliminated": [],
+    "placements": [
+      2,
+      1,
+      3
+    ]
+  },
+  {
+    "season": 23,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 13,
+    "contestants": [
+      "Jake T. Austin",
+      "Maureen McCormick",
+      "Marilu Henner",
+      "Ryan Lochte",
+      "Calvin Johnson Jr.",
+      "Laurie Hernandez",
+      "Amber Rose",
+      "Rick Perry",
+      "James Hinchcliffe",
+      "Babyface",
+      "Vanilla Ice",
+      "Jana Kramer",
+      "Terra Jole"
+    ],
+    "judge_scores": [
+      24.0,
+      26.0,
+      27.0,
+      24.0,
+      28.0,
+      32.0,
+      24.0,
+      22.0,
+      29.0,
+      30.0,
+      26.0,
+      29.0,
+      31.0
+    ],
+    "eliminated": [
+      "Jake T. Austin"
+    ]
+  },
+  {
+    "season": 23,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "Maureen McCormick",
+      "Marilu Henner",
+      "Ryan Lochte",
+      "Calvin Johnson Jr.",
+      "Laurie Hernandez",
+      "Amber Rose",
+      "Rick Perry",
+      "James Hinchcliffe",
+      "Babyface",
+      "Vanilla Ice",
+      "Jana Kramer",
+      "Terra Jole"
+    ],
+    "judge_scores": [
+      28.0,
+      28.0,
+      25.0,
+      32.0,
+      31.0,
+      25.0,
+      23.0,
+      29.0,
+      25.0,
+      23.0,
+      26.0,
+      30.0
+    ],
+    "eliminated": [
+      "Rick Perry"
+    ]
+  },
+  {
+    "season": 23,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Maureen McCormick",
+      "Marilu Henner",
+      "Ryan Lochte",
+      "Calvin Johnson Jr.",
+      "Laurie Hernandez",
+      "Amber Rose",
+      "James Hinchcliffe",
+      "Babyface",
+      "Vanilla Ice",
+      "Jana Kramer",
+      "Terra Jole"
+    ],
+    "judge_scores": [
+      24.0,
+      21.0,
+      22.0,
+      23.0,
+      30.0,
+      24.0,
+      28.0,
+      18.0,
+      23.0,
+      23.0,
+      25.0
+    ],
+    "eliminated": [
+      "Vanilla Ice",
+      "Babyface"
+    ]
+  },
+  {
+    "season": 23,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Maureen McCormick",
+      "Marilu Henner",
+      "Ryan Lochte",
+      "Calvin Johnson Jr.",
+      "Laurie Hernandez",
+      "Amber Rose",
+      "James Hinchcliffe",
+      "Jana Kramer",
+      "Terra Jole"
+    ],
+    "judge_scores": [
+      31.0,
+      34.0,
+      30.0,
+      37.0,
+      37.0,
+      28.0,
+      38.0,
+      40.0,
+      30.0
+    ],
+    "eliminated": [
+      "Amber Rose"
+    ]
+  },
+  {
+    "season": 23,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Maureen McCormick",
+      "Marilu Henner",
+      "Ryan Lochte",
+      "Calvin Johnson Jr.",
+      "Laurie Hernandez",
+      "James Hinchcliffe",
+      "Jana Kramer",
+      "Terra Jole"
+    ],
+    "judge_scores": [
+      33.0,
+      32.0,
+      33.0,
+      37.0,
+      34.5,
+      37.0,
+      34.5,
+      34.5
+    ],
+    "eliminated": [
+      "Maureen McCormick"
+    ]
+  },
+  {
+    "season": 23,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Marilu Henner",
+      "Ryan Lochte",
+      "Calvin Johnson Jr.",
+      "Laurie Hernandez",
+      "James Hinchcliffe",
+      "Jana Kramer",
+      "Terra Jole"
+    ],
+    "judge_scores": [
+      23.0,
+      26.0,
+      30.0,
+      33.0,
+      35.0,
+      30.0,
+      24.0
+    ],
+    "eliminated": [
+      "Ryan Lochte"
+    ]
+  },
+  {
+    "season": 23,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Marilu Henner",
+      "Calvin Johnson Jr.",
+      "Laurie Hernandez",
+      "James Hinchcliffe",
+      "Jana Kramer",
+      "Terra Jole"
+    ],
+    "judge_scores": [
+      36.0,
+      37.0,
+      40.0,
+      36.0,
+      40.0,
+      38.0
+    ],
+    "eliminated": [
+      "Marilu Henner"
+    ]
+  },
+  {
+    "season": 23,
+    "week": 10,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "Calvin Johnson Jr.",
+      "Laurie Hernandez",
+      "James Hinchcliffe",
+      "Jana Kramer",
+      "Terra Jole"
+    ],
+    "judge_scores": [
+      28.0,
+      30.0,
+      29.5,
+      29.0,
+      30.0
+    ],
+    "eliminated": [
+      "Terra Jole"
+    ]
+  },
+  {
+    "season": 23,
+    "week": 11,
+    "is_final": true,
+    "n_contestants": 4,
+    "contestants": [
+      "Calvin Johnson Jr.",
+      "Laurie Hernandez",
+      "James Hinchcliffe",
+      "Jana Kramer"
+    ],
+    "judge_scores": [
+      38.33,
+      39.33,
+      39.0,
+      35.5
+    ],
+    "eliminated": [],
+    "placements": [
+      3,
+      1,
+      2,
+      4
+    ]
+  },
+  {
+    "season": 24,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "Charo",
+      "Mr. T",
+      "Heather Morris",
+      "Nancy Kerrigan",
+      "Bonner Bolton",
+      "Simone Biles",
+      "David Ross",
+      "Rashad Jennings",
+      "Chris Kattan",
+      "Erika Jayne",
+      "Normani",
+      "Nick Viall"
+    ],
+    "judge_scores": [
+      25.0,
+      22.0,
+      30.0,
+      28.0,
+      28.0,
+      29.0,
+      27.0,
+      32.0,
+      22.0,
+      28.0,
+      32.0,
+      25.0
+    ],
+    "eliminated": [
+      "Chris Kattan"
+    ]
+  },
+  {
+    "season": 24,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Charo",
+      "Mr. T",
+      "Heather Morris",
+      "Nancy Kerrigan",
+      "Bonner Bolton",
+      "Simone Biles",
+      "David Ross",
+      "Rashad Jennings",
+      "Erika Jayne",
+      "Normani",
+      "Nick Viall"
+    ],
+    "judge_scores": [
+      24.0,
+      24.0,
+      33.0,
+      33.0,
+      24.0,
+      32.0,
+      31.0,
+      28.0,
+      26.0,
+      34.0,
+      26.0
+    ],
+    "eliminated": [
+      "Charo"
+    ]
+  },
+  {
+    "season": 24,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Mr. T",
+      "Heather Morris",
+      "Nancy Kerrigan",
+      "Bonner Bolton",
+      "Simone Biles",
+      "David Ross",
+      "Rashad Jennings",
+      "Erika Jayne",
+      "Normani",
+      "Nick Viall"
+    ],
+    "judge_scores": [
+      28.0,
+      35.0,
+      33.0,
+      32.0,
+      36.0,
+      31.0,
+      39.0,
+      30.0,
+      32.0,
+      30.0
+    ],
+    "eliminated": [
+      "Mr. T"
+    ]
+  },
+  {
+    "season": 24,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Heather Morris",
+      "Nancy Kerrigan",
+      "Bonner Bolton",
+      "Simone Biles",
+      "David Ross",
+      "Rashad Jennings",
+      "Erika Jayne",
+      "Normani",
+      "Nick Viall"
+    ],
+    "judge_scores": [
+      34.0,
+      36.0,
+      30.0,
+      38.0,
+      29.0,
+      32.0,
+      32.0,
+      39.0,
+      34.0
+    ],
+    "eliminated": [
+      "Erika Jayne"
+    ]
+  },
+  {
+    "season": 24,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Heather Morris",
+      "Nancy Kerrigan",
+      "Bonner Bolton",
+      "Simone Biles",
+      "David Ross",
+      "Rashad Jennings",
+      "Normani",
+      "Nick Viall"
+    ],
+    "judge_scores": [
+      37.0,
+      33.5,
+      31.5,
+      34.5,
+      31.0,
+      35.0,
+      36.0,
+      30.5
+    ],
+    "eliminated": [
+      "Heather Morris"
+    ]
+  },
+  {
+    "season": 24,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Nancy Kerrigan",
+      "Bonner Bolton",
+      "Simone Biles",
+      "David Ross",
+      "Rashad Jennings",
+      "Normani",
+      "Nick Viall"
+    ],
+    "judge_scores": [
+      36.0,
+      31.0,
+      39.0,
+      32.0,
+      39.0,
+      42.0,
+      34.0
+    ],
+    "eliminated": [
+      "Nancy Kerrigan",
+      "Nick Viall"
+    ]
+  },
+  {
+    "season": 24,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "Bonner Bolton",
+      "Simone Biles",
+      "David Ross",
+      "Rashad Jennings",
+      "Normani"
+    ],
+    "judge_scores": [
+      29.0,
+      36.0,
+      32.5,
+      37.5,
+      39.5
+    ],
+    "eliminated": [
+      "Bonner Bolton"
+    ]
+  },
+  {
+    "season": 24,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 4,
+    "contestants": [
+      "Simone Biles",
+      "David Ross",
+      "Rashad Jennings",
+      "Normani"
+    ],
+    "judge_scores": [
+      40.0,
+      35.0,
+      38.5,
+      38.0
+    ],
+    "eliminated": [
+      "Simone Biles"
+    ]
+  },
+  {
+    "season": 24,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 3,
+    "contestants": [
+      "David Ross",
+      "Rashad Jennings",
+      "Normani"
+    ],
+    "judge_scores": [
+      36.33,
+      39.67,
+      39.33
+    ],
+    "eliminated": [],
+    "placements": [
+      2,
+      1,
+      3
+    ]
+  },
+  {
+    "season": 25,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 13,
+    "contestants": [
+      "Sasha Pieterse",
+      "Frankie Muniz",
+      "Jordan Fisher",
+      "Derek Fisher",
+      "Nikki Bella",
+      "Terrell Owens",
+      "Victoria Arlen",
+      "Barbara Corcoran",
+      "Lindsey Stirling",
+      "Debbie Gibson",
+      "Nick Lachey",
+      "Drew Scott",
+      "Vanessa Lachey"
+    ],
+    "judge_scores": [
+      22.5,
+      24.0,
+      24.0,
+      19.0,
+      19.5,
+      19.5,
+      22.0,
+      17.0,
+      22.5,
+      20.5,
+      19.0,
+      20.5,
+      23.5
+    ],
+    "eliminated": [
+      "Barbara Corcoran",
+      "Debbie Gibson"
+    ]
+  },
+  {
+    "season": 25,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Sasha Pieterse",
+      "Frankie Muniz",
+      "Jordan Fisher",
+      "Derek Fisher",
+      "Nikki Bella",
+      "Terrell Owens",
+      "Victoria Arlen",
+      "Lindsey Stirling",
+      "Nick Lachey",
+      "Drew Scott",
+      "Vanessa Lachey"
+    ],
+    "judge_scores": [
+      24.0,
+      24.0,
+      29.0,
+      23.0,
+      24.0,
+      24.0,
+      27.0,
+      26.0,
+      22.0,
+      24.0,
+      24.0
+    ],
+    "eliminated": [
+      "Derek Fisher"
+    ]
+  },
+  {
+    "season": 25,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Sasha Pieterse",
+      "Frankie Muniz",
+      "Jordan Fisher",
+      "Nikki Bella",
+      "Terrell Owens",
+      "Victoria Arlen",
+      "Lindsey Stirling",
+      "Nick Lachey",
+      "Drew Scott",
+      "Vanessa Lachey"
+    ],
+    "judge_scores": [
+      24.0,
+      29.0,
+      30.0,
+      27.0,
+      25.0,
+      27.0,
+      28.0,
+      22.0,
+      25.0,
+      24.0
+    ],
+    "eliminated": [
+      "Sasha Pieterse"
+    ]
+  },
+  {
+    "season": 25,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Frankie Muniz",
+      "Jordan Fisher",
+      "Nikki Bella",
+      "Terrell Owens",
+      "Victoria Arlen",
+      "Lindsey Stirling",
+      "Nick Lachey",
+      "Drew Scott",
+      "Vanessa Lachey"
+    ],
+    "judge_scores": [
+      31.0,
+      39.0,
+      36.0,
+      37.0,
+      31.0,
+      40.0,
+      26.0,
+      30.0,
+      36.0
+    ],
+    "eliminated": [
+      "Nick Lachey"
+    ]
+  },
+  {
+    "season": 25,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Frankie Muniz",
+      "Jordan Fisher",
+      "Nikki Bella",
+      "Terrell Owens",
+      "Victoria Arlen",
+      "Lindsey Stirling",
+      "Drew Scott",
+      "Vanessa Lachey"
+    ],
+    "judge_scores": [
+      30.0,
+      27.0,
+      24.0,
+      24.5,
+      28.5,
+      25.5,
+      28.5,
+      27.0
+    ],
+    "eliminated": [
+      "Vanessa Lachey",
+      "Nikki Bella"
+    ]
+  },
+  {
+    "season": 25,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Frankie Muniz",
+      "Jordan Fisher",
+      "Terrell Owens",
+      "Victoria Arlen",
+      "Lindsey Stirling",
+      "Drew Scott"
+    ],
+    "judge_scores": [
+      26.5,
+      30.0,
+      25.5,
+      24.0,
+      27.0,
+      23.5
+    ],
+    "eliminated": [
+      "Terrell Owens"
+    ]
+  },
+  {
+    "season": 25,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "Frankie Muniz",
+      "Jordan Fisher",
+      "Victoria Arlen",
+      "Lindsey Stirling",
+      "Drew Scott"
+    ],
+    "judge_scores": [
+      25.5,
+      29.0,
+      28.0,
+      28.5,
+      24.0
+    ],
+    "eliminated": [
+      "Victoria Arlen"
+    ]
+  },
+  {
+    "season": 25,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 4,
+    "contestants": [
+      "Frankie Muniz",
+      "Jordan Fisher",
+      "Lindsey Stirling",
+      "Drew Scott"
+    ],
+    "judge_scores": [
+      38.89,
+      40.0,
+      40.0,
+      37.5
+    ],
+    "eliminated": [],
+    "placements": [
+      3,
+      1,
+      2,
+      4
+    ]
+  },
+  {
+    "season": 26,
+    "week": 1,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Jamie Anderson",
+      "Johnny Damon",
+      "Kareem Abdul-Jabbar",
+      "Arike Ogunbowale",
+      "Jennie Finch Daigle",
+      "Chris Mazdzer",
+      "Mirai Nagasu",
+      "Tonya Harding",
+      "Josh Norman",
+      "Adam Rippon"
+    ],
+    "judge_scores": [
+      19.0,
+      18.0,
+      17.0,
+      20.0,
+      21.0,
+      21.0,
+      23.0,
+      23.0,
+      24.0,
+      24.0
+    ],
+    "eliminated": [
+      "Johnny Damon",
+      "Jamie Anderson"
+    ]
+  },
+  {
+    "season": 26,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Kareem Abdul-Jabbar",
+      "Arike Ogunbowale",
+      "Jennie Finch Daigle",
+      "Chris Mazdzer",
+      "Mirai Nagasu",
+      "Tonya Harding",
+      "Josh Norman",
+      "Adam Rippon"
+    ],
+    "judge_scores": [
+      29.5,
+      35.0,
+      31.5,
+      33.0,
+      37.0,
+      33.0,
+      31.5,
+      37.0
+    ],
+    "eliminated": [
+      "Arike Ogunbowale",
+      "Kareem Abdul-Jabbar"
+    ]
+  },
+  {
+    "season": 26,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Jennie Finch Daigle",
+      "Chris Mazdzer",
+      "Mirai Nagasu",
+      "Tonya Harding",
+      "Josh Norman",
+      "Adam Rippon"
+    ],
+    "judge_scores": [
+      29.0,
+      33.0,
+      35.0,
+      35.0,
+      38.0,
+      41.0
+    ],
+    "eliminated": [
+      "Jennie Finch Daigle",
+      "Chris Mazdzer",
+      "Mirai Nagasu"
+    ]
+  },
+  {
+    "season": 26,
+    "week": 4,
+    "is_final": true,
+    "n_contestants": 3,
+    "contestants": [
+      "Tonya Harding",
+      "Josh Norman",
+      "Adam Rippon"
+    ],
+    "judge_scores": [
+      28.0,
+      28.5,
+      29.0
+    ],
+    "eliminated": [],
+    "placements": [
+      3,
+      2,
+      1
+    ]
+  },
+  {
+    "season": 27,
+    "week": 1,
+    "is_final": false,
+    "n_contestants": 13,
+    "contestants": [
+      "Juan Pablo Di Pace",
+      "Evanna Lynch",
+      "Nancy McKeon",
+      "John Schneider",
+      "Milo Manheim",
+      "Danelle Umstead",
+      "Mary Lou Retton",
+      "DeMarcus Ware",
+      "Nikki Glaser",
+      "Bobby Bones",
+      "Tinashe",
+      "Alexis Ren",
+      "Joe Amabile"
+    ],
+    "judge_scores": [
+      22.0,
+      18.0,
+      19.5,
+      18.0,
+      20.0,
+      18.0,
+      20.0,
+      23.0,
+      17.5,
+      20.0,
+      23.0,
+      22.0,
+      14.0
+    ],
+    "eliminated": [
+      "Nikki Glaser"
+    ]
+  },
+  {
+    "season": 27,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "Juan Pablo Di Pace",
+      "Evanna Lynch",
+      "Nancy McKeon",
+      "John Schneider",
+      "Milo Manheim",
+      "Danelle Umstead",
+      "Mary Lou Retton",
+      "DeMarcus Ware",
+      "Bobby Bones",
+      "Tinashe",
+      "Alexis Ren",
+      "Joe Amabile"
+    ],
+    "judge_scores": [
+      26.0,
+      24.0,
+      20.5,
+      21.5,
+      26.0,
+      18.5,
+      23.0,
+      23.5,
+      19.5,
+      26.0,
+      24.5,
+      17.5
+    ],
+    "eliminated": [
+      "Danelle Umstead"
+    ]
+  },
+  {
+    "season": 27,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Juan Pablo Di Pace",
+      "Evanna Lynch",
+      "Nancy McKeon",
+      "John Schneider",
+      "Milo Manheim",
+      "Mary Lou Retton",
+      "DeMarcus Ware",
+      "Bobby Bones",
+      "Tinashe",
+      "Alexis Ren",
+      "Joe Amabile"
+    ],
+    "judge_scores": [
+      30.0,
+      27.0,
+      22.0,
+      21.0,
+      27.0,
+      24.0,
+      26.0,
+      23.0,
+      27.0,
+      26.0,
+      18.0
+    ],
+    "eliminated": [
+      "Nancy McKeon"
+    ]
+  },
+  {
+    "season": 27,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Juan Pablo Di Pace",
+      "Evanna Lynch",
+      "John Schneider",
+      "Milo Manheim",
+      "Mary Lou Retton",
+      "DeMarcus Ware",
+      "Bobby Bones",
+      "Tinashe",
+      "Alexis Ren",
+      "Joe Amabile"
+    ],
+    "judge_scores": [
+      24.0,
+      24.0,
+      21.0,
+      29.0,
+      26.0,
+      22.0,
+      20.0,
+      26.0,
+      25.0,
+      15.0
+    ],
+    "eliminated": [
+      "Tinashe"
+    ]
+  },
+  {
+    "season": 27,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Juan Pablo Di Pace",
+      "Evanna Lynch",
+      "John Schneider",
+      "Milo Manheim",
+      "Mary Lou Retton",
+      "DeMarcus Ware",
+      "Bobby Bones",
+      "Alexis Ren",
+      "Joe Amabile"
+    ],
+    "judge_scores": [
+      30.0,
+      29.0,
+      19.0,
+      30.0,
+      24.0,
+      26.0,
+      22.0,
+      27.0,
+      22.0
+    ],
+    "eliminated": [
+      "Mary Lou Retton"
+    ]
+  },
+  {
+    "season": 27,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Juan Pablo Di Pace",
+      "Evanna Lynch",
+      "John Schneider",
+      "Milo Manheim",
+      "DeMarcus Ware",
+      "Bobby Bones",
+      "Alexis Ren",
+      "Joe Amabile"
+    ],
+    "judge_scores": [
+      28.0,
+      29.5,
+      27.0,
+      29.0,
+      26.5,
+      26.5,
+      27.5,
+      23.5
+    ],
+    "eliminated": [
+      "John Schneider",
+      "DeMarcus Ware"
+    ]
+  },
+  {
+    "season": 27,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Juan Pablo Di Pace",
+      "Evanna Lynch",
+      "Milo Manheim",
+      "Bobby Bones",
+      "Alexis Ren",
+      "Joe Amabile"
+    ],
+    "judge_scores": [
+      30.0,
+      29.0,
+      27.5,
+      22.5,
+      29.0,
+      23.0
+    ],
+    "eliminated": [
+      "Juan Pablo Di Pace",
+      "Joe Amabile"
+    ]
+  },
+  {
+    "season": 27,
+    "week": 9,
+    "is_final": true,
+    "n_contestants": 4,
+    "contestants": [
+      "Evanna Lynch",
+      "Milo Manheim",
+      "Bobby Bones",
+      "Alexis Ren"
+    ],
+    "judge_scores": [
+      30.0,
+      30.0,
+      27.0,
+      28.5
+    ],
+    "eliminated": [],
+    "placements": [
+      3,
+      2,
+      1,
+      4
+    ]
+  },
+  {
+    "season": 28,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "Kate Flannery",
+      "James Van Der Beek",
+      "Kel Mitchell",
+      "Ray Lewis",
+      "Lamar Odom",
+      "Sailor Brinkley-Cook",
+      "Sean Spicer",
+      "Mary Wilson",
+      "Lauren Alaina",
+      "Ally Brooke",
+      "Karamo Brown",
+      "Hannah Brown"
+    ],
+    "judge_scores": [
+      21.0,
+      20.0,
+      20.0,
+      15.0,
+      12.0,
+      18.0,
+      16.0,
+      15.0,
+      19.0,
+      20.0,
+      19.0,
+      24.0
+    ],
+    "eliminated": [
+      "Mary Wilson",
+      "Ray Lewis"
+    ]
+  },
+  {
+    "season": 28,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Kate Flannery",
+      "James Van Der Beek",
+      "Kel Mitchell",
+      "Lamar Odom",
+      "Sailor Brinkley-Cook",
+      "Sean Spicer",
+      "Lauren Alaina",
+      "Ally Brooke",
+      "Karamo Brown",
+      "Hannah Brown"
+    ],
+    "judge_scores": [
+      26.0,
+      28.0,
+      32.0,
+      20.0,
+      31.0,
+      21.0,
+      32.0,
+      32.0,
+      28.0,
+      32.0
+    ],
+    "eliminated": [
+      "Lamar Odom"
+    ]
+  },
+  {
+    "season": 28,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Kate Flannery",
+      "James Van Der Beek",
+      "Kel Mitchell",
+      "Sailor Brinkley-Cook",
+      "Sean Spicer",
+      "Lauren Alaina",
+      "Ally Brooke",
+      "Karamo Brown",
+      "Hannah Brown"
+    ],
+    "judge_scores": [
+      27.0,
+      27.0,
+      26.0,
+      27.0,
+      21.0,
+      26.0,
+      25.0,
+      25.0,
+      24.0
+    ],
+    "eliminated": [
+      "Sailor Brinkley-Cook"
+    ]
+  },
+  {
+    "season": 28,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Kate Flannery",
+      "James Van Der Beek",
+      "Kel Mitchell",
+      "Sean Spicer",
+      "Lauren Alaina",
+      "Ally Brooke",
+      "Karamo Brown",
+      "Hannah Brown"
+    ],
+    "judge_scores": [
+      24.0,
+      27.0,
+      25.5,
+      21.0,
+      27.0,
+      27.0,
+      24.5,
+      26.0
+    ],
+    "eliminated": [
+      "Karamo Brown"
+    ]
+  },
+  {
+    "season": 28,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Kate Flannery",
+      "James Van Der Beek",
+      "Kel Mitchell",
+      "Sean Spicer",
+      "Lauren Alaina",
+      "Ally Brooke",
+      "Hannah Brown"
+    ],
+    "judge_scores": [
+      26.0,
+      32.0,
+      30.0,
+      20.0,
+      24.0,
+      30.0,
+      31.0
+    ],
+    "eliminated": [
+      "Kate Flannery"
+    ]
+  },
+  {
+    "season": 28,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "James Van Der Beek",
+      "Kel Mitchell",
+      "Sean Spicer",
+      "Lauren Alaina",
+      "Ally Brooke",
+      "Hannah Brown"
+    ],
+    "judge_scores": [
+      36.0,
+      37.0,
+      25.0,
+      35.0,
+      40.0,
+      35.5
+    ],
+    "eliminated": [
+      "Sean Spicer"
+    ]
+  },
+  {
+    "season": 28,
+    "week": 10,
+    "is_final": false,
+    "n_contestants": 5,
+    "contestants": [
+      "James Van Der Beek",
+      "Kel Mitchell",
+      "Lauren Alaina",
+      "Ally Brooke",
+      "Hannah Brown"
+    ],
+    "judge_scores": [
+      25.5,
+      28.5,
+      27.0,
+      29.5,
+      27.0
+    ],
+    "eliminated": [
+      "James Van Der Beek"
+    ]
+  },
+  {
+    "season": 28,
+    "week": 11,
+    "is_final": true,
+    "n_contestants": 4,
+    "contestants": [
+      "Kel Mitchell",
+      "Lauren Alaina",
+      "Ally Brooke",
+      "Hannah Brown"
+    ],
+    "judge_scores": [
+      29.5,
+      28.5,
+      30.0,
+      29.0
+    ],
+    "eliminated": [],
+    "placements": [
+      2,
+      4,
+      3,
+      1
+    ]
+  },
+  {
+    "season": 29,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 15,
+    "contestants": [
+      "Anne Heche",
+      "Jesse Metcalfe",
+      "Chrishell Stause",
+      "Skai Jackson",
+      "Justina Machado",
+      "Charles Oakley",
+      "Veron Davis",
+      "Johnny Weir",
+      "Nev Schulman",
+      "AJ McLean",
+      "Nelly",
+      "Kaitlyn Bristowe",
+      "Carole Baskin",
+      "Monica Aldama",
+      "Jeannie Mai"
+    ],
+    "judge_scores": [
+      18.0,
+      20.0,
+      18.0,
+      15.0,
+      21.0,
+      15.0,
+      18.0,
+      18.0,
+      21.0,
+      19.0,
+      18.0,
+      22.0,
+      16.0,
+      16.0,
+      18.0
+    ],
+    "eliminated": [
+      "Charles Oakley"
+    ]
+  },
+  {
+    "season": 29,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 14,
+    "contestants": [
+      "Anne Heche",
+      "Jesse Metcalfe",
+      "Chrishell Stause",
+      "Skai Jackson",
+      "Justina Machado",
+      "Veron Davis",
+      "Johnny Weir",
+      "Nev Schulman",
+      "AJ McLean",
+      "Nelly",
+      "Kaitlyn Bristowe",
+      "Carole Baskin",
+      "Monica Aldama",
+      "Jeannie Mai"
+    ],
+    "judge_scores": [
+      15.0,
+      20.0,
+      22.0,
+      18.0,
+      19.0,
+      22.0,
+      24.0,
+      24.0,
+      21.0,
+      18.0,
+      23.0,
+      12.0,
+      21.0,
+      22.0
+    ],
+    "eliminated": [
+      "Carole Baskin"
+    ]
+  },
+  {
+    "season": 29,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 13,
+    "contestants": [
+      "Anne Heche",
+      "Jesse Metcalfe",
+      "Chrishell Stause",
+      "Skai Jackson",
+      "Justina Machado",
+      "Veron Davis",
+      "Johnny Weir",
+      "Nev Schulman",
+      "AJ McLean",
+      "Nelly",
+      "Kaitlyn Bristowe",
+      "Monica Aldama",
+      "Jeannie Mai"
+    ],
+    "judge_scores": [
+      21.0,
+      21.0,
+      22.0,
+      28.0,
+      24.0,
+      22.0,
+      24.0,
+      24.0,
+      24.0,
+      21.0,
+      25.0,
+      24.0,
+      21.0
+    ],
+    "eliminated": [
+      "Anne Heche"
+    ]
+  },
+  {
+    "season": 29,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "Jesse Metcalfe",
+      "Chrishell Stause",
+      "Skai Jackson",
+      "Justina Machado",
+      "Veron Davis",
+      "Johnny Weir",
+      "Nev Schulman",
+      "AJ McLean",
+      "Nelly",
+      "Kaitlyn Bristowe",
+      "Monica Aldama",
+      "Jeannie Mai"
+    ],
+    "judge_scores": [
+      19.0,
+      19.0,
+      24.0,
+      24.0,
+      21.0,
+      29.0,
+      26.0,
+      24.0,
+      24.0,
+      27.0,
+      26.0,
+      24.0
+    ],
+    "eliminated": [
+      "Jesse Metcalfe"
+    ]
+  },
+  {
+    "season": 29,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Chrishell Stause",
+      "Skai Jackson",
+      "Justina Machado",
+      "Veron Davis",
+      "Johnny Weir",
+      "Nev Schulman",
+      "AJ McLean",
+      "Nelly",
+      "Kaitlyn Bristowe",
+      "Monica Aldama",
+      "Jeannie Mai"
+    ],
+    "judge_scores": [
+      24.0,
+      18.0,
+      27.0,
+      21.0,
+      22.0,
+      26.0,
+      27.0,
+      24.0,
+      27.0,
+      27.0,
+      25.0
+    ],
+    "eliminated": [
+      "Veron Davis"
+    ]
+  },
+  {
+    "season": 29,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Chrishell Stause",
+      "Skai Jackson",
+      "Justina Machado",
+      "Johnny Weir",
+      "Nev Schulman",
+      "AJ McLean",
+      "Nelly",
+      "Kaitlyn Bristowe",
+      "Monica Aldama",
+      "Jeannie Mai"
+    ],
+    "judge_scores": [
+      26.0,
+      27.0,
+      26.0,
+      27.0,
+      30.0,
+      26.0,
+      27.0,
+      24.0,
+      22.0,
+      25.0
+    ],
+    "eliminated": [
+      "Monica Aldama",
+      "Jeannie Mai"
+    ]
+  },
+  {
+    "season": 29,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Chrishell Stause",
+      "Skai Jackson",
+      "Justina Machado",
+      "Johnny Weir",
+      "Nev Schulman",
+      "AJ McLean",
+      "Nelly",
+      "Kaitlyn Bristowe"
+    ],
+    "judge_scores": [
+      27.0,
+      27.0,
+      29.0,
+      30.0,
+      30.0,
+      27.0,
+      24.0,
+      28.0
+    ],
+    "eliminated": [
+      "Chrishell Stause"
+    ]
+  },
+  {
+    "season": 29,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Skai Jackson",
+      "Justina Machado",
+      "Johnny Weir",
+      "Nev Schulman",
+      "AJ McLean",
+      "Nelly",
+      "Kaitlyn Bristowe"
+    ],
+    "judge_scores": [
+      29.0,
+      26.0,
+      30.0,
+      29.0,
+      25.0,
+      24.0,
+      30.0
+    ],
+    "eliminated": [
+      "AJ McLean"
+    ]
+  },
+  {
+    "season": 29,
+    "week": 10,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Skai Jackson",
+      "Justina Machado",
+      "Johnny Weir",
+      "Nev Schulman",
+      "Nelly",
+      "Kaitlyn Bristowe"
+    ],
+    "judge_scores": [
+      28.5,
+      29.0,
+      28.5,
+      30.0,
+      28.0,
+      30.0
+    ],
+    "eliminated": [
+      "Johnny Weir",
+      "Skai Jackson"
+    ]
+  },
+  {
+    "season": 29,
+    "week": 11,
+    "is_final": true,
+    "n_contestants": 4,
+    "contestants": [
+      "Justina Machado",
+      "Nev Schulman",
+      "Nelly",
+      "Kaitlyn Bristowe"
+    ],
+    "judge_scores": [
+      30.0,
+      30.0,
+      28.5,
+      30.0
+    ],
+    "eliminated": [],
+    "placements": [
+      4,
+      2,
+      3,
+      1
+    ]
+  },
+  {
+    "season": 30,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 15,
+    "contestants": [
+      "Martin Kove",
+      "Brian Austin Green",
+      "Melora Hardin",
+      "Matt James",
+      "Mike \"The Miz\" Mizanin",
+      "Suni Lee",
+      "Iman Shumpert",
+      "Cody Rigsby",
+      "Melanie C",
+      "Jimmie Allen",
+      "Olivia Jade",
+      "JoJo Siwa",
+      "Christine Chiu",
+      "Kenya Moore",
+      "Amanda Kloots"
+    ],
+    "judge_scores": [
+      15.0,
+      23.0,
+      27.0,
+      22.0,
+      26.0,
+      28.0,
+      25.0,
+      24.0,
+      30.0,
+      27.0,
+      27.0,
+      31.0,
+      24.0,
+      24.0,
+      32.0
+    ],
+    "eliminated": [
+      "Martin Kove"
+    ]
+  },
+  {
+    "season": 30,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 14,
+    "contestants": [
+      "Brian Austin Green",
+      "Melora Hardin",
+      "Matt James",
+      "Mike \"The Miz\" Mizanin",
+      "Suni Lee",
+      "Iman Shumpert",
+      "Cody Rigsby",
+      "Melanie C",
+      "Jimmie Allen",
+      "Olivia Jade",
+      "JoJo Siwa",
+      "Christine Chiu",
+      "Kenya Moore",
+      "Amanda Kloots"
+    ],
+    "judge_scores": [
+      19.0,
+      23.0,
+      20.0,
+      22.0,
+      21.0,
+      19.0,
+      18.0,
+      22.0,
+      20.0,
+      24.0,
+      24.0,
+      21.0,
+      21.0,
+      24.0
+    ],
+    "eliminated": [
+      "Christine Chiu"
+    ]
+  },
+  {
+    "season": 30,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 13,
+    "contestants": [
+      "Brian Austin Green",
+      "Melora Hardin",
+      "Matt James",
+      "Mike \"The Miz\" Mizanin",
+      "Suni Lee",
+      "Iman Shumpert",
+      "Cody Rigsby",
+      "Melanie C",
+      "Jimmie Allen",
+      "Olivia Jade",
+      "JoJo Siwa",
+      "Kenya Moore",
+      "Amanda Kloots"
+    ],
+    "judge_scores": [
+      26.0,
+      36.5,
+      28.5,
+      32.5,
+      34.0,
+      31.5,
+      29.0,
+      33.0,
+      32.5,
+      35.0,
+      35.0,
+      29.5,
+      34.0
+    ],
+    "eliminated": [
+      "Brian Austin Green",
+      "Matt James"
+    ]
+  },
+  {
+    "season": 30,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Melora Hardin",
+      "Mike \"The Miz\" Mizanin",
+      "Suni Lee",
+      "Iman Shumpert",
+      "Cody Rigsby",
+      "Melanie C",
+      "Jimmie Allen",
+      "Olivia Jade",
+      "JoJo Siwa",
+      "Kenya Moore",
+      "Amanda Kloots"
+    ],
+    "judge_scores": [
+      36.0,
+      32.0,
+      36.0,
+      28.0,
+      32.0,
+      36.0,
+      34.0,
+      36.0,
+      40.0,
+      36.0,
+      39.0
+    ],
+    "eliminated": [
+      "Melanie C"
+    ]
+  },
+  {
+    "season": 30,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Melora Hardin",
+      "Mike \"The Miz\" Mizanin",
+      "Suni Lee",
+      "Iman Shumpert",
+      "Cody Rigsby",
+      "Jimmie Allen",
+      "Olivia Jade",
+      "JoJo Siwa",
+      "Kenya Moore",
+      "Amanda Kloots"
+    ],
+    "judge_scores": [
+      34.0,
+      34.0,
+      36.0,
+      40.0,
+      36.0,
+      38.0,
+      36.0,
+      40.0,
+      32.0,
+      38.0
+    ],
+    "eliminated": [
+      "Kenya Moore"
+    ]
+  },
+  {
+    "season": 30,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Melora Hardin",
+      "Mike \"The Miz\" Mizanin",
+      "Suni Lee",
+      "Iman Shumpert",
+      "Cody Rigsby",
+      "Jimmie Allen",
+      "Olivia Jade",
+      "JoJo Siwa",
+      "Amanda Kloots"
+    ],
+    "judge_scores": [
+      38.0,
+      32.0,
+      34.0,
+      34.0,
+      36.0,
+      38.0,
+      42.0,
+      39.0,
+      34.0
+    ],
+    "eliminated": [
+      "Mike \"The Miz\" Mizanin"
+    ]
+  },
+  {
+    "season": 30,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Melora Hardin",
+      "Suni Lee",
+      "Iman Shumpert",
+      "Cody Rigsby",
+      "Jimmie Allen",
+      "Olivia Jade",
+      "JoJo Siwa",
+      "Amanda Kloots"
+    ],
+    "judge_scores": [
+      42.0,
+      42.0,
+      35.0,
+      38.0,
+      32.0,
+      36.0,
+      41.0,
+      42.0
+    ],
+    "eliminated": [
+      "Jimmie Allen",
+      "Olivia Jade"
+    ]
+  },
+  {
+    "season": 30,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Melora Hardin",
+      "Suni Lee",
+      "Iman Shumpert",
+      "Cody Rigsby",
+      "JoJo Siwa",
+      "Amanda Kloots"
+    ],
+    "judge_scores": [
+      36.0,
+      37.5,
+      37.5,
+      35.5,
+      40.0,
+      39.5
+    ],
+    "eliminated": [
+      "Suni Lee",
+      "Melora Hardin"
+    ]
+  },
+  {
+    "season": 30,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 4,
+    "contestants": [
+      "Iman Shumpert",
+      "Cody Rigsby",
+      "JoJo Siwa",
+      "Amanda Kloots"
+    ],
+    "judge_scores": [
+      40.0,
+      38.0,
+      40.0,
+      39.0
+    ],
+    "eliminated": [],
+    "placements": [
+      1,
+      3,
+      2,
+      4
+    ]
+  },
+  {
+    "season": 31,
+    "week": 1,
+    "is_final": false,
+    "n_contestants": 16,
+    "contestants": [
+      "Jason Lewis",
+      "Cheryl Ladd",
+      "Selma Blair",
+      "Joseph Baena",
+      "Trevor Donovan",
+      "Daniel Durant",
+      "Wayne Brady",
+      "Sam Champion",
+      "Jessie James Decker",
+      "Jordin Sparks",
+      "Heidi D'Amelio",
+      "Charli D'Amelio",
+      "Teresa Giudice",
+      "Vinny Guadagnino",
+      "Shangela",
+      "Gabby Windey"
+    ],
+    "judge_scores": [
+      18.0,
+      21.0,
+      28.0,
+      23.0,
+      21.0,
+      27.0,
+      29.0,
+      20.0,
+      20.0,
+      26.0,
+      24.0,
+      32.0,
+      20.0,
+      17.0,
+      28.0,
+      28.0
+    ],
+    "eliminated": [
+      "Jason Lewis"
+    ]
+  },
+  {
+    "season": 31,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 15,
+    "contestants": [
+      "Cheryl Ladd",
+      "Selma Blair",
+      "Joseph Baena",
+      "Trevor Donovan",
+      "Daniel Durant",
+      "Wayne Brady",
+      "Sam Champion",
+      "Jessie James Decker",
+      "Jordin Sparks",
+      "Heidi D'Amelio",
+      "Charli D'Amelio",
+      "Teresa Giudice",
+      "Vinny Guadagnino",
+      "Shangela",
+      "Gabby Windey"
+    ],
+    "judge_scores": [
+      21.0,
+      28.0,
+      24.0,
+      30.0,
+      29.0,
+      32.0,
+      26.0,
+      25.0,
+      27.0,
+      28.0,
+      32.0,
+      23.0,
+      27.0,
+      28.0,
+      32.0
+    ],
+    "eliminated": [
+      "Teresa Giudice"
+    ]
+  },
+  {
+    "season": 31,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 14,
+    "contestants": [
+      "Cheryl Ladd",
+      "Selma Blair",
+      "Joseph Baena",
+      "Trevor Donovan",
+      "Daniel Durant",
+      "Wayne Brady",
+      "Sam Champion",
+      "Jessie James Decker",
+      "Jordin Sparks",
+      "Heidi D'Amelio",
+      "Charli D'Amelio",
+      "Vinny Guadagnino",
+      "Shangela",
+      "Gabby Windey"
+    ],
+    "judge_scores": [
+      24.0,
+      28.0,
+      29.0,
+      27.0,
+      31.0,
+      33.0,
+      25.0,
+      26.0,
+      29.0,
+      32.0,
+      33.0,
+      23.0,
+      30.0,
+      33.0
+    ],
+    "eliminated": [
+      "Cheryl Ladd"
+    ]
+  },
+  {
+    "season": 31,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 13,
+    "contestants": [
+      "Selma Blair",
+      "Joseph Baena",
+      "Trevor Donovan",
+      "Daniel Durant",
+      "Wayne Brady",
+      "Sam Champion",
+      "Jessie James Decker",
+      "Jordin Sparks",
+      "Heidi D'Amelio",
+      "Charli D'Amelio",
+      "Vinny Guadagnino",
+      "Shangela",
+      "Gabby Windey"
+    ],
+    "judge_scores": [
+      32.0,
+      28.0,
+      28.0,
+      29.0,
+      36.0,
+      25.0,
+      31.0,
+      34.0,
+      34.0,
+      36.0,
+      29.0,
+      32.0,
+      36.0
+    ],
+    "eliminated": [
+      "Sam Champion"
+    ]
+  },
+  {
+    "season": 31,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "Selma Blair",
+      "Joseph Baena",
+      "Trevor Donovan",
+      "Daniel Durant",
+      "Wayne Brady",
+      "Jessie James Decker",
+      "Jordin Sparks",
+      "Heidi D'Amelio",
+      "Charli D'Amelio",
+      "Vinny Guadagnino",
+      "Shangela",
+      "Gabby Windey"
+    ],
+    "judge_scores": [
+      40.0,
+      35.0,
+      36.0,
+      33.5,
+      41.0,
+      36.0,
+      35.5,
+      39.0,
+      42.0,
+      31.0,
+      38.5,
+      41.0
+    ],
+    "eliminated": [
+      "Joseph Baena",
+      "Selma Blair"
+    ]
+  },
+  {
+    "season": 31,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Trevor Donovan",
+      "Daniel Durant",
+      "Wayne Brady",
+      "Jessie James Decker",
+      "Jordin Sparks",
+      "Heidi D'Amelio",
+      "Charli D'Amelio",
+      "Vinny Guadagnino",
+      "Shangela",
+      "Gabby Windey"
+    ],
+    "judge_scores": [
+      34.0,
+      34.0,
+      34.0,
+      32.0,
+      34.0,
+      36.0,
+      40.0,
+      28.0,
+      36.0,
+      37.0
+    ],
+    "eliminated": [
+      "Jessie James Decker"
+    ]
+  },
+  {
+    "season": 31,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Trevor Donovan",
+      "Daniel Durant",
+      "Wayne Brady",
+      "Jordin Sparks",
+      "Heidi D'Amelio",
+      "Charli D'Amelio",
+      "Vinny Guadagnino",
+      "Shangela",
+      "Gabby Windey"
+    ],
+    "judge_scores": [
+      39.0,
+      36.5,
+      38.0,
+      34.5,
+      35.0,
+      39.0,
+      31.5,
+      36.5,
+      35.5
+    ],
+    "eliminated": [
+      "Jordin Sparks"
+    ]
+  },
+  {
+    "season": 31,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Trevor Donovan",
+      "Daniel Durant",
+      "Wayne Brady",
+      "Heidi D'Amelio",
+      "Charli D'Amelio",
+      "Vinny Guadagnino",
+      "Shangela",
+      "Gabby Windey"
+    ],
+    "judge_scores": [
+      39.0,
+      39.0,
+      45.0,
+      35.0,
+      45.0,
+      29.0,
+      42.0,
+      40.0
+    ],
+    "eliminated": [
+      "Heidi D'Amelio",
+      "Vinny Guadagnino"
+    ]
+  },
+  {
+    "season": 31,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Trevor Donovan",
+      "Daniel Durant",
+      "Wayne Brady",
+      "Charli D'Amelio",
+      "Shangela",
+      "Gabby Windey"
+    ],
+    "judge_scores": [
+      32.5,
+      34.5,
+      36.5,
+      40.0,
+      36.5,
+      40.0
+    ],
+    "eliminated": [
+      "Daniel Durant",
+      "Trevor Donovan"
+    ]
+  },
+  {
+    "season": 31,
+    "week": 10,
+    "is_final": true,
+    "n_contestants": 4,
+    "contestants": [
+      "Wayne Brady",
+      "Charli D'Amelio",
+      "Shangela",
+      "Gabby Windey"
+    ],
+    "judge_scores": [
+      38.0,
+      40.0,
+      38.0,
+      40.0
+    ],
+    "eliminated": [],
+    "placements": [
+      3,
+      1,
+      4,
+      2
+    ]
+  },
+  {
+    "season": 32,
+    "week": 1,
+    "is_final": false,
+    "n_contestants": 14,
+    "contestants": [
+      "Jamie Lynn Spears",
+      "Mira Sorvino",
+      "Barry Williams",
+      "Alyson Hannigan",
+      "Xochitl Gomez",
+      "Adrian Peterson",
+      "Matt Walsh",
+      "Tyson Beckford",
+      "Jason Mraz",
+      "Lele Pons",
+      "Harry Jowsey",
+      "Mauricio Umansky",
+      "Charity Lawson",
+      "Ariana Madix"
+    ],
+    "judge_scores": [
+      15.0,
+      17.0,
+      16.0,
+      13.0,
+      18.0,
+      18.0,
+      12.0,
+      12.0,
+      21.0,
+      19.0,
+      12.0,
+      15.0,
+      22.0,
+      21.0
+    ],
+    "eliminated": [
+      "Matt Walsh"
+    ]
+  },
+  {
+    "season": 32,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 13,
+    "contestants": [
+      "Jamie Lynn Spears",
+      "Mira Sorvino",
+      "Barry Williams",
+      "Alyson Hannigan",
+      "Xochitl Gomez",
+      "Adrian Peterson",
+      "Tyson Beckford",
+      "Jason Mraz",
+      "Lele Pons",
+      "Harry Jowsey",
+      "Mauricio Umansky",
+      "Charity Lawson",
+      "Ariana Madix"
+    ],
+    "judge_scores": [
+      16.0,
+      18.0,
+      15.0,
+      19.0,
+      24.0,
+      15.0,
+      18.0,
+      24.0,
+      21.0,
+      15.0,
+      12.0,
+      21.0,
+      20.0
+    ],
+    "eliminated": [
+      "Jamie Lynn Spears"
+    ]
+  },
+  {
+    "season": 32,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "Mira Sorvino",
+      "Barry Williams",
+      "Alyson Hannigan",
+      "Xochitl Gomez",
+      "Adrian Peterson",
+      "Tyson Beckford",
+      "Jason Mraz",
+      "Lele Pons",
+      "Harry Jowsey",
+      "Mauricio Umansky",
+      "Charity Lawson",
+      "Ariana Madix"
+    ],
+    "judge_scores": [
+      26.0,
+      25.0,
+      24.0,
+      32.0,
+      22.0,
+      20.0,
+      34.0,
+      27.0,
+      24.0,
+      23.0,
+      32.0,
+      34.0
+    ],
+    "eliminated": [
+      "Tyson Beckford"
+    ]
+  },
+  {
+    "season": 32,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Mira Sorvino",
+      "Barry Williams",
+      "Alyson Hannigan",
+      "Xochitl Gomez",
+      "Adrian Peterson",
+      "Jason Mraz",
+      "Lele Pons",
+      "Harry Jowsey",
+      "Mauricio Umansky",
+      "Charity Lawson",
+      "Ariana Madix"
+    ],
+    "judge_scores": [
+      21.0,
+      18.0,
+      18.0,
+      27.0,
+      21.0,
+      24.0,
+      22.0,
+      21.0,
+      19.0,
+      24.0,
+      25.0
+    ],
+    "eliminated": [
+      "Adrian Peterson"
+    ]
+  },
+  {
+    "season": 32,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Mira Sorvino",
+      "Barry Williams",
+      "Alyson Hannigan",
+      "Xochitl Gomez",
+      "Jason Mraz",
+      "Lele Pons",
+      "Harry Jowsey",
+      "Mauricio Umansky",
+      "Charity Lawson",
+      "Ariana Madix"
+    ],
+    "judge_scores": [
+      22.0,
+      24.0,
+      21.0,
+      28.0,
+      27.0,
+      24.0,
+      18.0,
+      24.0,
+      28.0,
+      24.0
+    ],
+    "eliminated": [
+      "Mira Sorvino"
+    ]
+  },
+  {
+    "season": 32,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Barry Williams",
+      "Alyson Hannigan",
+      "Xochitl Gomez",
+      "Jason Mraz",
+      "Lele Pons",
+      "Harry Jowsey",
+      "Mauricio Umansky",
+      "Charity Lawson",
+      "Ariana Madix"
+    ],
+    "judge_scores": [
+      32.0,
+      31.0,
+      42.0,
+      39.0,
+      37.0,
+      29.0,
+      33.0,
+      38.0,
+      41.0
+    ],
+    "eliminated": [
+      "Mauricio Umansky"
+    ]
+  },
+  {
+    "season": 32,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Barry Williams",
+      "Alyson Hannigan",
+      "Xochitl Gomez",
+      "Jason Mraz",
+      "Lele Pons",
+      "Harry Jowsey",
+      "Charity Lawson",
+      "Ariana Madix"
+    ],
+    "judge_scores": [
+      32.5,
+      35.0,
+      37.0,
+      36.0,
+      36.5,
+      32.0,
+      36.0,
+      37.0
+    ],
+    "eliminated": [
+      "Lele Pons"
+    ]
+  },
+  {
+    "season": 32,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Barry Williams",
+      "Alyson Hannigan",
+      "Xochitl Gomez",
+      "Jason Mraz",
+      "Harry Jowsey",
+      "Charity Lawson",
+      "Ariana Madix"
+    ],
+    "judge_scores": [
+      35.0,
+      36.0,
+      40.0,
+      33.0,
+      28.0,
+      39.0,
+      42.0
+    ],
+    "eliminated": [
+      "Barry Williams"
+    ]
+  },
+  {
+    "season": 32,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Alyson Hannigan",
+      "Xochitl Gomez",
+      "Jason Mraz",
+      "Harry Jowsey",
+      "Charity Lawson",
+      "Ariana Madix"
+    ],
+    "judge_scores": [
+      32.0,
+      41.0,
+      43.0,
+      30.0,
+      38.0,
+      37.0
+    ],
+    "eliminated": [
+      "Harry Jowsey"
+    ]
+  },
+  {
+    "season": 32,
+    "week": 11,
+    "is_final": true,
+    "n_contestants": 5,
+    "contestants": [
+      "Alyson Hannigan",
+      "Xochitl Gomez",
+      "Jason Mraz",
+      "Charity Lawson",
+      "Ariana Madix"
+    ],
+    "judge_scores": [
+      26.5,
+      30.0,
+      30.0,
+      29.5,
+      29.5
+    ],
+    "eliminated": [],
+    "placements": [
+      5,
+      1,
+      2,
+      4,
+      3
+    ]
+  },
+  {
+    "season": 33,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 13,
+    "contestants": [
+      "Tori Spelling",
+      "Eric Roberts",
+      "Reginald VelJohnson",
+      "Chandler Kinney",
+      "Dwight Howard\u00a0",
+      "Danny Amendola",
+      "Stephen Nedoroscik",
+      "Ilona Maher",
+      "Anna Delvey",
+      "Brooks Nader",
+      "Phaedra Parks",
+      "Jenn Tran",
+      "Joey Graziadei"
+    ],
+    "judge_scores": [
+      19.0,
+      15.0,
+      15.0,
+      24.0,
+      22.0,
+      21.0,
+      22.0,
+      21.0,
+      17.0,
+      20.0,
+      21.0,
+      19.0,
+      22.0
+    ],
+    "eliminated": [
+      "Anna Delvey",
+      "Tori Spelling"
+    ]
+  },
+  {
+    "season": 33,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Eric Roberts",
+      "Reginald VelJohnson",
+      "Chandler Kinney",
+      "Dwight Howard\u00a0",
+      "Danny Amendola",
+      "Stephen Nedoroscik",
+      "Ilona Maher",
+      "Brooks Nader",
+      "Phaedra Parks",
+      "Jenn Tran",
+      "Joey Graziadei"
+    ],
+    "judge_scores": [
+      23.0,
+      21.0,
+      34.5,
+      26.0,
+      30.0,
+      31.0,
+      28.0,
+      30.5,
+      28.0,
+      31.0,
+      35.0
+    ],
+    "eliminated": [
+      "Eric Roberts",
+      "Reginald VelJohnson"
+    ]
+  },
+  {
+    "season": 33,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Chandler Kinney",
+      "Dwight Howard\u00a0",
+      "Danny Amendola",
+      "Stephen Nedoroscik",
+      "Ilona Maher",
+      "Brooks Nader",
+      "Phaedra Parks",
+      "Jenn Tran",
+      "Joey Graziadei"
+    ],
+    "judge_scores": [
+      32.0,
+      29.0,
+      36.0,
+      33.0,
+      32.0,
+      32.0,
+      32.0,
+      32.0,
+      36.0
+    ],
+    "eliminated": [
+      "Brooks Nader"
+    ]
+  },
+  {
+    "season": 33,
+    "week": 5,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Chandler Kinney",
+      "Dwight Howard\u00a0",
+      "Danny Amendola",
+      "Stephen Nedoroscik",
+      "Ilona Maher",
+      "Phaedra Parks",
+      "Jenn Tran",
+      "Joey Graziadei"
+    ],
+    "judge_scores": [
+      27.0,
+      24.0,
+      25.5,
+      24.0,
+      26.0,
+      24.0,
+      25.5,
+      26.0
+    ],
+    "eliminated": [
+      "Phaedra Parks"
+    ]
+  },
+  {
+    "season": 33,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Chandler Kinney",
+      "Dwight Howard\u00a0",
+      "Danny Amendola",
+      "Stephen Nedoroscik",
+      "Ilona Maher",
+      "Jenn Tran",
+      "Joey Graziadei"
+    ],
+    "judge_scores": [
+      32.0,
+      31.0,
+      28.0,
+      28.0,
+      24.0,
+      31.0,
+      32.0
+    ],
+    "eliminated": [
+      "Jenn Tran"
+    ]
+  },
+  {
+    "season": 33,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Chandler Kinney",
+      "Dwight Howard\u00a0",
+      "Danny Amendola",
+      "Stephen Nedoroscik",
+      "Ilona Maher",
+      "Joey Graziadei"
+    ],
+    "judge_scores": [
+      30.0,
+      24.0,
+      25.5,
+      27.0,
+      26.0,
+      27.5
+    ],
+    "eliminated": [
+      "Dwight Howard\u00a0"
+    ]
+  },
+  {
+    "season": 33,
+    "week": 9,
+    "is_final": true,
+    "n_contestants": 5,
+    "contestants": [
+      "Chandler Kinney",
+      "Danny Amendola",
+      "Stephen Nedoroscik",
+      "Ilona Maher",
+      "Joey Graziadei"
+    ],
+    "judge_scores": [
+      30.0,
+      28.0,
+      29.5,
+      28.5,
+      29.5
+    ],
+    "eliminated": [],
+    "placements": [
+      3,
+      5,
+      4,
+      2,
+      1
+    ]
+  },
+  {
+    "season": 34,
+    "week": 2,
+    "is_final": false,
+    "n_contestants": 14,
+    "contestants": [
+      "Corey Feldman",
+      "Danielle Fishel",
+      "Elaine Hendrix",
+      "Baron Davis",
+      "Jordan Chiles",
+      "Andy Richter",
+      "Robert Irwin",
+      "Hilaria Baldwin",
+      "Lauren Jauregui",
+      "Scott Hoying",
+      "Alix Earle",
+      "Jen Affleck",
+      "Whitney Leavitt",
+      "Dylan Efron"
+    ],
+    "judge_scores": [
+      15.0,
+      19.0,
+      21.0,
+      18.0,
+      22.0,
+      16.0,
+      22.0,
+      21.0,
+      21.0,
+      18.0,
+      21.0,
+      22.0,
+      22.0,
+      20.0
+    ],
+    "eliminated": [
+      "Corey Feldman",
+      "Baron Davis"
+    ]
+  },
+  {
+    "season": 34,
+    "week": 3,
+    "is_final": false,
+    "n_contestants": 12,
+    "contestants": [
+      "Danielle Fishel",
+      "Elaine Hendrix",
+      "Jordan Chiles",
+      "Andy Richter",
+      "Robert Irwin",
+      "Hilaria Baldwin",
+      "Lauren Jauregui",
+      "Scott Hoying",
+      "Alix Earle",
+      "Jen Affleck",
+      "Whitney Leavitt",
+      "Dylan Efron"
+    ],
+    "judge_scores": [
+      21.0,
+      21.0,
+      24.0,
+      18.0,
+      22.0,
+      22.0,
+      18.0,
+      22.0,
+      23.0,
+      19.0,
+      24.0,
+      23.0
+    ],
+    "eliminated": [
+      "Lauren Jauregui"
+    ]
+  },
+  {
+    "season": 34,
+    "week": 4,
+    "is_final": false,
+    "n_contestants": 11,
+    "contestants": [
+      "Danielle Fishel",
+      "Elaine Hendrix",
+      "Jordan Chiles",
+      "Andy Richter",
+      "Robert Irwin",
+      "Hilaria Baldwin",
+      "Scott Hoying",
+      "Alix Earle",
+      "Jen Affleck",
+      "Whitney Leavitt",
+      "Dylan Efron"
+    ],
+    "judge_scores": [
+      21.0,
+      24.0,
+      24.0,
+      18.0,
+      22.0,
+      23.0,
+      21.0,
+      24.0,
+      23.0,
+      25.0,
+      23.0
+    ],
+    "eliminated": [
+      "Hilaria Baldwin"
+    ]
+  },
+  {
+    "season": 34,
+    "week": 6,
+    "is_final": false,
+    "n_contestants": 10,
+    "contestants": [
+      "Danielle Fishel",
+      "Elaine Hendrix",
+      "Jordan Chiles",
+      "Andy Richter",
+      "Robert Irwin",
+      "Scott Hoying",
+      "Alix Earle",
+      "Jen Affleck",
+      "Whitney Leavitt",
+      "Dylan Efron"
+    ],
+    "judge_scores": [
+      36.0,
+      36.0,
+      39.0,
+      27.0,
+      36.0,
+      28.0,
+      35.0,
+      32.0,
+      39.0,
+      32.0
+    ],
+    "eliminated": [
+      "Scott Hoying"
+    ]
+  },
+  {
+    "season": 34,
+    "week": 7,
+    "is_final": false,
+    "n_contestants": 9,
+    "contestants": [
+      "Danielle Fishel",
+      "Elaine Hendrix",
+      "Jordan Chiles",
+      "Andy Richter",
+      "Robert Irwin",
+      "Alix Earle",
+      "Jen Affleck",
+      "Whitney Leavitt",
+      "Dylan Efron"
+    ],
+    "judge_scores": [
+      35.0,
+      32.0,
+      38.0,
+      29.0,
+      41.0,
+      43.0,
+      34.0,
+      42.0,
+      38.0
+    ],
+    "eliminated": [
+      "Jen Affleck"
+    ]
+  },
+  {
+    "season": 34,
+    "week": 8,
+    "is_final": false,
+    "n_contestants": 8,
+    "contestants": [
+      "Danielle Fishel",
+      "Elaine Hendrix",
+      "Jordan Chiles",
+      "Andy Richter",
+      "Robert Irwin",
+      "Alix Earle",
+      "Whitney Leavitt",
+      "Dylan Efron"
+    ],
+    "judge_scores": [
+      37.0,
+      37.5,
+      39.0,
+      34.0,
+      38.0,
+      38.5,
+      39.5,
+      38.0
+    ],
+    "eliminated": [
+      "Danielle Fishel"
+    ]
+  },
+  {
+    "season": 34,
+    "week": 9,
+    "is_final": false,
+    "n_contestants": 7,
+    "contestants": [
+      "Elaine Hendrix",
+      "Jordan Chiles",
+      "Andy Richter",
+      "Robert Irwin",
+      "Alix Earle",
+      "Whitney Leavitt",
+      "Dylan Efron"
+    ],
+    "judge_scores": [
+      36.0,
+      39.0,
+      29.0,
+      42.0,
+      40.0,
+      42.0,
+      42.0
+    ],
+    "eliminated": [
+      "Andy Richter"
+    ]
+  },
+  {
+    "season": 34,
+    "week": 10,
+    "is_final": false,
+    "n_contestants": 6,
+    "contestants": [
+      "Elaine Hendrix",
+      "Jordan Chiles",
+      "Robert Irwin",
+      "Alix Earle",
+      "Whitney Leavitt",
+      "Dylan Efron"
+    ],
+    "judge_scores": [
+      28.5,
+      28.5,
+      29.5,
+      29.0,
+      29.0,
+      27.5
+    ],
+    "eliminated": [
+      "Whitney Leavitt"
+    ]
+  },
+  {
+    "season": 34,
+    "week": 11,
+    "is_final": true,
+    "n_contestants": 5,
+    "contestants": [
+      "Elaine Hendrix",
+      "Jordan Chiles",
+      "Robert Irwin",
+      "Alix Earle",
+      "Dylan Efron"
+    ],
+    "judge_scores": [
+      29.0,
+      29.67,
+      29.67,
+      30.0,
+      29.33
+    ],
+    "eliminated": [],
+    "placements": [
+      5,
+      3,
+      1,
+      2,
+      4
+    ]
+  }
+]
