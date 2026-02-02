@@ -3,8 +3,13 @@
 Finalize regions by sampling from convex hull and verifying each point.
 
 Takes forward-projected regions, samples points uniformly from the convex hull,
-verifies each against premise constraints, and produces a validated point cloud
-with comprehensive statistics.
+verifies each against premise constraints, and computes comprehensive statistics.
+
+Note: The full point cloud is NOT stored to save space. Only key points are kept:
+- Hull vertices (in region.vertices)
+- Representative point (nearest to mean)
+- Dimension extremes (min/max vectors per dimension)
+- Diameter points (farthest pair)
 """
 import sys
 from pathlib import Path
@@ -286,7 +291,6 @@ def finalize_region(
     if region.vertices is None or len(region.vertices) == 0:
         log.warning(f"  No vertices for S{region.season}W{region.week}")
         result["finalization"]["status"] = "no_vertices"
-        result["finalization"]["point_cloud"] = []
         result["finalization"]["cloud_statistics"] = compute_cloud_statistics(np.empty((0, n)), region.contestants, p)
         result["finalization"]["extreme_statistics"] = compute_extreme_statistics(np.empty((0, n)), p)
         result["finalization"]["hull_acceptance"] = 0.0
@@ -323,11 +327,10 @@ def finalize_region(
     result["finalization"]["cloud_statistics"] = cloud_stats
     result["finalization"]["extreme_statistics"] = extreme_stats
 
-    # Store the entire point cloud
-    result["finalization"]["point_cloud"] = [
-        [round(float(x), p) for x in pt]
-        for pt in valid_points
-    ]
+    # Note: We don't store the full point_cloud to save space.
+    # The hull vertices are already in result["region"]["vertices"].
+    # Key points are stored in cloud_statistics (nearest_to_mean, dim extremes)
+    # and extreme_statistics (diameter_points, farthest_from_centroid).
 
     # Update region's representative point to nearest-to-mean
     if cloud_stats["nearest_to_mean"] is not None:
