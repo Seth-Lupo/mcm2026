@@ -48,37 +48,50 @@ log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
 # SETUP: Clone repo and create conda environment on cluster
 #
 cmd_setup() {
-    log_info "Setting up environment on Tufts HPC..."
+    log_info "Setting up environment on Tufts HPC (single connection)..."
 
-    log_info "Uploading configuration..."
-    ssh "$CLUSTER_SSH" "mkdir -p ~/mcm2026"
-    scp "$PROJECT_DIR/.env" "${CLUSTER_SSH}:~/mcm2026/.env"
+    # Do everything in one SSH session using ControlMaster
+    ssh -o ControlMaster=auto -o ControlPath=/tmp/ssh-%r@%h:%p -o ControlPersist=60 "$CLUSTER_SSH" "mkdir -p ~/mcm2026/slurm/jobs"
 
-    ssh "$CLUSTER_SSH" 'bash -s' << 'REMOTE_SETUP'
+    # Upload all files in one scp call
+    scp -o ControlPath=/tmp/ssh-%r@%h:%p \
+        "$PROJECT_DIR/.env" \
+        "$PROJECT_DIR/environment.yml" \
+        "$SCRIPT_DIR/jobs/"*.sh \
+        "${CLUSTER_SSH}:~/mcm2026/"
+
+    # Move job scripts to correct location and run setup
+    ssh -o ControlPath=/tmp/ssh-%r@%h:%p "$CLUSTER_SSH" 'bash -s' << 'REMOTE_SETUP'
         set -e
-        cd ~
+        cd ~/mcm2026
 
-        if [[ -f ~/mcm2026/.env ]]; then
+        # Move job scripts to correct location
+        mv -f *.sh slurm/jobs/ 2>/dev/null || true
+
+        # Load env vars
+        if [[ -f .env ]]; then
             set -a
-            source ~/mcm2026/.env
+            source .env
             set +a
         fi
 
+        # Clone or pull repo
         REPO_URL="${GITHUB_REPO:-https://github.com/your-username/mcm2026.git}"
-        if [[ -d ~/mcm2026/.git ]]; then
-            echo "Repository exists, pulling latest..."
-            cd ~/mcm2026
-            git pull || echo "Git pull failed, continuing with existing code"
+        if [[ -d .git ]]; then
+            echo "Pulling latest from GitHub..."
+            git pull || echo "Git pull failed, continuing"
         else
             echo "Cloning repository..."
-            rm -rf ~/mcm2026
-            git clone "$REPO_URL" ~/mcm2026
+            cd ~
+            rm -rf mcm2026
+            git clone "$REPO_URL" mcm2026
+            cd mcm2026
         fi
-        cd ~/mcm2026
 
         mkdir -p logs data slurm/jobs
+        chmod +x slurm/jobs/*.sh
 
-        # Load miniforge (per Tufts docs)
+        # Load miniforge
         module purge
         module load miniforge/24.11.2-py312 2>/dev/null || \
         module load miniforge/24.7.1-py312 2>/dev/null || \
@@ -86,8 +99,8 @@ cmd_setup() {
 
         echo "Conda: $(which conda)"
 
-        # Create/update conda environment from environment.yml
-        if [[ ! -d ~/mcm2026/mcm_env ]]; then
+        # Create/update conda environment
+        if [[ ! -d mcm_env ]]; then
             echo "Creating conda environment..."
             conda env create -f environment.yml -p ~/mcm2026/mcm_env
         else
@@ -109,10 +122,6 @@ cmd_setup() {
         source deactivate || true
 REMOTE_SETUP
 
-    log_info "Uploading SLURM job scripts..."
-    ssh "$CLUSTER_SSH" "mkdir -p ~/mcm2026/slurm/jobs"
-    scp "$SCRIPT_DIR/jobs/"*.sh "${CLUSTER_SSH}:~/mcm2026/slurm/jobs/"
-
     log_info "Setup complete! Run './slurm/start.sh run' or './slurm/start.sh pipeline'"
 }
 
@@ -122,10 +131,11 @@ REMOTE_SETUP
 cmd_run() {
     log_info "Submitting chained pipeline to SLURM..."
 
-    ssh "$CLUSTER_SSH" "mkdir -p ~/mcm2026/slurm/jobs ~/mcm2026/logs ~/mcm2026/data"
-    scp "$SCRIPT_DIR/jobs/"*.sh "${CLUSTER_SSH}:~/mcm2026/slurm/jobs/"
+    # Single connection for all operations
+    ssh -o ControlMaster=auto -o ControlPath=/tmp/ssh-%r@%h:%p -o ControlPersist=60 "$CLUSTER_SSH" "mkdir -p ~/mcm2026/slurm/jobs ~/mcm2026/logs ~/mcm2026/data"
+    scp -o ControlPath=/tmp/ssh-%r@%h:%p "$SCRIPT_DIR/jobs/"*.sh "${CLUSTER_SSH}:~/mcm2026/slurm/jobs/"
 
-    ssh "$CLUSTER_SSH" 'bash -s' << 'REMOTE_RUN'
+    ssh -o ControlPath=/tmp/ssh-%r@%h:%p "$CLUSTER_SSH" 'bash -s' << 'REMOTE_RUN'
         set -e
         cd ~/mcm2026
 
@@ -182,10 +192,11 @@ REMOTE_RUN
 cmd_pipeline() {
     log_info "Submitting full pipeline as single job..."
 
-    ssh "$CLUSTER_SSH" "mkdir -p ~/mcm2026/slurm/jobs ~/mcm2026/logs ~/mcm2026/data"
-    scp "$SCRIPT_DIR/jobs/"*.sh "${CLUSTER_SSH}:~/mcm2026/slurm/jobs/"
+    # Single connection for all operations
+    ssh -o ControlMaster=auto -o ControlPath=/tmp/ssh-%r@%h:%p -o ControlPersist=60 "$CLUSTER_SSH" "mkdir -p ~/mcm2026/slurm/jobs ~/mcm2026/logs ~/mcm2026/data"
+    scp -o ControlPath=/tmp/ssh-%r@%h:%p "$SCRIPT_DIR/jobs/"*.sh "${CLUSTER_SSH}:~/mcm2026/slurm/jobs/"
 
-    ssh "$CLUSTER_SSH" 'bash -s' << 'REMOTE_PIPELINE'
+    ssh -o ControlPath=/tmp/ssh-%r@%h:%p "$CLUSTER_SSH" 'bash -s' << 'REMOTE_PIPELINE'
         set -e
         cd ~/mcm2026
 

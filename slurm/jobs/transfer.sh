@@ -4,6 +4,7 @@
 #SBATCH -p batch,preempt
 #SBATCH -N 1
 #SBATCH -n 1
+#SBATCH --cpus-per-task=1
 #SBATCH --mem=4g
 #SBATCH --output=logs/transfer_%j.out
 #SBATCH --error=logs/transfer_%j.err
