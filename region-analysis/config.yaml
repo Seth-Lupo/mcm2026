@@ -3,7 +3,7 @@
 
 # Sampling
 sampling:
-  n_samples: 100000000        # 100M samples (5x increase for better coverage)
+  n_samples: 10000000         # 10M samples (reduced to avoid OOM)
   seed: 100                   # random seed for reproducibility
 
 # Convex Hull (approximate via extreme points)
@@ -31,7 +31,7 @@ backprojection:
 
 # Parallelization
 parallel:
-  n_workers: 32               # half of CPUs - each worker uses Numba threads internally
+  n_workers: 16               # 16 workers = 16GB RAM each, 4 threads each
   batch_size: 1000            # larger batches for better parallelization
 
 # Voting

@@ -20,9 +20,9 @@ module purge
 module load miniforge/24.11.2-py312 2>/dev/null || module load miniforge/24.7.1-py312 2>/dev/null || module load miniforge 2>/dev/null
 source activate ~/mcm2026/mcm_env
 
-# With 32 workers, each gets 2 threads (32*2=64 CPUs)
-export NUMBA_NUM_THREADS=2
-export OMP_NUM_THREADS=2
+# With 16 workers, each gets 4 threads (16*4=64 CPUs)
+export NUMBA_NUM_THREADS=4
+export OMP_NUM_THREADS=4
 
 echo "=============================================="
 echo "Region Analysis - Finalize"
