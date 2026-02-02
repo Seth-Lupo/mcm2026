@@ -153,14 +153,14 @@ def get_premise_type(season: int, n_eliminated: int, is_final: bool) -> PremiseT
         else:
             return PremiseType.PP_ELIM
 
-    # Seasons 28-34: Rank-Rank
+    # Seasons 28-34: Rank-Rank with Bottom-2 rule
     else:
         if is_final:
             return PremiseType.RR_FINAL
         elif is_multi:
             return PremiseType.RR_MULTI
         else:
-            return PremiseType.RR_ELIM
+            return PremiseType.RR_B2  # Bottom-2 with judge save
 
 
 # =============================================================================

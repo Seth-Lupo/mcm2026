@@ -13,7 +13,7 @@ hull:
   include_axis_extremes: true
   max_dim_exact_volume: 5     # use exact ConvexHull for dims <= 5
   volume_samples: 50000000    # 50M samples (10x increase for volume accuracy)
-  fast_volume_dim_threshold: 5
+  fast_volume_dim_threshold: 100
 
 # Output
 output:

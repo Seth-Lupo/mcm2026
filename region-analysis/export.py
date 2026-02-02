@@ -475,6 +475,7 @@ def write_votes_csv(regions: List[Dict[str, Any]], output_path: Path, data_dir: 
     - season, week, name
     - proportion, proportion_min, proportion_max, proportion_range
     - absolute, absolute_min, absolute_max, absolute_range (scaled by viewership * votes_per_viewer)
+    - proportion_volume, proportion_relative_volume, proportion_relative_volume_root (hull geometry)
     """
     from config import get_config
     cfg = get_config()
@@ -510,6 +511,20 @@ def write_votes_csv(regions: List[Dict[str, Any]], output_path: Path, data_dir: 
         total_votes = None
         if viewers_millions is not None:
             total_votes = viewers_millions * 1_000_000 * votes_per_viewer
+
+        # Get hull volume data from finalization or region
+        hull_data = finalization.get("hull", {})
+        proportion_volume = hull_data.get("volume") or region_data.get("volume")
+        proportion_relative_volume = hull_data.get("relative_volume") or region_data.get("relative_volume")
+        proportion_relative_volume_root = hull_data.get("relative_volume_root")
+
+        # If relative_volume_root not in hull data, compute it
+        if proportion_relative_volume_root is None and proportion_relative_volume is not None:
+            hull_dim = hull_data.get("dimension") or (event.get("n_contestants", 2) - 1)
+            if proportion_relative_volume > 0 and hull_dim > 0:
+                proportion_relative_volume_root = proportion_relative_volume ** (1.0 / hull_dim)
+            else:
+                proportion_relative_volume_root = 0.0
 
         # Skip if no data
         if not representative or not contestants:
@@ -553,6 +568,9 @@ def write_votes_csv(regions: List[Dict[str, Any]], output_path: Path, data_dir: 
                 "proportion_min": round(prop_min, 6) if prop_min is not None else None,
                 "proportion_max": round(prop_max, 6) if prop_max is not None else None,
                 "proportion_range": round(prop_range, 6) if prop_range is not None else None,
+                "proportion_volume": float(proportion_volume) if proportion_volume is not None else None,
+                "proportion_relative_volume": float(proportion_relative_volume) if proportion_relative_volume is not None else None,
+                "proportion_relative_volume_root": round(float(proportion_relative_volume_root), 6) if proportion_relative_volume_root is not None else None,
                 "absolute": round(abs_votes) if abs_votes is not None else None,
                 "absolute_min": round(abs_min) if abs_min is not None else None,
                 "absolute_max": round(abs_max) if abs_max is not None else None,
@@ -568,6 +586,7 @@ def write_votes_csv(regions: List[Dict[str, Any]], output_path: Path, data_dir: 
     fieldnames = [
         "season", "week", "is_final", "name", "viewers_millions",
         "proportion", "proportion_min", "proportion_max", "proportion_range",
+        "proportion_volume", "proportion_relative_volume", "proportion_relative_volume_root",
         "absolute", "absolute_min", "absolute_max", "absolute_range",
     ]
 

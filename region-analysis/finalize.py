@@ -280,6 +280,10 @@ def finalize_region(
     result = json.loads(json.dumps(region.raw_data))  # deep copy
     n = region.n_contestants
 
+    # Remove projection-specific fields (those belong in projected files, not finalized)
+    for key in ["fp_constraints", "fp_iou", "bp_constraints", "bp_iou"]:
+        result.pop(key, None)
+
     # Initialize finalization section
     result["finalization"] = {
         "hull_samples": n_hull_samples,
@@ -290,11 +294,21 @@ def finalize_region(
     # Check if we have vertices to sample from
     if region.vertices is None or len(region.vertices) == 0:
         log.warning(f"  No vertices for S{region.season}W{region.week}")
+        hull_dim = n - 1
         result["finalization"]["status"] = "no_vertices"
         result["finalization"]["cloud_statistics"] = compute_cloud_statistics(np.empty((0, n)), region.contestants, p)
         result["finalization"]["extreme_statistics"] = compute_extreme_statistics(np.empty((0, n)), p)
         result["finalization"]["hull_acceptance"] = 0.0
         result["finalization"]["simplex_accuracy"] = 0.0
+        result["finalization"]["hull_dimension"] = hull_dim
+        result["finalization"]["hull"] = {
+            "n_vertices": 0,
+            "dimension": hull_dim,
+            "vertices": [],
+            "volume": 0.0,
+            "relative_volume": 0.0,
+            "relative_volume_root": 0.0,
+        }
         return result
 
     # Sample from hull and verify
@@ -327,8 +341,31 @@ def finalize_region(
     result["finalization"]["cloud_statistics"] = cloud_stats
     result["finalization"]["extreme_statistics"] = extreme_stats
 
+    # Hull geometry information
+    # The hull dimension is n_contestants - 1 (projecting from simplex to n-1 dims)
+    hull_dim = n - 1
+    result["finalization"]["hull_dimension"] = hull_dim
+
+    # Store hull objects explicitly in finalization section
+    hull_vertices = region.vertices
+    result["finalization"]["hull"] = {
+        "n_vertices": len(hull_vertices) if hull_vertices is not None else 0,
+        "dimension": hull_dim,
+        "vertices": [[round(float(x), p) for x in row] for row in hull_vertices] if hull_vertices is not None else [],
+        "volume": result["region"].get("volume", 0.0),
+        "relative_volume": result["region"].get("relative_volume", 0.0),
+    }
+
+    # Compute relative_volume_root = relative_volume^(1/d)
+    rel_vol = result["region"].get("relative_volume", 0.0)
+    if rel_vol > 0 and hull_dim > 0:
+        rel_vol_root = rel_vol ** (1.0 / hull_dim)
+    else:
+        rel_vol_root = 0.0
+    result["finalization"]["hull"]["relative_volume_root"] = round(float(rel_vol_root), p)
+
     # Note: We don't store the full point_cloud to save space.
-    # The hull vertices are already in result["region"]["vertices"].
+    # The hull vertices are in result["finalization"]["hull"]["vertices"].
     # Key points are stored in cloud_statistics (nearest_to_mean, dim extremes)
     # and extreme_statistics (diameter_points, farthest_from_centroid).
 
