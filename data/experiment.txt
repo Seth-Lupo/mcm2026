@@ -1,0 +1,62 @@
+======================================================================
+EXPERIMENT STATISTICS
+Generated: 2026-02-02 14:56:19
+======================================================================
+
+VOTING PROPORTIONS (per-contestant uncertainty)
+--------------------------------------------------
+  N observations:  2369
+  Mean range:      0.3481
+  Median range:    0.3720
+  Std dev:         0.1667
+  Min range:       0.0091
+  Max range:       0.8734
+  25th percentile: 0.2409
+  75th percentile: 0.4586
+
+REGION VOLUME (relative to simplex)
+--------------------------------------------------
+  N regions:       295
+  Mean:            0.024810
+  Median:          0.000083
+  Std dev:         0.052704
+  Min:             0.000000
+  Max:             0.354516
+
+VOLUME REDUCTION (final / initial)
+--------------------------------------------------
+  N regions:       284
+  Mean:            0.4500
+  Median:          0.3916
+  Std dev:         0.3364
+  Min:             0.0000
+  Max:             2.7850
+  Regions with >50% reduction: 178
+  Regions with >90% reduction: 32
+
+HULL ACCEPTANCE (fraction of hull satisfying constraints)
+--------------------------------------------------
+Note: Values < 1.0 indicate error - points in convex hull
+      that don't satisfy the premise constraints.
+
+  N regions:       295
+  Mean:            0.9960 (99.60%)
+  Median:          1.0000
+  Std dev:         0.0493
+  Min:             0.1890 (18.90%)
+  Max:             1.0000
+
+  Error rate (1 - acceptance):
+    Mean error:    0.0040 (0.40%)
+    Max error:     0.8110 (81.10%)
+    Regions with >1% error:  5
+    Regions with >5% error:  3
+    Regions with >10% error: 2
+
+SIMPLEX ACCURACY (fraction of simplex that's valid)
+--------------------------------------------------
+  N regions:       295
+  Mean:            0.219017 (21.9017%)
+  Median:          0.191000
+  Min:             0.001000
+  Max:             0.720000

@@ -81,13 +81,13 @@ def _is_feasible_numba(ps, pe, lo, hi):
 @njit(cache=True)
 def _find_intersection_numba(v_pass, v_fail, elim_idx, surv_idx, lo, hi):
     """
-    Numba-compiled edge intersection finder.
+    Numba-compiled edge intersection finder using binary search.
 
     Returns t value where feasibility boundary is crossed.
     """
     n_surv = len(surv_idx)
 
-    # Linear coefficients
+    # Linear coefficients: p(t) = a + b * t
     a_surv = np.empty(n_surv)
     b_surv = np.empty(n_surv)
     for i in range(n_surv):
@@ -98,152 +98,7 @@ def _find_intersection_numba(v_pass, v_fail, elim_idx, surv_idx, lo, hi):
     a_elim = v_pass[elim_idx]
     b_elim = v_fail[elim_idx] - v_pass[elim_idx]
 
-    # Collect candidate t values
-    max_candidates = 4 * n_surv + 10
-    candidates = np.empty(max_candidates)
-    n_cand = 0
-
-    # Simple constraints: p_j <= hi_j
-    for i in range(n_surv):
-        if abs(b_surv[i]) > 1e-15:
-            t = (hi[i] - a_surv[i]) / b_surv[i]
-            if 0 < t <= 1:
-                candidates[n_cand] = t
-                n_cand += 1
-
-    # Simple constraints: p_j + p_elim >= lo_j
-    for i in range(n_surv):
-        denom = b_surv[i] + b_elim
-        if abs(denom) > 1e-15:
-            t = (lo[i] - a_surv[i] - a_elim) / denom
-            if 0 < t <= 1:
-                candidates[n_cand] = t
-                n_cand += 1
-
-    # Sort candidates
-    candidates_sorted = np.sort(candidates[:n_cand])
-
-    # Check simple constraint crossings first
-    for k in range(len(candidates_sorted)):
-        t = candidates_sorted[k]
-        ps_before = a_surv + b_surv * (t - 1e-9)
-        pe_before = a_elim + b_elim * (t - 1e-9)
-        ps_after = a_surv + b_surv * (t + 1e-9)
-        pe_after = a_elim + b_elim * (t + 1e-9)
-
-        if _is_feasible_numba(ps_before, pe_before, lo, hi) and not _is_feasible_numba(ps_after, pe_after, lo, hi):
-            return t
-
-    # Compute breakpoints for piecewise sum constraints
-    max_bp = 4 * n_surv + 2
-    breakpoints = np.empty(max_bp)
-    breakpoints[0] = 0.0
-    breakpoints[1] = 1.0
-    n_bp = 2
-
-    for i in range(n_surv):
-        if abs(b_surv[i]) > 1e-15:
-            t = (lo[i] - a_surv[i]) / b_surv[i]
-            if 0 < t < 1:
-                breakpoints[n_bp] = t
-                n_bp += 1
-            t = (hi[i] - a_surv[i]) / b_surv[i]
-            if 0 < t < 1:
-                breakpoints[n_bp] = t
-                n_bp += 1
-
-        denom = b_surv[i] + b_elim
-        if abs(denom) > 1e-15:
-            t = (lo[i] - a_surv[i] - a_elim) / denom
-            if 0 < t < 1:
-                breakpoints[n_bp] = t
-                n_bp += 1
-            t = (hi[i] - a_surv[i] - a_elim) / denom
-            if 0 < t < 1:
-                breakpoints[n_bp] = t
-                n_bp += 1
-
-    breakpoints_sorted = np.sort(breakpoints[:n_bp])
-
-    # Check sum constraints in each segment
-    sum_candidates = np.empty(2 * n_bp)
-    n_sum_cand = 0
-
-    for seg in range(len(breakpoints_sorted) - 1):
-        t_lo_seg = breakpoints_sorted[seg]
-        t_hi_seg = breakpoints_sorted[seg + 1]
-        t_mid = (t_lo_seg + t_hi_seg) / 2
-
-        pe_mid = a_elim + b_elim * t_mid
-        if pe_mid < 1e-12:
-            continue
-
-        ps_mid = a_surv + b_surv * t_mid
-
-        # Σ L_j = 1 crossing
-        sum_lo_active = 0.0
-        sum_a_active = 0.0
-        sum_b_active = 0.0
-        has_active_L = False
-
-        for i in range(n_surv):
-            raw_L = (lo[i] - ps_mid[i]) / pe_mid
-            if raw_L > 0:
-                has_active_L = True
-                sum_lo_active += lo[i]
-                sum_a_active += a_surv[i]
-                sum_b_active += b_surv[i]
-
-        if has_active_L:
-            numer = sum_lo_active - sum_a_active - a_elim
-            denom = sum_b_active + b_elim
-            if abs(denom) > 1e-15:
-                t_cross = numer / denom
-                if t_lo_seg < t_cross < t_hi_seg:
-                    sum_candidates[n_sum_cand] = t_cross
-                    n_sum_cand += 1
-
-        # Σ U_j = 1 crossing
-        sum_hi_active = 0.0
-        sum_a_active = 0.0
-        sum_b_active = 0.0
-        n_inactive = 0
-        has_active_U = False
-
-        for i in range(n_surv):
-            raw_U = (hi[i] - ps_mid[i]) / pe_mid
-            if raw_U < 1:
-                has_active_U = True
-                sum_hi_active += hi[i]
-                sum_a_active += a_surv[i]
-                sum_b_active += b_surv[i]
-            else:
-                n_inactive += 1
-
-        if has_active_U:
-            coef = 1 - n_inactive
-            numer = sum_hi_active - sum_a_active - coef * a_elim
-            denom = sum_b_active + coef * b_elim
-            if abs(denom) > 1e-15:
-                t_cross = numer / denom
-                if t_lo_seg < t_cross < t_hi_seg:
-                    sum_candidates[n_sum_cand] = t_cross
-                    n_sum_cand += 1
-
-    # Check sum constraint crossings
-    sum_candidates_sorted = np.sort(sum_candidates[:n_sum_cand])
-    for k in range(len(sum_candidates_sorted)):
-        t = sum_candidates_sorted[k]
-        if 0 < t <= 1:
-            ps_before = a_surv + b_surv * (t - 1e-9)
-            pe_before = a_elim + b_elim * (t - 1e-9)
-            ps_after = a_surv + b_surv * (t + 1e-9)
-            pe_after = a_elim + b_elim * (t + 1e-9)
-
-            if _is_feasible_numba(ps_before, pe_before, lo, hi) and not _is_feasible_numba(ps_after, pe_after, lo, hi):
-                return t
-
-    # Fallback: binary search
+    # Binary search for the crossing point
     lo_t = 0.0
     hi_t = 1.0
     for _ in range(50):

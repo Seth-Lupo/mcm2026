@@ -442,6 +442,104 @@ def load_viewership(data_dir: Path) -> Dict[tuple, float]:
     return viewership
 
 
+def load_vote_milestones(data_dir: Path) -> List[tuple]:
+    """
+    Load vote count milestones from viewership.csv.
+
+    Returns list of (season, week, viewership_millions, vote_count_millions) tuples,
+    sorted chronologically. These are the record-breaking vote announcements.
+    """
+    viewership_path = data_dir / "viewership.csv"
+    if not viewership_path.exists():
+        return []
+
+    milestones = []
+
+    with open(viewership_path, "r") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            vote_count_str = row.get("VoteCountMillions", "").strip()
+            if not vote_count_str:
+                continue
+
+            season = int(row["Season"])
+            week_str = row.get("Week", "").strip()
+            if not week_str:
+                continue
+
+            week = int(week_str)
+            viewers = float(row["ViewersMillions"])
+            vote_count = float(vote_count_str)
+
+            milestones.append((season, week, viewers, vote_count))
+
+    # Sort chronologically
+    milestones.sort(key=lambda x: (x[0], x[1]))
+    return milestones
+
+
+def get_votes_per_viewer(
+    season: int,
+    week: int,
+    milestones: List[tuple],
+    viewership: Dict[tuple, float],
+) -> tuple:
+    """
+    Get the votes_per_viewer ratio for a given (season, week).
+
+    Algorithm from paper:
+    - Find interval [milestone_j, milestone_j+1) containing current week
+    - M = max viewership in entire interval [milestone_j, milestone_j+1)
+    - α = v_j+1 / M (next milestone's votes / max viewership in interval)
+
+    Returns (ratio, max_viewership_in_interval).
+    """
+    if not milestones:
+        return None, None
+
+    # Find the interval [prev_milestone, next_milestone) containing current week
+    prev_milestone = None
+    next_milestone = None
+
+    for i, (s, w, viewers, votes) in enumerate(milestones):
+        if (s, w) > (season, week):
+            next_milestone = (s, w, viewers, votes)
+            break
+        prev_milestone = (s, w, viewers, votes)
+
+    # If before first milestone, interval is [start, first_milestone)
+    if next_milestone is None:
+        # After all milestones - use last milestone
+        next_milestone = milestones[-1]
+        prev_milestone = milestones[-2] if len(milestones) > 1 else None
+
+    # Define interval bounds
+    if prev_milestone:
+        interval_start = (prev_milestone[0], prev_milestone[1])
+    else:
+        interval_start = (1, 1)  # Beginning of time
+
+    interval_end = (next_milestone[0], next_milestone[1])
+    next_votes = next_milestone[3]
+
+    # Find max viewership in interval [interval_start, interval_end)
+    max_viewership = 0.0
+    for (s, w), v in viewership.items():
+        if interval_start <= (s, w) < interval_end:
+            max_viewership = max(max_viewership, v)
+
+    # Include the endpoint if we're at or past the last milestone
+    if (season, week) >= (milestones[-1][0], milestones[-1][1]):
+        for (s, w), v in viewership.items():
+            if (s, w) >= interval_start:
+                max_viewership = max(max_viewership, v)
+
+    if max_viewership == 0.0:
+        max_viewership = viewership.get((season, week), 1.0)
+
+    return next_votes / max_viewership, max_viewership
+
+
 def _interpolate_viewership(viewership: Dict[tuple, float], season: int, week: int) -> Optional[float]:
     """
     Interpolate viewership for a missing (season, week) using continuous timeline.
@@ -499,13 +597,13 @@ def write_votes_csv(regions: List[Dict[str, Any]], output_path: Path, data_dir: 
     - absolute, absolute_min, absolute_max, absolute_range (scaled by viewership * votes_per_viewer)
     - proportion_volume, proportion_relative_volume, proportion_relative_volume_root (hull geometry)
     - volume_cut (finalized_volume / initial_volume - how much volume remains after propagation)
-    """
-    from config import get_config
-    cfg = get_config()
-    votes_per_viewer = cfg.voting.votes_per_viewer
 
-    # Load viewership data
+    votes_per_viewer is calculated dynamically from record-breaking vote milestones:
+    ratio = next_milestone_votes / next_milestone_viewership
+    """
+    # Load viewership data and vote milestones
     viewership = load_viewership(data_dir)
+    milestones = load_vote_milestones(data_dir)
 
     # Load initial regions to get original volumes (before projection)
     initial_volumes = {}
@@ -546,9 +644,12 @@ def write_votes_csv(regions: List[Dict[str, Any]], output_path: Path, data_dir: 
         if viewers_millions is None:
             viewers_millions = _interpolate_viewership(viewership, season, week)
 
+        # Get votes_per_viewer ratio from next record viewership and milestone votes
+        votes_per_viewer, record_viewership = get_votes_per_viewer(season, week, milestones, viewership)
+
         # Total votes = viewers * 1_000_000 * votes_per_viewer
         total_votes = None
-        if viewers_millions is not None:
+        if viewers_millions is not None and votes_per_viewer is not None:
             total_votes = viewers_millions * 1_000_000 * votes_per_viewer
 
         # Get hull volume data from finalization or region
@@ -612,6 +713,7 @@ def write_votes_csv(regions: List[Dict[str, Any]], output_path: Path, data_dir: 
                 "is_final": is_final,
                 "name": name,
                 "viewers_millions": round(viewers_millions, 2) if viewers_millions else None,
+                "votes_per_viewer": round(votes_per_viewer, 2) if votes_per_viewer is not None else None,
                 "proportion": round(prop, 6) if prop is not None else None,
                 "proportion_min": round(prop_min, 6) if prop_min is not None else None,
                 "proportion_max": round(prop_max, 6) if prop_max is not None else None,
@@ -633,7 +735,7 @@ def write_votes_csv(regions: List[Dict[str, Any]], output_path: Path, data_dir: 
 
     # Write CSV
     fieldnames = [
-        "season", "week", "is_final", "name", "viewers_millions",
+        "season", "week", "is_final", "name", "viewers_millions", "votes_per_viewer",
         "proportion", "proportion_min", "proportion_max", "proportion_range",
         "proportion_volume", "proportion_relative_volume", "proportion_relative_volume_root",
         "proportion_volume_reduction",
@@ -646,6 +748,154 @@ def write_votes_csv(regions: List[Dict[str, Any]], output_path: Path, data_dir: 
         writer.writerows(rows)
 
     print(f"  Wrote {output_path.name} ({len(rows)} rows)")
+
+
+def write_experiment_stats(
+    finalized_regions: List[Dict[str, Any]],
+    initial_regions: List[Dict[str, Any]],
+    output_path: Path,
+) -> None:
+    """
+    Write experiment.tex with LaTeX tables for uncertainty and error statistics.
+    """
+    # Build lookup for initial volumes
+    initial_volumes = {}
+    for r in initial_regions:
+        ev = r.get("event", {})
+        reg = r.get("region", {})
+        key = (ev.get("season"), ev.get("week"), ev.get("is_final", False))
+        vol = reg.get("volume")
+        if vol is not None:
+            initial_volumes[key] = vol
+
+    # Collect statistics
+    hull_acceptances = []
+    volume_reductions = []
+    relative_volumes = []
+
+    for r in finalized_regions:
+        ev = r.get("event", {})
+        fin = r.get("finalization", {})
+        reg = r.get("region", {})
+
+        if fin.get("status") != "success":
+            continue
+
+        ha = fin.get("hull_acceptance")
+        if ha is not None:
+            hull_acceptances.append(ha)
+
+        key = (ev.get("season"), ev.get("week"), ev.get("is_final", False))
+        init_vol = initial_volumes.get(key)
+        final_vol = reg.get("volume")
+        if init_vol and init_vol > 0 and final_vol is not None:
+            volume_reductions.append(final_vol / init_vol)
+
+        rel_vol = reg.get("relative_volume")
+        if rel_vol is not None:
+            relative_volumes.append(rel_vol)
+
+    errors = [1 - ha for ha in hull_acceptances] if hull_acceptances else []
+
+    try:
+        import matplotlib.pyplot as plt
+
+        # Histogram of volume reduction
+        if volume_reductions:
+            fig, ax = plt.subplots(figsize=(6, 4))
+            ax.hist(volume_reductions, bins=30, edgecolor='black', alpha=0.7)
+            ax.set_xlabel('Volume Reduction (final / initial)')
+            ax.set_ylabel('Count')
+            ax.axvline(np.mean(volume_reductions), color='red', linestyle='--', label=f'Mean: {np.mean(volume_reductions):.2f}')
+            ax.axvline(np.median(volume_reductions), color='orange', linestyle='--', label=f'Median: {np.median(volume_reductions):.2f}')
+            ax.legend()
+            plt.tight_layout()
+            plt.savefig(output_path.parent / 'reduction.png', dpi=150)
+            plt.close()
+            print(f"  Wrote reduction.png")
+
+        # Histogram of relative volumes (log scale)
+        if relative_volumes:
+            fig, ax = plt.subplots(figsize=(6, 4))
+            # Use log-spaced bins
+            pos_vols = [v for v in relative_volumes if v > 0]
+            if pos_vols:
+                log_bins = np.logspace(np.log10(min(pos_vols)), np.log10(max(pos_vols)), 30)
+                ax.hist(pos_vols, bins=log_bins, edgecolor='black', alpha=0.7)
+                ax.set_xscale('log', base=2)
+                ax.set_xlabel('Relative Volume')
+                ax.set_ylabel('Count')
+                ax.axvline(np.mean(pos_vols), color='red', linestyle='--', label=f'Mean: {np.mean(pos_vols):.2e}')
+                ax.axvline(np.median(pos_vols), color='orange', linestyle='--', label=f'Median: {np.median(pos_vols):.2e}')
+                ax.legend()
+            plt.tight_layout()
+            plt.savefig(output_path.parent / 'relative.png', dpi=150)
+            plt.close()
+            print(f"  Wrote relative.png")
+
+        # Votes per viewer over time
+        viewership = load_viewership(output_path.parent)
+        milestones = load_vote_milestones(output_path.parent)
+        if viewership and milestones:
+            # Get all weeks sorted chronologically
+            weeks = sorted(viewership.keys())
+            ratios = []
+            for s, w in weeks:
+                ratio, _ = get_votes_per_viewer(s, w, milestones, viewership)
+                ratios.append(ratio if ratio else 0)
+
+            fig, ax = plt.subplots(figsize=(10, 4))
+            x_labels = [f"S{s}W{w}" for s, w in weeks]
+            ax.plot(range(len(weeks)), ratios, linewidth=1)
+            ax.set_ylabel('Votes per Viewer')
+            ax.set_xlabel('Week')
+            # Only show some x labels to avoid crowding
+            step = max(1, len(weeks) // 20)
+            ax.set_xticks(range(0, len(weeks), step))
+            ax.set_xticklabels([x_labels[i] for i in range(0, len(weeks), step)], rotation=45, ha='right', fontsize=8)
+            plt.tight_layout()
+            plt.savefig(output_path.parent / 'votes-per-viewer.png', dpi=150)
+            plt.close()
+            print(f"  Wrote votes-per-viewer.png")
+
+    except ImportError:
+        print("  Skipping histograms (matplotlib not installed)")
+
+    lines = []
+
+    # Error table
+    if hull_acceptances:
+        lines.append("\\begin{table}[htbp]")
+        lines.append("\\centering")
+        lines.append("\\begin{tabular}{lrrrr}")
+        lines.append("\\toprule")
+        lines.append("Mean Acceptance & Mean Error & Max Error & Regions $>$5\\% error \\\\")
+        lines.append("\\midrule")
+        lines.append(f"{np.mean(hull_acceptances):.4f} & {np.mean(errors):.4f} & {np.max(errors):.4f} & {sum(1 for e in errors if e > 0.05)} \\\\")
+        lines.append("\\bottomrule")
+        lines.append("\\end{tabular}")
+        lines.append("\\end{table}")
+        lines.append("")
+
+    # Figures
+    lines.append("\\begin{figure}[htbp]")
+    lines.append("\\centering")
+    lines.append("\\includegraphics[width=0.48\\textwidth]{reduction.png}")
+    lines.append("\\hfill")
+    lines.append("\\includegraphics[width=0.48\\textwidth]{relative.png}")
+    lines.append("\\caption{Volume reduction (left) and relative volume (right) distributions.}")
+    lines.append("\\end{figure}")
+    lines.append("")
+    lines.append("\\begin{figure}[htbp]")
+    lines.append("\\centering")
+    lines.append("\\includegraphics[width=\\textwidth]{votes-per-viewer.png}")
+    lines.append("\\caption{Votes per viewer ratio over time.}")
+    lines.append("\\end{figure}")
+
+    with open(output_path, "w") as f:
+        f.write("\n".join(lines))
+
+    print(f"  Wrote {output_path.name}")
 
 
 def main():
@@ -686,12 +936,21 @@ def main():
     if process_finalized:
         process_file(data_dir / "regions-finalized.json", projection_type="finalized")
 
-        # Also write votes.csv from finalized regions
+        # Also write votes.csv and experiment.txt from finalized regions
         finalized_path = data_dir / "regions-finalized.json"
+        initial_path = data_dir / "regions.json"
         if finalized_path.exists():
             with open(finalized_path) as f:
                 finalized_regions = json.load(f)
             write_votes_csv(finalized_regions, data_dir / "votes.csv", data_dir)
+
+            # Load initial regions for volume comparison
+            initial_regions = []
+            if initial_path.exists():
+                with open(initial_path) as f:
+                    initial_regions = json.load(f)
+
+            write_experiment_stats(finalized_regions, initial_regions, data_dir / "experiment.tex")
 
     print("\nDone!")
 
